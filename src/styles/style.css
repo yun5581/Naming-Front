@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  img:focus {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  @font-face {
+    font-family: 'SF_HambakSnow';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/SF_HambakSnow.woff') format('woff');
+}
+  
+  @font-face {
+    font-family: 'Simonetta';
+    src: url('https://fonts.googleapis.com/css2?family=Simonetta&display=swap');
+  }
+  
+  @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
