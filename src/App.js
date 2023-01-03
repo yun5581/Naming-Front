@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 //메인
-import MainPage from "./pages/mainpage/MainPage";
+import LandingPage from "./pages/landingPage/LandingPage";
 function App() {
   return (
     <Router>
        <Routes>
-          <Route exact path="/" element={<MainPage />} />
+          <Route exact path="/" element={<LandingPage />} />
       </Routes>
     </Router>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
 
-const MainPage = () => {
+const LandingPage = () => {
     return (
         <>
             <div>
@@ -11,4 +11,4 @@ const MainPage = () => {
     );
 };
 
-export default MainPage;
+export default LandingPage;
