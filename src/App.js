@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-//메인
+// 랜딩 페이지
 import LandingPage from "./pages/landingPage/LandingPage";
 function App() {
   return (
