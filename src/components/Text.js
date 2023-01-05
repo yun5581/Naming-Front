@@ -10,7 +10,7 @@ export const  SF_HambakSnow= styled.p`
 `;
 
 export const Simonetta = styled.p`
-  font-family: "Simonetta";
+  font-family: "Simonetta", cursive;
   font-weight: ${({ weight }) => weight};
   line-height: ${({ height }) => height};
   font-size: ${({ size }) => size};
