@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import LandingPage from "./pages/landingPage/LandingPage";
 // 로그인 페이지 
 import LoginPage from "./pages/authPage/LoginPage";
+// 회원가입 페이지
+import RegisterPage from "./pages/authPage/RegisterPage";
 
 function App() {
   return (
@@ -11,6 +13,7 @@ function App() {
        <Routes>
           <Route exact path="/" element={<LandingPage />} />  
           <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/register" element={<RegisterPage/>}/>
       </Routes>
     </Router>
   );
