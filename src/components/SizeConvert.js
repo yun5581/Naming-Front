@@ -13,11 +13,11 @@ export const vw = (width) =>{
 };
 
 export const vh = (height) =>{
-    var result;
-    isMobile ? 
-    result = (0.129 * height)+"vh":
-    result = height+"px";
-    return result;
+  var result;
+  isMobile ? 
+  result = (0.129 * height)+"vh":
+  result = height+"px";
+  return result;
 };
 
 export const useResize = () =>{
@@ -37,6 +37,3 @@ export const useResize = () =>{
       }, []);
     return;
 }
-
-
-
