@@ -20,9 +20,14 @@
         <td  align="center"><img src = "" width="100px"/></td>
     </tr>
     <tr width="100%">
-      <td  align="center"></td>
-      <td  align="center"></td>
-      <td  align="center"></td>
+      <td  align="felx-start">
+        [가입자] 홈 화면 페이지 <br/> [가입자] 정의 구경하기 페이지 <br/> [가입자] 사전 검색 페이지 <br/> 햄버거 메뉴
+        </td>
+      <td  align="flex-start">
+        [가입자] 초기화면 페이지 <br/> [가입자] 로그인/회원가입 페이지 <br/> [가입자] 번호 부여 페이지 <br/> [가입자] 사전 커스텀 페이지
+       </td>
+      <td  align="flex-start">[방문자] 초기화면 페이지 <br/> [방문자] 작성자 이름 입력 페이지 <br/> [방문자] 정의 작성 페이지 <br/> [방문자] 둘러보기 페이지
+        </td>
    </tr>
 </table>
 
