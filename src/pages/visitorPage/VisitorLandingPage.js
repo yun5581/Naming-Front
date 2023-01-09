@@ -8,7 +8,7 @@ import { SF_HambakSnow, Simonetta } from "../../components/Text";
 
 //image
 import background from "../../images/background.svg";
-import dic from '../../images/VisitorLandingPage/dic_visitor.svg'
+import dic from '../../images/VisitorPage/dic_visitor.svg'
 
 const VisitorLandingPage = () => {
 
