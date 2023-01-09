@@ -6,7 +6,7 @@ const Footer = () =>{
     return (
         <>
             <Simonetta style={{
-                fontSize: vw(8),
+                fontSize: '8px',
                 color: "#FFFFFF",
                 textAlign: 'center',
                }}>ⓒ 2022. likelion_ewha All rights reserved.</Simonetta>
