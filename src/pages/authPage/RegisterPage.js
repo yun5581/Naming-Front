@@ -1,3 +1,4 @@
+import axios from "axios";
 import styled from "styled-components";
 import { useState } from "react";
 import { vw } from "../../components/SizeConvert";
@@ -6,15 +7,21 @@ import Footer from "../../components/Footer";
 import Title from "../../components/authPage/Title";
 //images
 import background from "../../images/background.svg";
+import RegisterModal from "../../components/authPage/RegisterModal";
 
 const RegisterPage = () =>{
+    // 모달 관리 
+    const [modal, setModal] = useState(false);
+    function scrollto(e){
+        e.target.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
     // 회원가입 정보관리
     const [id, setID] = useState("");
     const [password, setPW] = useState("");
     const [password2, setPW2] = useState("");
     const [name, setName] = useState("");
-    const Login =()=>{
-    }
+
+    // 비밀번호 일치 함수
     function checkInput(){
         var isSame;
         if(id!=""&&password!=""&&name!=""){
@@ -24,12 +31,41 @@ const RegisterPage = () =>{
         } 
         return isSame;
     }
-    function scrollto(e){
-        e.target.scrollIntoView({ behavior: "smooth", block: "center" });
+    // 회원가입 함수 
+    const register=(e, async)=>{
+        // if(id!=""&&password!=""&&checkInput()){
+        //     axios  
+        //         .post("http://localhost:3002/user/",{
+        //         // post("/accounts/signup/",{
+        //             firstname: name,
+        //             loginId: id,
+        //             password: password,
+        //             mynumber: 1,
+        //         })
+        //         .then(res=>{
+        //            console.log(res);
+        //             // if(res.data.message=="회원가입 성공"){
+        //             //     login();
+        //             //     setModal(true);
+        //             //     // 회원 정보 저장하는 것 코드 추가 필요
+        //             // }
+        //             // else{
+                        
+        //             // }
+        //         })
+        // }
     }
+    // 로그인 함수
+    const login = () =>{
+
+    }
+    // 모달 정보 
+    var number = 3;
+    var name2 = "채원";
     return(
         <>
             <Background>
+                {modal? <RegisterModal number={number} name={name2} setModal={setModal}/> :null}
                         <Title/>
                             <RegisterForm>
                             <input 
@@ -59,7 +95,8 @@ const RegisterPage = () =>{
                                 onChange={e => setName(e.target.value)}
                                 onClick={e=> scrollto(e)}
                                 />
-                            <RegisterBtn type="submit" 
+                            <RegisterBtn
+                                onClick={()=>{register()}}
                                 className={ checkInput() ? 'active' : ''}
                                >회원가입 하기</RegisterBtn>
                             </RegisterForm>
@@ -87,7 +124,7 @@ const Background = styled.div`
     background-size: cover;
 `
 
-const RegisterForm = styled.form`
+const RegisterForm = styled.div`
     width: ${vw(262)};
 
     display: flex;
@@ -110,6 +147,11 @@ const RegisterForm = styled.form`
         border-radius: 5px;
         outline: none;
     }
+    div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     @media only screen  and (max-width: 300px){
         margin-top: 30px;
     }
@@ -122,7 +164,7 @@ const RegisterForm = styled.form`
         }
     }
 `
-const RegisterBtn = styled.button`
+const RegisterBtn = styled.div`
     aspect-ratio: 6 / 1;
 
     border-style: none;
