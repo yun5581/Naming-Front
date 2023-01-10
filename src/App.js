@@ -6,6 +6,8 @@ import LandingPage from "./pages/landingPage/LandingPage";
 import LoginPage from "./pages/authPage/LoginPage";
 // 회원가입 페이지
 import RegisterPage from "./pages/authPage/RegisterPage";
+// 사전 커스텀 페이지 
+import CustomPage from "./pages/customPage/CustomPage";
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
           <Route exact path="/" element={<LandingPage />} />  
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/register" element={<RegisterPage/>}/>
+          <Route exact path="/custom" element={<CustomPage/>}/>
       </Routes>
     </Router>
   );
