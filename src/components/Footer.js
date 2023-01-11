@@ -1,15 +1,19 @@
-import { Simonetta } from "./Text"
-import { vw, vh } from "../components/SizeConvert";
+import styled from "styled-components";
+import { vw } from "../components/SizeConvert";
+
 
 const Footer = () =>{
     return (
         <>
-            <Simonetta style={{
-                fontSize: vw(8),
-                color: "#FFFFFF",
-               }}>ⓒ 2022. likelion_ewha All rights reserved.</Simonetta>
+            <Wrapper>ⓒ 2022. likelion_ewha All rights reserved.</Wrapper>
         </>
     )
 }
 
 export default Footer;
+
+const Wrapper = styled.div`
+    color: var(--white);
+    font-size: ${vw(8)};
+    font-family: var(--sm-font);
+`
