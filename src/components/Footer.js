@@ -1,6 +1,5 @@
 import { Simonetta } from "./Text"
 import { vw, vh } from "../components/SizeConvert";
-import styled from "styled-components";
 
 const Footer = () =>{
     return (
@@ -8,7 +7,6 @@ const Footer = () =>{
             <Simonetta style={{
                 fontSize: '8px',
                 color: "#FFFFFF",
-                textAlign: 'center',
                }}>ⓒ 2022. likelion_ewha All rights reserved.</Simonetta>
         </>
     )
