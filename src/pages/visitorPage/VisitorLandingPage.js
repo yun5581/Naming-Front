@@ -4,15 +4,25 @@ import { Link } from "react-router-dom";
 
 //component
 import Footer from "../../components/Footer";
-import { SF_HambakSnow, Simonetta } from "../../components/Text";
+import TxtInputModal from "../../components/TxtModal/NameInputModal";
 
 //image
 import background from "../../images/background.svg";
 import dic from '../../images/VisitorPage/dic_visitor.svg'
 
 const VisitorLandingPage = () => {
-
+  // 사전 주인 이름
   const [name, setName] = useState('이름')
+
+  //모달
+  const [modal, setModal] = useState(false)
+  const OpenModal = () => {
+    setModal(true)
+  }
+  const CloseModal = () => {
+    setModal(false)
+  }
+  const Name = '작성해주신 이름은 '+'\n '+(name)+"하다 사전의 '만들이들' 목록에 기재됩니다."
 
   return(
   <>
@@ -30,11 +40,16 @@ const VisitorLandingPage = () => {
           <img src={dic}/>
         </object>
       </DicContainer>
-        <Link to = '/' style={{textDecoration:'none'}}>
-          <Button>
+          <Button onClick={OpenModal}>
             <p>{name}하다 정의 작성하기</p>
           </Button>
-        </Link>
+          <TxtInputModal
+          isIinput = {true}
+          open={modal}
+          close={CloseModal}
+          header='작성자의 이름을 알려주세요'
+          maintext={Name}
+           />
       </BodyContainer>
       <FooterWrapper>
         <Footer/>
