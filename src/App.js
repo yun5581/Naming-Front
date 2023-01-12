@@ -11,6 +11,8 @@ import CustomPage from "./pages/customPage/CustomPage";
 
 // 방문자 랜딩 페이지
 import VisitorLandingPage from "./pages/visitorPage/VisitorLandingPage";
+// 방문자 정의 첫작성 페이지
+import VisitorFirstPage from "./pages/visitorPage/VisitorFirstPage";
 
 function App() {
   return (
@@ -18,9 +20,10 @@ function App() {
        <Routes>
           <Route exact path="/" element={<LandingPage />} /> 
           <Route exact path="/login" element={<LoginPage />} />
-          <Route exact path="/visitorlanding" element={<VisitorLandingPage/>} /> 
           <Route exact path="/register" element={<RegisterPage/>}/>
           <Route exact path="/custom" element={<CustomPage/>}/>
+          <Route exact path="/visitorlanding" element={<VisitorLandingPage/>} /> 
+          <Route exact path="/visitorfirst" element={<VisitorFirstPage/>} />
       </Routes>
     </Router>
   );
