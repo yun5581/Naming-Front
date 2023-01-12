@@ -9,12 +9,16 @@ import RegisterPage from "./pages/authPage/RegisterPage";
 // 사전 커스텀 페이지 
 import CustomPage from "./pages/customPage/CustomPage";
 
+// 방문자 랜딩 페이지
+import VisitorLandingPage from "./pages/visitorPage/VisitorLandingPage";
+
 function App() {
   return (
     <Router>
        <Routes>
-          <Route exact path="/" element={<LandingPage />} />  
+          <Route exact path="/" element={<LandingPage />} /> 
           <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/visitorlanding" element={<VisitorLandingPage/>} /> 
           <Route exact path="/register" element={<RegisterPage/>}/>
           <Route exact path="/custom" element={<CustomPage/>}/>
       </Routes>
