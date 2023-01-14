@@ -27,8 +27,8 @@ const HomePage = () => {
 	useResize();
 	return (
 		<>
+			<Sidebar />
 			<Background>
-				<Sidebar />
 				<object type="image/svg+xml" data={dictionary} className="dic" />
 				<ButtonWrapper onClick={alertMessage}>
 					<Button>
@@ -68,7 +68,7 @@ const Background = styled.div`
 	.dic {
 		width: ${vw(324)};
 		height: ${vh(468)};
-		margin: ${vh(26)} 0 ${vh(32)} 0;
+		margin: ${vh(100)} 0 ${vh(32)} 0;
 	}
 `;
 
@@ -81,9 +81,8 @@ const AlertMSG = styled.div`
 `;
 
 const ButtonWrapper = styled.button`
-	width: 70%;
-	height: 46px;
-	max-width: 250px;
+	width: ${vw(272)};
+	height: ${vh(46)};
 	background: #ffffff;
 	border-radius: 5px;
 	margin-top: ${vh(15)};

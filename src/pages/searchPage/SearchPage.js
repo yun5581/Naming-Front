@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useResize, vh, vw } from '../../components/SizeConvert';
 
-import { SF_HambakSnow, Simonetta } from '../../components/Text';
 import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
 
@@ -32,6 +31,7 @@ const SearchPage = () => {
 	return (
 		<>
 			<Background>
+				<Sidebar />
 				<InputBox>
 					<object type="image/svg+xml" data={searchImg} className="searchImg" />
 					<Input placeholder="다른 사전을 검색해 보세요" />
@@ -65,9 +65,9 @@ const InputBox = styled.div`
 	background-color: #ffffff;
 	border-radius: 5px;
 	width: ${vw(301)};
-	height: ${vh(42)};
+	height: ${vh(50)};
 	display: flex;
-	margin-top: ${vw(16)};
+	margin-top: ${vw(100)};
 	.searchImg {
 		margin-left: ${vw(16)};
 		margin-right: ${vw(10)};
@@ -88,7 +88,6 @@ const Input = styled.input`
 	font-family: 'SF_HambakSnow';
 	font-weight: 800;
 	font-size: 16px;
-	color: #818181;
 `;
 
 const FooterWrapper = styled.div`
