@@ -17,6 +17,8 @@ import CustomPage from './pages/customPage/CustomPage';
 import HomePage from './pages/homePage/HomePage';
 // 방문자 랜딩 페이지
 import VisitorLandingPage from './pages/visitorPage/VisitorLandingPage';
+// 검색 페이지
+import SearchPage from './pages/searchPage/SearchPage';
 
 function App() {
 	return (
@@ -28,6 +30,7 @@ function App() {
 				<Route exact path="/visitorlanding" element={<VisitorLandingPage />} />
 				<Route exact path="/register" element={<RegisterPage />} />
 				<Route exact path="/custom" element={<CustomPage />} />
+				<Route exact path="/search" element={<SearchPage />} />
 			</Routes>
 		</Router>
 	);

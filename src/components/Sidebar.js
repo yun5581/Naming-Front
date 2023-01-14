@@ -36,27 +36,32 @@ const Sidebar = (props) => {
 
 	return (
 		<BarWrapper>
-			<object type="image/svg+xml" data={hamburger} className="hamburger" />
-			{/* <Bar onClick={DeleteSideBar}>
-				<LinkWrapper>
-					<SF_HambakSnow>
-						<img src={home} />
-						{<Link to="/">홈</Link>}
-					</SF_HambakSnow>
-					<SF_HambakSnow style={{ marginRight: '32px' }}>
-						<img src={gathering} />
-						{<Link to="/">정의 모아보기</Link>}
-					</SF_HambakSnow>
-					<SF_HambakSnow style={{ marginRight: '32px' }}>
-						<img src={search} />
-						<Link to="/">사전 검색하기</Link>
-					</SF_HambakSnow>
-					<SF_HambakSnow style={{ marginRight: '32px' }}>
-						<img src={gathering} />
-						<Link to="/">만든이들</Link>
-					</SF_HambakSnow>
-				</LinkWrapper>
-			</Bar> */}
+			<hamburgerWrapper>
+				<object type="image/svg+xml" data={hamburger} className="hamburger" />
+			</hamburgerWrapper>
+
+			{
+				<Bar onClick={DeleteSideBar}>
+					<LinkWrapper>
+						<SF_HambakSnow>
+							<img src={home} />
+							{<Link to="/">홈</Link>}
+						</SF_HambakSnow>
+						<SF_HambakSnow style={{ marginRight: '32px' }}>
+							<img src={gathering} />
+							{<Link to="/">정의 모아보기</Link>}
+						</SF_HambakSnow>
+						<SF_HambakSnow style={{ marginRight: '32px' }}>
+							<img src={search} />
+							<Link to="/">사전 검색하기</Link>
+						</SF_HambakSnow>
+						<SF_HambakSnow style={{ marginRight: '32px' }}>
+							<img src={gathering} />
+							<Link to="/">만든이들</Link>
+						</SF_HambakSnow>
+					</LinkWrapper>
+				</Bar>
+			}
 		</BarWrapper>
 	);
 };
@@ -70,6 +75,9 @@ const BarWrapper = styled.div`
 	z-index: 9;
 	top: 0;
 	left: 0;
+`;
+const hamburgerWrapper = styled.div`
+	background-color: red;
 	.hamburger {
 		margin-top: ${vh(41)};
 		margin-left: ${vh(50)};

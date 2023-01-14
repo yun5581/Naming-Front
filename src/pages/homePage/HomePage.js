@@ -29,9 +29,7 @@ const HomePage = () => {
 		<>
 			<Background>
 				<Sidebar />
-				<Container>
-					<object type="image/svg+xml" data={dictionary} className="dic" />
-				</Container>
+				<object type="image/svg+xml" data={dictionary} className="dic" />
 				<ButtonWrapper onClick={alertMessage}>
 					<Button>
 						<object type="image/svg+xml" data={getLink} className="getLink" />
@@ -54,6 +52,25 @@ const HomePage = () => {
 		</>
 	);
 };
+
+const Background = styled.div`
+	width: 100%;
+	height: 100vh;
+	overflow: scroll;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	background-image: url(${background});
+	background-repeat: no-repeat;
+	background-size: cover;
+	.dic {
+		width: ${vw(324)};
+		height: ${vh(468)};
+		margin: ${vh(26)} 0 ${vh(32)} 0;
+	}
+`;
 
 const AlertMSG = styled.div`
 	font-weight: 800;
@@ -87,32 +104,14 @@ const Button = styled.div`
 	}
 `;
 
-const Background = styled.div`
-	width: 100%;
-	height: 100vh;
-
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-
-	background-image: url(${background});
-	background-repeat: no-repeat;
-	background-size: cover;
-`;
-const Container = styled.div`
-	margin-top: 90px;
-	width: 90%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	.dic {
-		width: 90%;
-	}
-`;
-
 const FooterWrapper = styled.div`
+	height: 100vh;
+	margin-top: 30px;
+	padding-bottom: 30px;
+	position: relative;
+
 	display: flex;
-	margin-top: ${vh(60)};
+	flex-direction: column;
+	justify-content: flex-end;
 `;
 export default HomePage;
