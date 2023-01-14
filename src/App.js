@@ -19,6 +19,8 @@ import HomePage from './pages/homePage/HomePage';
 import VisitorLandingPage from './pages/visitorPage/VisitorLandingPage';
 // 검색 페이지
 import SearchPage from './pages/searchPage/SearchPage';
+//정의 페이지
+import DefinitionPage from './pages/definitionPage/DefinitionPage';
 
 function App() {
 	return (
@@ -31,6 +33,7 @@ function App() {
 				<Route exact path="/register" element={<RegisterPage />} />
 				<Route exact path="/custom" element={<CustomPage />} />
 				<Route exact path="/search" element={<SearchPage />} />
+				<Route exact path="/definition" element={<DefinitionPage />} />
 			</Routes>
 		</Router>
 	);

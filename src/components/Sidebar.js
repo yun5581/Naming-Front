@@ -50,7 +50,7 @@ const Sidebar = (props) => {
 						</SF_HambakSnow>
 						<SF_HambakSnow style={{ marginRight: '32px' }}>
 							<object type="image/svg+xml" data={gathering} />
-							{<Link to="/">정의 모아보기</Link>}
+							{<Link to="/definition">정의 모아보기</Link>}
 						</SF_HambakSnow>
 						<SF_HambakSnow style={{ marginRight: '32px' }}>
 							<object type="image/svg+xml" data={search} />
