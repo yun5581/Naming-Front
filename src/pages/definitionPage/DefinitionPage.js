@@ -4,14 +4,21 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { vw, vh } from '../../components/SizeConvert';
 import Sidebar from '../../components/Sidebar';
-import { SF_HambakSnow, Simonetta } from '../../components/Text';
+import { SF_HambakSnow, Pretendard } from '../../components/Text';
 
 //images
 import background from '../../images/background.svg';
-import dictionary from '../../images/landingPage/dictionary.svg';
+import like from '../../images/like.svg';
+import deleteIcon from '../../images/definePage/delete.svg';
 import Footer from '../../components/Footer';
 
 const DefinitionPage = () => {
+	const [edit, setEdit] = useState(false);
+
+	const editItem = () => {
+		setEdit(!edit);
+	};
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
@@ -20,22 +27,49 @@ const DefinitionPage = () => {
 			<Background>
 				<Sidebar />
 				<NumText>
-					<SF_HambakSnow>총 20개의 문장이 쌓여있어요!</SF_HambakSnow>
+					<SF_HambakSnow>
+						총 <span>20</span>개의 문장이 쌓여있어요!
+					</SF_HambakSnow>
 				</NumText>
 				<DicBook>
 					<DicSidePage></DicSidePage>
 					<DicPage>
 						<TitleBox>
-							<Title>이름하다</Title>
-							<EditBtn>수정</EditBtn>
+							<Title>
+								<Pretendard>이름하다</Pretendard>
+							</Title>
+							<EditBtn onClick={editItem}>수정</EditBtn>
 						</TitleBox>
-						<ContentBox>
-							<div className="content">
-								<div className="countNum">3</div>
-								<div className="comment">넌 재미없어</div>
-								<div className="like"></div>
-							</div>
-						</ContentBox>
+						<ContentWrapper>
+							<ContentBox>
+								<Content>
+									<div className="countNum">
+										<Pretendard>3.</Pretendard>
+									</div>
+									<div className="comment">
+										<Pretendard>넌 재미없어</Pretendard>
+									</div>
+									{edit ? (
+										<object
+											type="image/svg+xml"
+											data={deleteIcon}
+											className="deleteIcon"
+										/>
+									) : (
+										<div className="like">
+											<object
+												type="image/svg+xml"
+												data={like}
+												className="likeIcon"
+											/>
+											<div className="likeNum">
+												<SF_HambakSnow>80</SF_HambakSnow>
+											</div>
+										</div>
+									)}
+								</Content>
+							</ContentBox>
+						</ContentWrapper>
 					</DicPage>
 					<DicIndexWrapper></DicIndexWrapper>
 				</DicBook>
@@ -50,15 +84,57 @@ const DefinitionPage = () => {
 
 export default DefinitionPage;
 
+const ContentWrapper = styled.div`
+	height: 85%;
+`;
+
 const ContentBox = styled.div`
 	overflow-y: scroll;
-	.content {
-		box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
-		border-radius: 5px;
-		height: ${vh(33)};
-		background-color: red;
-		margin-bottom: ${vw(16)};
-		display: flex;
+	height: 100%;
+	&::-webkit-scrollbar {
+		width: 6px;
+		height: 100%;
+		background-color: #f8f8f8;
+		border-radius: 50px;
+	}
+	&::-webkit-scrollbar-thumb {
+		width: 6px;
+		background-color: #2b787d;
+		border-radius: 50px;
+	}
+`;
+
+const Content = styled.div`
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	height: ${vh(33)};
+	width: 96%;
+	margin-bottom: ${vw(16)};
+	display: flex;
+	align-items: center;
+
+	.countNum {
+		margin-left: ${vw(16)};
+		margin-right: ${vw(6)};
+		font-weight: 400;
+		font-size: ${vw(12)};
+	}
+	.likeIcon {
+		width: ${vw(13)};
+	}
+	.likeNum {
+		font-weight: 800;
+		font-size: ${vw(8)};
+		color: #818181;
+		width: fit-content;
+		margin: 0 auto;
+	}
+	.comment {
+		width: 72%;
+		font-weight: 400;
+		font-size: ${vw(12)};
+	}
+	.like {
 		align-items: center;
 	}
 `;
@@ -73,6 +149,7 @@ const Title = styled.div`
 	font-weight: 900;
 	font-size: ${vw(20)};
 	text-decoration-line: underline;
+	text-decoration-thickness: 3px;
 `;
 const TitleBox = styled.div`
 	display: flex;
@@ -98,6 +175,9 @@ const NumText = styled.div`
 	font-size: ${vw(18)};
 	margin-top: ${vh(65)};
 	margin-left: ${vw(25)};
+	span {
+		color: #85d2d7;
+	}
 `;
 const DicBook = styled.div`
 	display: flex;
