@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useResize, vh, vw } from './SizeConvert';
@@ -14,11 +14,13 @@ import gathering_active from '../images/Sidebar/gathering_active.svg';
 import search from '../images/Sidebar/search.svg';
 import search_active from '../images/Sidebar/search_active.svg';
 import hamburger from '../images/Sidebar/sideBar.svg';
+import makers from '../images/Sidebar/makers.svg';
 
 const Sidebar = (props) => {
-	const DeleteSideBar = () => {
-		console.log('11');
-		props.setSideBar(false);
+	const [show, setShow] = useState(false);
+	const sidebarAction = (e) => {
+		setShow(!show);
+		return { show };
 	};
 	// 사이드바 배경 스크롤 방지
 	useEffect(() => {
@@ -35,61 +37,89 @@ const Sidebar = (props) => {
 	}, []);
 
 	return (
-		<BarWrapper>
-			<object type="image/svg+xml" data={hamburger} className="hamburger" />
-			{/* <Bar onClick={DeleteSideBar}>
-				<LinkWrapper>
-					<SF_HambakSnow>
-						<img src={home} />
-						{<Link to="/">홈</Link>}
-					</SF_HambakSnow>
-					<SF_HambakSnow style={{ marginRight: '32px' }}>
-						<img src={gathering} />
-						{<Link to="/">정의 모아보기</Link>}
-					</SF_HambakSnow>
-					<SF_HambakSnow style={{ marginRight: '32px' }}>
-						<img src={search} />
-						<Link to="/">사전 검색하기</Link>
-					</SF_HambakSnow>
-					<SF_HambakSnow style={{ marginRight: '32px' }}>
-						<img src={gathering} />
-						<Link to="/">만든이들</Link>
-					</SF_HambakSnow>
-				</LinkWrapper>
-			</Bar> */}
-		</BarWrapper>
+		<>
+			<HamburgerWrapper onClick={sidebarAction}>
+				<img src={hamburger} className="hamburger" />
+			</HamburgerWrapper>
+			{show ? (
+				<BarWrapper>
+					<LinkWrapper>
+						<SF_HambakSnow>
+							<object type="image/svg+xml" data={home} />
+							{<Link to="/home">홈</Link>}
+						</SF_HambakSnow>
+						<SF_HambakSnow style={{ marginRight: '32px' }}>
+							<object type="image/svg+xml" data={gathering} />
+							{<Link to="/definition">정의 모아보기</Link>}
+						</SF_HambakSnow>
+						<SF_HambakSnow style={{ marginRight: '32px' }}>
+							<object type="image/svg+xml" data={search} />
+							<Link to="/search">사전 검색하기</Link>
+						</SF_HambakSnow>
+						<SF_HambakSnow style={{ marginRight: '32px' }}>
+							<object type="image/svg+xml" data={makers} />
+							<Link to="/">만든이들</Link>
+						</SF_HambakSnow>
+					</LinkWrapper>
+					<LogoutWrapper>
+						<SF_HambakSnow>
+							<Link to="/">로그아웃</Link>
+						</SF_HambakSnow>
+					</LogoutWrapper>
+				</BarWrapper>
+			) : (
+				<></>
+			)}
+			{show ? <OuterToToggleSideBar onClick={sidebarAction} /> : ''}
+		</>
 	);
 };
 
 export default Sidebar;
 
-const BarWrapper = styled.div`
-	width: 100%;
-	height: 812px;
-	position: absolute;
-	z-index: 9;
-	top: 0;
-	left: 0;
-	.hamburger {
-		margin-top: ${vh(41)};
-		margin-left: ${vh(50)};
-		width: ${vh(24)};
-	}
+const LogoutWrapper = styled.div`
+	width: fit-content;
+	margin: ${vh(280)} auto;
 `;
 
-const Bar = styled.div`
-	width: 50%;
-	height: ${vh(600)};
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	z-index: 10;
-	top: ${vh(100)};
-	left: 0;
+const OuterToToggleSideBar = styled.div`
+	width: 100%;
+	height: 100%;
+	z-index: 99;
+	opacity: 0.8;
+	background-color: black;
+	position: fixed;
+`;
+
+const HamburgerWrapper = styled.div`
+	.hamburger {
+		margin-top: ${vh(41)};
+		margin-left: ${vw(0)};
+		width: ${vw(24)};
+		position: fixed;
+		left: ${vw(50)};
+		top: ${vh(21)};
+		z-index: 100;
+	}
+`;
+const LinkWrapper = styled.div`
+	width: fit-content;
+	margin-left: ${vw(40)};
+	margin-top: ${vh(60)};
+	object {
+		width: ${vw(20)};
+		align-items: baseline;
+	}
+`;
+const BarWrapper = styled.div`
+	z-index: 100;
+	width: ${vw(200)};
+	height: 80%;
 	background: #ffffff;
 	border-radius: 0px 5px 5px 0px;
-
+	position: absolute;
+	left: 0;
+	margin-top: ${vh(100)};
 	animation: LeftToRight 0.8s;
 	@keyframes LeftToRight {
 		0% {
@@ -99,37 +129,19 @@ const Bar = styled.div`
 			transform: translateZ(0);
 		}
 	}
-`;
-
-const LinkWrapper = styled.div`
-	width: 165px;
-	height: 330px;
-	margin-top: 40px;
-	justify-content: space-between;
-	p {
-		width: 100px;
-		height: 50px;
-		display: flex;
-		align-items: center;
-		font-weight: 800;
-		font-size: 14px;
-		text-align: center;
-		margin-left: 20px;
-		margin-top: 10px;
-	}
 	a {
-		position: absolute;
-		z-index: 2;
-		margin-left: 20px;
-		color: #004628;
+		margin-left: ${vw(13)};
+		color: #818181;
 		text-decoration: none;
+		cursor: pointer;
 	}
 	a:hover {
 		color: #fbb03b;
 	}
-	img {
-		position: absolute;
-		z-index: 1;
-		width: 20px;
+	p {
+		font-weight: 800;
+		font-size: ${vw(14)};
+		margin-bottom: ${vh(44)};
+		display: flex;
 	}
 `;
