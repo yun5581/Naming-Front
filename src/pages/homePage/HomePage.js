@@ -1,5 +1,5 @@
 // vw, vh 연습용 코드
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useResize, vh, vw } from '../../components/SizeConvert';
@@ -12,6 +12,9 @@ import getLink from '../../images/homePage/share.svg';
 import background from '../../images/background.svg';
 import dictionary from '../../images/landingPage/dictionary.svg';
 import Footer from '../../components/Footer';
+
+// link copy
+//const copyLinkRef = useRef();
 
 const HomePage = () => {
 	useEffect(() => {

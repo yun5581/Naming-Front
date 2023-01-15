@@ -12,6 +12,9 @@ import dictionary from '../../images/landingPage/dictionary.svg';
 import Footer from '../../components/Footer';
 
 const DefinitionPage = () => {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<>
 			<Background>

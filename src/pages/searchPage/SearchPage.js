@@ -13,6 +13,9 @@ import { SF_HambakSnow } from '../../components/Text';
 
 const SearchPage = () => {
 	const [search, setSearch] = useState(false);
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	//const preKeyWord = useAppSelector((state) => state.page.search);
 
 	// const onSubmit = (e) => {
