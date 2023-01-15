@@ -89,6 +89,7 @@ const ButtonWrapper = styled.button`
 `;
 
 const Button = styled.div`
+	height: ${vh(46)};
 	width: fit-content;
 	margin: auto;
 	color: var(--blue);

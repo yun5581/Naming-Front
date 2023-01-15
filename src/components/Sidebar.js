@@ -18,7 +18,7 @@ import makers from '../images/Sidebar/makers.svg';
 
 const Sidebar = (props) => {
 	const [show, setShow] = useState(false);
-	const alertMessage = (e) => {
+	const sidebarAction = (e) => {
 		setShow(!show);
 		return { show };
 	};
@@ -38,7 +38,7 @@ const Sidebar = (props) => {
 
 	return (
 		<>
-			<HamburgerWrapper onClick={alertMessage}>
+			<HamburgerWrapper onClick={sidebarAction}>
 				<img src={hamburger} className="hamburger" />
 			</HamburgerWrapper>
 			{show ? (
@@ -70,6 +70,7 @@ const Sidebar = (props) => {
 			) : (
 				<></>
 			)}
+			{show ? <OuterToToggleSideBar onClick={sidebarAction} /> : ''}
 		</>
 	);
 };
@@ -81,6 +82,15 @@ const LogoutWrapper = styled.div`
 	margin: ${vh(280)} auto;
 `;
 
+const OuterToToggleSideBar = styled.div`
+	width: 100%;
+	height: 100%;
+	z-index: 99;
+	opacity: 0.8;
+	background-color: black;
+	position: fixed;
+`;
+
 const HamburgerWrapper = styled.div`
 	.hamburger {
 		margin-top: ${vh(41)};
@@ -89,6 +99,7 @@ const HamburgerWrapper = styled.div`
 		position: fixed;
 		left: ${vw(50)};
 		top: ${vh(21)};
+		z-index: 100;
 	}
 `;
 const LinkWrapper = styled.div`
@@ -101,6 +112,7 @@ const LinkWrapper = styled.div`
 	}
 `;
 const BarWrapper = styled.div`
+	z-index: 100;
 	width: ${vw(200)};
 	height: 80%;
 	background: #ffffff;
