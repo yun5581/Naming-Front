@@ -23,7 +23,7 @@ const CustomPage = () =>{
     }
     const checkOption = () =>{
         var num = sessionStorage.getItem("option"); 
-        if(num=="") num=0; 
+        if(num==null) num=0; 
         return num;
     }
     // 커스텀 선택 값 관리
