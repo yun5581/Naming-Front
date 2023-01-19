@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import './NameInputModal.css'
+import { Link } from "react-router-dom";
+
 //components
 import { Pretendard,SF_HambakSnow } from "../Text";
 import GreenBtn from "./GreenBtn";
@@ -32,6 +34,7 @@ const NameInputModal = props => {
 
   const [input,setInput] = useState(0)
   const [isInput, setIsInput] = useState(false)
+  const [name,setName] = useState('')
 
   const changeButton = (e) => {
     // e.preventDefault();
@@ -86,15 +89,17 @@ const NameInputModal = props => {
                     padding:'0 15px'
                     }}
                     onChange={changeButton}
+                    value={name}
                     />
                 </InputBox>
               </main>
                 <footer>
                 {isInput ? (
-                  <GreenBtn onClick={onClick}>
-                      완료
-                  </GreenBtn>
-
+                  <Link to='/visitorfirst'>
+                    <GreenBtn onClick={onClick}>
+                        완료
+                    </GreenBtn>
+                  </Link>
                  ):(
                   <DisabledBtn>
                   완료
