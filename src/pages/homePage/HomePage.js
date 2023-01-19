@@ -1,5 +1,5 @@
 // vw, vh 연습용 코드
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useResize, vh, vw } from '../../components/SizeConvert';
@@ -12,6 +12,9 @@ import getLink from '../../images/homePage/share.svg';
 import background from '../../images/background.svg';
 import dictionary from '../../images/landingPage/dictionary.svg';
 import Footer from '../../components/Footer';
+
+// link copy
+//const copyLinkRef = useRef();
 
 const HomePage = () => {
 	useEffect(() => {
@@ -27,11 +30,9 @@ const HomePage = () => {
 	useResize();
 	return (
 		<>
+			<Sidebar />
 			<Background>
-				<Sidebar />
-				<Container>
-					<object type="image/svg+xml" data={dictionary} className="dic" />
-				</Container>
+				<object type="image/svg+xml" data={dictionary} className="dic" />
 				<ButtonWrapper onClick={alertMessage}>
 					<Button>
 						<object type="image/svg+xml" data={getLink} className="getLink" />
@@ -55,6 +56,25 @@ const HomePage = () => {
 	);
 };
 
+const Background = styled.div`
+	width: 100%;
+	height: 100vh;
+	overflow: scroll;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	background-image: url(${background});
+	background-repeat: no-repeat;
+	background-size: cover;
+	.dic {
+		width: ${vw(324)};
+		height: ${vh(468)};
+		margin: ${vh(100)} 0 ${vh(32)} 0;
+	}
+`;
+
 const AlertMSG = styled.div`
 	font-weight: 800;
 	font-size: 12px;
@@ -64,15 +84,15 @@ const AlertMSG = styled.div`
 `;
 
 const ButtonWrapper = styled.button`
-	width: 70%;
-	height: 46px;
-	max-width: 250px;
+	width: ${vw(272)};
+	height: ${vh(46)};
 	background: #ffffff;
 	border-radius: 5px;
 	margin-top: ${vh(15)};
 `;
 
 const Button = styled.div`
+	height: ${vh(46)};
 	width: fit-content;
 	margin: auto;
 	color: var(--blue);
@@ -87,32 +107,14 @@ const Button = styled.div`
 	}
 `;
 
-const Background = styled.div`
-	width: 100%;
-	height: 100vh;
-
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-
-	background-image: url(${background});
-	background-repeat: no-repeat;
-	background-size: cover;
-`;
-const Container = styled.div`
-	margin-top: 90px;
-	width: 90%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	.dic {
-		width: 90%;
-	}
-`;
-
 const FooterWrapper = styled.div`
+	height: 100vh;
+	margin-top: 30px;
+	padding-bottom: 30px;
+	position: relative;
+
 	display: flex;
-	margin-top: ${vh(60)};
+	flex-direction: column;
+	justify-content: flex-end;
 `;
 export default HomePage;
