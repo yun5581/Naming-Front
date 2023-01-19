@@ -6,6 +6,7 @@ const Footer = () =>{
     return (
         <>
             <Wrapper>ⓒ 2022. likelion_ewha All rights reserved.</Wrapper>
+
         </>
     )
 }
