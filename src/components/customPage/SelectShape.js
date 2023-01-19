@@ -4,6 +4,9 @@ import { vw, vh } from "../SizeConvert";
 import shape1 from "../../images/customPage/shape/shape1.svg";
 import shape2 from "../../images/customPage/shape/shape2.svg";
 import shape3 from "../../images/customPage/shape/shape3.svg";
+import shape4 from "../../images/customPage/shape/shape4.svg";
+import shape5 from "../../images/customPage/shape/shape5.svg";
+import shape6 from "../../images/customPage/shape/shape6.svg";
 
 const SelectShape = props =>{
     const save_shape=(number)=>{
@@ -18,8 +21,14 @@ const SelectShape = props =>{
                             onClick={()=>save_shape(1)}/></Shape>
                 <Shape><div style={{backgroundImage:`url(${shape2})`}}
                             onClick={()=>save_shape(2)}/></Shape>
-                <Shape style={{marginBottom: vh(15)}}><div style={{backgroundImage:`url(${shape3})`}}
+                <Shape><div style={{backgroundImage:`url(${shape3})`}}
                             onClick={()=>save_shape(3)}/></Shape>
+                 <Shape><div style={{backgroundImage:`url(${shape4})`}}
+                            onClick={()=>save_shape(4)}/></Shape>
+                 <Shape style={{marginBottom: vh(15)}}><div style={{backgroundImage:`url(${shape5})`}}
+                            onClick={()=>save_shape(5)}/></Shape>
+                  <Shape style={{marginBottom: vh(15)}}><div style={{backgroundImage:`url(${shape6})`}}
+                            onClick={()=>save_shape(6)}/></Shape>
                 {/* <Shape><div/><object type="image/svg+xml" data={shape1}/></Shape>
                 <Shape><object type="image/svg+xml" data={shape2}/></Shape>
                 <Shape style={{marginBottom: vh(15)}}>

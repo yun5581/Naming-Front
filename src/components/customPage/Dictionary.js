@@ -5,7 +5,7 @@ import { vw, vh } from "../../components/SizeConvert";
 // data
 import { makrData } from "../../_mock/customInfo";
 // 배경 images
-import grey from "../../images/customPage/background/Bgray.svg";
+import grey from "../../images/customPage/background/Bgrey.svg";
 import green from "../../images/customPage/background/Bgreen.svg";
 import purple from "../../images/customPage/background/Bpurple.svg";
 import blue from "../../images/customPage/background/Bblue.svg";
@@ -28,6 +28,22 @@ import Cshape3_2 from "../../images/customPage/Cshape/Cshape3_2.svg";
 import Cshape3_3 from "../../images/customPage/Cshape/Cshape3_3.svg";
 import Cshape3_4 from "../../images/customPage/Cshape/Cshape3_4.svg";
 import Cshape3_5 from "../../images/customPage/Cshape/Cshape3_5.svg";
+import Cshape4_1 from "../../images/customPage/Cshape/Cshape4_1.svg";
+import Cshape4_2 from "../../images/customPage/Cshape/Cshape4_2.svg";
+import Cshape4_3 from "../../images/customPage/Cshape/Cshape4_3.svg";
+import Cshape4_4 from "../../images/customPage/Cshape/Cshape4_4.svg";
+import Cshape4_5 from "../../images/customPage/Cshape/Cshape4_5.svg";
+import Cshape5_1 from "../../images/customPage/Cshape/Cshape5_1.svg";
+import Cshape5_2 from "../../images/customPage/Cshape/Cshape5_2.svg";
+import Cshape5_3 from "../../images/customPage/Cshape/Cshape5_3.svg";
+import Cshape5_4 from "../../images/customPage/Cshape/Cshape5_4.svg";
+import Cshape5_5 from "../../images/customPage/Cshape/Cshape5_5.svg";
+import Cshape6_1 from "../../images/customPage/Cshape/Cshape6_1.svg";
+import Cshape6_2 from "../../images/customPage/Cshape/Cshape6_2.svg";
+import Cshape6_3 from "../../images/customPage/Cshape/Cshape6_3.svg";
+import Cshape6_4 from "../../images/customPage/Cshape/Cshape6_4.svg";
+import Cshape6_5 from "../../images/customPage/Cshape/Cshape6_5.svg";
+
 
 // 기타 iamges
 import Dcircle from "../../images/customPage/deco/Dcircle.svg";
@@ -41,7 +57,7 @@ const Dictionary = props =>{
     var shapeNum = Number(sessionStorage.getItem("shapeNum"));
     var shapeColor = Number(sessionStorage.getItem("Scolor"));
     var decoNum = sessionStorage.getItem("decoNum");
-    
+
     // 사전 표지색 리턴 함수
     const Bcolor =()=>{
         // switch(props.bookColor){
@@ -58,19 +74,48 @@ const Dictionary = props =>{
     }
     // 사전 실루엣 색 리턴함수
     const shape= () =>{
+        if(shapeNum==0) shapeNum = 1;
+        if(shapeColor==0) shapeColor =1;
+        //shapeNum=`Cshape${shapeNum}_${shapeColor}`;
+        //shapeNum=eval("Cshape"+shapeNum+"_"+shapeColor);
+        console.log(shapeNum);
         switch(shapeColor){
             case 1:
-                shapeNum==1? shapeNum=Cshape1_1: shapeNum==2? shapeNum=Cshape2_1: shapeNum=Cshape3_1; break;
+                switch(shapeNum){
+                    case 1: shapeNum=Cshape1_1; break; case 2: shapeNum=Cshape2_1; break; 
+                    case 3: shapeNum=Cshape3_1; break; case 4: shapeNum=Cshape4_1; break;
+                    case 5: shapeNum=Cshape5_1; break; case 6: shapeNum=Cshape6_1; break;
+                    default: shapeNum=Cshape1_1; } break;
             case 2:
-                shapeNum==1? shapeNum=Cshape1_2: shapeNum==2? shapeNum=Cshape2_2: shapeNum=Cshape3_2; break;
+                switch(shapeNum){
+                    case 1: shapeNum=Cshape1_2; break; case 2: shapeNum=Cshape2_2; break; 
+                    case 3: shapeNum=Cshape3_2; break; case 4: shapeNum=Cshape4_2; break;
+                    case 5: shapeNum=Cshape5_2; break; case 6: shapeNum=Cshape6_2; break;
+                    default: shapeNum=Cshape1_2; } break;
             case 3:
-                shapeNum==1? shapeNum=Cshape1_3: shapeNum==2? shapeNum=Cshape2_3: shapeNum=Cshape3_3; break;
+                switch(shapeNum){
+                    case 1: shapeNum=Cshape1_3; break; case 2: shapeNum=Cshape2_3; break; 
+                    case 3: shapeNum=Cshape3_3; break; case 4: shapeNum=Cshape4_3; break;
+                    case 5: shapeNum=Cshape5_3; break; case 6: shapeNum=Cshape6_3; break;
+                    default: shapeNum=Cshape1_3; } break;
             case 4:
-                shapeNum==1? shapeNum=Cshape1_4: shapeNum==2? shapeNum=Cshape2_4: shapeNum=Cshape3_4; break;
+                switch(shapeNum){
+                    case 1: shapeNum=Cshape1_4; break; case 2: shapeNum=Cshape2_4; break; 
+                    case 3: shapeNum=Cshape3_4; break; case 4: shapeNum=Cshape4_4; break;
+                    case 5: shapeNum=Cshape5_4; break; case 6: shapeNum=Cshape6_4; break;
+                    default: shapeNum=Cshape1_4; } break;
             case 5:
-                shapeNum==1? shapeNum=Cshape1_5: shapeNum==2? shapeNum=Cshape2_5: shapeNum=Cshape3_5; break;
+                switch(shapeNum){
+                    case 1: shapeNum=Cshape1_5; break; case 2: shapeNum=Cshape2_5; break; 
+                    case 3: shapeNum=Cshape3_5; break; case 4: shapeNum=Cshape4_5; break;
+                    case 5: shapeNum=Cshape5_5; break; case 6: shapeNum=Cshape6_5; break;
+                    default: shapeNum=Cshape1_5; } break;
             default: 
-                shapeNum==""||shapeNum==1? shapeNum=Cshape1_1: shapeNum==2? shapeNum=Cshape2_1: shapeNum=Cshape3_1;
+                switch(shapeNum){
+                    case 2: shapeNum=Cshape2_1; break; case 3: shapeNum=Cshape3_1; break;
+                    case 4: shapeNum=Cshape4_1; break; case 5: shapeNum=Cshape5_1; break;
+                    case 6: shapeNum=Cshape6_1; break; default: shapeNum=Cshape1_1;                    
+                }
         }
         return shapeNum;
     }
