@@ -23,8 +23,6 @@ import DefinitionPage from './pages/definitionPage/DefinitionPage';
 import VisitorLandingPage from "./pages/visitorPage/VisitorLandingPage";
 // 방문자 정의 첫작성 페이지
 import VisitorFirstPage from "./pages/visitorPage/VisitorFirstPage";
-// 방문자 둘러보기 
-import VisitorBrowsingPage from './pages/visitorPage/VisitorBrowsingPage';
 
 function App() {
 	return (
@@ -39,7 +37,6 @@ function App() {
 				<Route exact path="/definition" element={<DefinitionPage />} />
         <Route exact path="/visitorlanding" element={<VisitorLandingPage />} />
         <Route exact path="/visitorfirst" element={<VisitorFirstPage/>} />
-        <Route eaxct path="/visitorbrowsing" element={<VisitorBrowsingPage/>} />
 			</Routes>
 		</Router>
 	);

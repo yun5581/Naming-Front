@@ -1,7 +1,6 @@
 import React, {useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 //component
 import { Pretendard,SF_HambakSnow} from "../../components/Text";
@@ -22,8 +21,6 @@ const GreenBtn = ({ children, onClick, margin }) => {
     </Button>
   );
 };
-
-
 
 
 const VisitorFirstPage = () => {
@@ -187,7 +184,7 @@ const VisitorFirstPage = () => {
             </Pretendard>
             </TextBox>
             <BrowseBtn>
-            <Link to='/visitorbrowsing' 
+            <Link to='/definition' 
             style={{textDecoration:'none', color:'var(--green)'}}>
               (이름)하다 사전 둘러보기
               </Link>
