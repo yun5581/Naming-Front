@@ -1,5 +1,7 @@
-import React, {useEffect, useState, Link } from "react";
+import React, {useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 //component
 import { Pretendard,SF_HambakSnow} from "../../components/Text";
@@ -21,8 +23,11 @@ const GreenBtn = ({ children, onClick, margin }) => {
   );
 };
 
+
+
+
 const VisitorFirstPage = () => {
-  const [page,setPage] = useState(4)
+  const [page,setPage] = useState(1)
   const [input,setInput] = useState(0)
   const [isInput, setIsInput] = useState(true)
 
@@ -46,8 +51,13 @@ const VisitorFirstPage = () => {
     setPage(page+1)
     console.log(page)
   }
+
+
   const pages = () => {
+    
+
     console.log(page)
+    
     if (page === 1){
       return (
       <>
@@ -144,7 +154,7 @@ const VisitorFirstPage = () => {
                     />
             </InputBox>
           {isInput ? (
-                    <GreenBtn>
+                    <GreenBtn onClick={Next}>
                         완료
                     </GreenBtn>
                  ):(
@@ -163,7 +173,6 @@ const VisitorFirstPage = () => {
         else {
           return(
             <>
-
               <Emoji>👏🏻</Emoji>
               <TitleBox style={{marginTop:'125px'}}>
               <Title>작성이 완료되었습니다!</Title>
@@ -177,8 +186,18 @@ const VisitorFirstPage = () => {
               <br/> 나만의 사전을 만들어보세요.  </span>
             </Pretendard>
             </TextBox>
-            <BrowseBtn>(이름)하다 사전 둘러보기</BrowseBtn>
-            <GreenBtn>내 사전 만들러 가기</GreenBtn>
+            <BrowseBtn>
+            <Link to='/visitorbrowsing' 
+            style={{textDecoration:'none', color:'var(--green)'}}>
+              (이름)하다 사전 둘러보기
+              </Link>
+              </BrowseBtn>
+            <GreenBtn>
+              <Link to='/' 
+              style={{textDecoration:'none', color:'var(--white)'}}>
+                내 사전 만들러 가기
+                </Link>
+              </GreenBtn>
             </>
           )
         }
@@ -196,6 +215,9 @@ const VisitorFirstPage = () => {
             </object>
           </DicContainer>
         </BodyContainer>
+        <FooterWrapper>
+        <Footer/>
+      </FooterWrapper>
       </Background>
     </>
     )
@@ -261,8 +283,6 @@ const TextBox = styled.div`
   align-items: center;
   position: absolute;
 
-  /* margin-left: 10%;
-  margin-right: 13%; */
   margin-bottom: 80px;
   text-align: center;
 `
@@ -289,6 +309,7 @@ const DisabledBtn = styled.button`
   border: none;
   border-radius: 5px;
   font-family: SF_HambakSnow;
+  
 `;
 
 const BrowseBtn = styled.button`
@@ -297,12 +318,11 @@ const BrowseBtn = styled.button`
   position: absolute;
   width: 226px;
   height: 46px;
-  margin-top: 100px;
   border: 1px solid var(--green);
   border-radius: 5px;
   font-family: SF_HambakSnow;
+  margin-top: 100px;
 `
-
 
 const InputBox = styled.div` 
   position: absolute;
@@ -328,4 +348,17 @@ const Emoji = styled.div`
   font-size: 24px;
 
 
+`
+
+const FooterWrapper = styled.div`
+    height: 100vh;
+    margin-top: 30px;
+    padding-bottom: 30px;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    margin: 0 auto;
 `
