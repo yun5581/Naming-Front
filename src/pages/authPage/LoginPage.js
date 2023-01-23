@@ -8,10 +8,12 @@ import Title from "../../components/authPage/Title";
 import background from "../../images/background.svg";
 
 const LoginPage = () =>{
-    // 회원가입 정보관리
+    // 로그인 정보관리
     const [id, setID] = useState("");
     const [password, setPW] = useState("");
+    // 로그인 함수
     const Login =()=>{
+        
     }
     function scrollto(e){
         e.target.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -37,6 +39,7 @@ const LoginPage = () =>{
                                 />
                             <LoginBtn type="submit" 
                                 className={ id!=""&&password!="" ? 'active' : ''}
+                                onClick={()=>Login()}
                                >로그인 하기</LoginBtn>
                 </LoginForm>
                 <FooterWrapper>

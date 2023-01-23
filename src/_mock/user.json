@@ -1,22 +1,15 @@
 {
-    "user":[
-        {
-            "firstname": "사자",
-            "loginId": "likelion",
-            "password": "1234",
-            "mynumber": 1
-        },
-        {
-            "firstname": "사자",
-            "loginId": "likelion1",
-            "password": "1234",
-            "mynumber": 2
-        },
-        {
-            "firstname": "사자",
-            "loginId": "likelion2",
-            "password": "1234",
-            "mynumber": 3
-        }
-    ]
+  "accounts": [
+    {
+      "firstname": "채원",
+      "loginId": "chaewon",
+      "password": "1234",
+      "id": 1
+    },
+    {
+      "loginId": "chaewon",
+      "password": "1234",
+      "id": 2
+    }
+  ]
 }

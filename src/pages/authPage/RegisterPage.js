@@ -1,4 +1,3 @@
-import axios from "axios";
 import styled from "styled-components";
 import { useState } from "react";
 import { vw } from "../../components/SizeConvert";
@@ -8,8 +7,14 @@ import Title from "../../components/authPage/Title";
 //images
 import background from "../../images/background.svg";
 import RegisterModal from "../../components/authPage/RegisterModal";
+// api, 유저 정보
+import { GetUser, PostUser } from "../../api/user";
+import { useAppDispatch } from "../../redux/store";
+import { setUser } from "../../redux/userSlice";
 
 const RegisterPage = () =>{
+    // 유저 리덕스 
+    const dispatch =useAppDispatch();
     // 모달 관리 
     const [modal, setModal] = useState(false);
     function scrollto(e){
@@ -21,7 +26,7 @@ const RegisterPage = () =>{
     const [password2, setPW2] = useState("");
     const [name, setName] = useState("");
 
-    // 비밀번호 일치 함수
+    // 비밀번호 일치 확인 함수
     function checkInput(){
         var isSame;
         if(id!=""&&password!=""&&name!=""){
@@ -33,32 +38,52 @@ const RegisterPage = () =>{
     }
     // 회원가입 함수 
     const register=(e, async)=>{
-        // if(id!=""&&password!=""&&checkInput()){
-        //     axios  
-        //         .post("http://localhost:3002/user/",{
-        //         // post("/accounts/signup/",{
-        //             firstname: name,
-        //             loginId: id,
-        //             password: password,
-        //             mynumber: 1,
-        //         })
-        //         .then(res=>{
-        //            console.log(res);
-        //             // if(res.data.message=="회원가입 성공"){
-        //             //     login();
-        //             //     setModal(true);
-        //             //     // 회원 정보 저장하는 것 코드 추가 필요
-        //             // }
-        //             // else{
-                        
-        //             // }
-        //         })
-        // }
+        if(id!=""&&password!=""&&checkInput()){
+            PostUser(name, id, password)
+                // .then(res=>{
+                //     if(res.data.message=="회원가입 성공"){
+                //         login();
+                //         setModal(true);
+                //     }
+                //     else{
+                //         alert("이미 존재하는 아이디입니다.");
+                //     }
+                // })
+        }
     }
     // 로그인 함수
     const login = () =>{
-
+        GetUser(id, password)
+        // json-server용 임시 코드
+        .then(()=>{
+            var userId = 10; 
+            dispatch(setUser(userId, name));
+        })
+        // .then(res=>{
+        //     window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
+        //     dispatch(setUser(res.data));
+        //     window.location.href="http://localhost:3000/"; // url 변경 필요
+        // }).catch((error)=> console.log(error));
     }
+
+    //json-server용 임시 코드
+    // const register = () => {
+    //     const userInfo = {
+    //         firstname: name,
+    //         loginId: id,
+    //         password: password
+    //     }
+    //     fetch('http://localhost:4000/accounts/', {
+    //       method: 'POST',
+    //       headers: {"Content-Type": "application/json"},
+    //       body: JSON.stringify(userInfo)
+    //     }).then(() => {
+    //         console.log('회원가입 성공');
+    //         login();
+    //         setModal(true); 
+    //         dispatch(setUser(id, name));
+    //     })
+    //   }
     // 모달 정보 
     var number = 3;
     var name2 = "채원";
