@@ -78,7 +78,6 @@ const Dictionary = props =>{
         if(shapeColor==0) shapeColor =1;
         //shapeNum=`Cshape${shapeNum}_${shapeColor}`;
         //shapeNum=eval("Cshape"+shapeNum+"_"+shapeColor);
-        console.log(shapeNum);
         switch(shapeColor){
             case 1:
                 switch(shapeNum){
@@ -141,7 +140,7 @@ const Dictionary = props =>{
                 <Container>
                     <object type="image/svg+xml" data={star} className="star"/>
                     <Title>
-                        <div>{props.name}하다</div>
+                        <div>{props.title}하다</div>
                         <hr/>
                     </Title>
                     <Shape style={{ backgroundImage: `url(${deco()})`}}>
