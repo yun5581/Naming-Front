@@ -6,6 +6,8 @@ const name = "UserSlice";
 const initialState = {
     userId: "", // 유저 고유 번호
     name: "", // 유저 이름
+    ID: "",
+    PW:""
 };
 
 export const userSlice = createSlice({
@@ -13,12 +15,16 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     initUser: state => {
-      state.userId = initialState.id;
+      state.userId = initialState.userId;
       state.name = initialState.firstname;
+      state.ID = initialState.ID;
+      state.PW = initialState.PW;
     },
     setUser: (state, action) => {
       state.userId = action.payload.userId;
       state.name = action.payload.name;
+      state.ID  = action.payload.ID;
+      state.PW = action.payload.PW;
     },
   },
   extraReducers: builder => {
