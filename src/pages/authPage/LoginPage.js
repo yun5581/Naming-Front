@@ -52,7 +52,7 @@ const LoginPage = () =>{
                             <input 
                                 className="id"
                                 placeholder="아이디"
-                                defaultValue={id}
+                                defaultValue={ID}
                                 onChange={e => setID(e.target.value)}
                                 onClick={e=> scrollto(e)}
                                 />
@@ -60,12 +60,12 @@ const LoginPage = () =>{
                                 className="pw"
                                 type="password"
                                 placeholder="비밀번호"
-                                defaultValue={password}
+                                defaultValue={PW}
                                 onChange={e => setPW(e.target.value)}
                                 onClick={e=> scrollto(e)}
                                 />
                             <LoginBtn 
-                                className={ id!=null&&password!=null ? 'active' : ''}
+                                className={ id!=""&&password!="" ? 'active' : ''}
                                 onClick={()=>login()}
                                >로그인 하기</LoginBtn>
                 </LoginForm>
