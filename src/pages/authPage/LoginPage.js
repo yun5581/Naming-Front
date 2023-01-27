@@ -6,14 +6,40 @@ import Footer from "../../components/Footer";
 import Title from "../../components/authPage/Title";
 //images
 import background from "../../images/background.svg";
+import { useNavigate } from "react-router-dom";
+// api, 유저 정보
+import { GetUser } from "../../api/user";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { setUser } from "../../redux/userSlice";
 
 const LoginPage = () =>{
+    const navigate = useNavigate();
+    // 유저 리덕스 
+    const dispatch =useAppDispatch();
+    const {ID, PW} = useAppSelector(state=>state.user);
+
     // 로그인 정보관리
-    const [id, setID] = useState("");
-    const [password, setPW] = useState("");
+    const [id, setID] = useState(ID);
+    const [password, setPW] = useState(PW);
     // 로그인 함수
-    const Login =()=>{
-        
+    const login =()=>{
+        GetUser(id, password)
+        .then((res)=>{
+            if(res.message=="로그인 성공"){
+                window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
+                dispatch(setUser({
+                    userId: res.data.userid,
+                    name: res.data.firstName,
+                    ID: id,
+                    PW: password
+                }));
+                navigate("/home");
+            }
+        }).catch((error)=>{
+            if(error.message=="로그인 실패"){
+                alert("아이디 또는 비밀번호를 확인해주세요.");
+            }
+        });
     }
     function scrollto(e){
         e.target.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -25,8 +51,8 @@ const LoginPage = () =>{
                 <LoginForm>
                             <input 
                                 className="id"
-                                // value={id}
                                 placeholder="아이디"
+                                defaultValue={id}
                                 onChange={e => setID(e.target.value)}
                                 onClick={e=> scrollto(e)}
                                 />
@@ -34,12 +60,13 @@ const LoginPage = () =>{
                                 className="pw"
                                 type="password"
                                 placeholder="비밀번호"
+                                defaultValue={password}
                                 onChange={e => setPW(e.target.value)}
                                 onClick={e=> scrollto(e)}
                                 />
-                            <LoginBtn type="submit" 
-                                className={ id!=""&&password!="" ? 'active' : ''}
-                                onClick={()=>Login()}
+                            <LoginBtn 
+                                className={ id!=null&&password!=null ? 'active' : ''}
+                                onClick={()=>login()}
                                >로그인 하기</LoginBtn>
                 </LoginForm>
                 <FooterWrapper>
@@ -93,7 +120,21 @@ const LoginForm = styled.form`
         outline: none;
     }
 `
-const LoginBtn = styled.button`
+// const SaveUser = styled.div`
+//     font-size: ${vw(9)};
+//     zoom: 0.9;
+//     font-family: 'SF_HambakSnow';
+//     color: white;
+//     margin-bottom: 5px;
+//     @media only screen  and (min-width: 700px) and (max-width: 850px){
+//         margin-bottom: 10px;
+//     }
+// `
+const LoginBtn = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     aspect-ratio: 6 / 1;
 
     border-style: none;
