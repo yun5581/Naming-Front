@@ -4,9 +4,10 @@ import { vw } from "../../components/SizeConvert";
 //components
 import Footer from "../../components/Footer";
 import Title from "../../components/authPage/Title";
+import RegisterModal from "../../components/authPage/RegisterModal";
 //images
 import background from "../../images/background.svg";
-import RegisterModal from "../../components/authPage/RegisterModal";
+import { MdOutlineCheckCircle } from"react-icons/md";
 // api, 유저 정보
 import { GetUser, PostUser } from "../../api/user";
 import { useAppDispatch } from "../../redux/store";
@@ -26,8 +27,8 @@ const RegisterPage = () =>{
     const [password2, setPW2] = useState("");
     const [name, setName] = useState("");
 
-    // 비밀번호 일치 확인 함수
-    function checkInput(){
+    // 필수 필드 확인 함수
+    const checkInput =()=>{
         var isSame;
         if(id!=""&&password!=""&&name!=""){
             password == password2 ?
@@ -36,61 +37,51 @@ const RegisterPage = () =>{
         } 
         return isSame;
     }
+    const checkPW = () =>{
+        var isSame;
+        password!="" && password===password2 ? isSame=true: isSame=false;
+        return isSame;        
+    }
     // 회원가입 함수 
     const register=(e, async)=>{
+        //setModal(true);
         if(id!=""&&password!=""&&checkInput()){
             PostUser(name, id, password)
-                // .then(res=>{
-                //     if(res.data.message=="회원가입 성공"){
-                //         login();
-                //         setModal(true);
-                //     }
-                //     else{
-                //         alert("이미 존재하는 아이디입니다.");
-                //     }
-                // })
+                .then((res)=>{
+                    if(res.message=="회원가입 성공"){
+                        login();
+                        setModal(true);
+                    }
+                })
+                .catch((error)=>{
+                    if(error.message=="회원가입 실패"){
+                        alert("이미 존재하는 아이디입니다.");
+                    }
+                })
         }
     }
     // 로그인 함수
     const login = () =>{
         GetUser(id, password)
-        // json-server용 임시 코드
-        .then(()=>{
-            var userId = 10; 
-            dispatch(setUser(userId, name));
-        })
-        // .then(res=>{
-        //     window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
-        //     dispatch(setUser(res.data));
-        //     window.location.href="http://localhost:3000/"; // url 변경 필요
-        // }).catch((error)=> console.log(error));
+        .then(res=>{
+            console.log(res);
+            window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
+            dispatch(setUser({
+                userId: res.data.userid,
+                name: res.data.firstName,
+                ID: id,
+                PW: password
+            }));
+        }).catch((error)=> console.log(error));
     }
 
-    //json-server용 임시 코드
-    // const register = () => {
-    //     const userInfo = {
-    //         firstname: name,
-    //         loginId: id,
-    //         password: password
-    //     }
-    //     fetch('http://localhost:4000/accounts/', {
-    //       method: 'POST',
-    //       headers: {"Content-Type": "application/json"},
-    //       body: JSON.stringify(userInfo)
-    //     }).then(() => {
-    //         console.log('회원가입 성공');
-    //         login();
-    //         setModal(true); 
-    //         dispatch(setUser(id, name));
-    //     })
-    //   }
     // 모달 정보 
     var number = 3;
     var name2 = "채원";
     return(
         <>
             <Background>
-                {modal? <RegisterModal number={number} name={name2} setModal={setModal}/> :null}
+                {modal? <RegisterModal number={number} name={name} setModal={setModal}/> :null}
                         <Title/>
                             <RegisterForm>
                             <input 
@@ -107,13 +98,19 @@ const RegisterPage = () =>{
                                 onChange={e => setPW(e.target.value)}
                                 onClick={e=> scrollto(e)}
                                 />
-                            <input
+                            <PW2>
+                                <input
                                 className="pw2"
                                 type="password"
                                 placeholder="비밀번호 확인"
-                                onChange={e => setPW2(e.target.value)}
+                                onChange={e => {
+                                    setPW2(e.target.value)
+                                }}
                                 onClick={e=> scrollto(e)}
-                                />
+                                >
+                                </input>
+                                {checkPW() ? <MdOutlineCheckCircle id="check"/>: null}
+                            </PW2>
                             <input
                                 className="name"
                                 placeholder="이름만 입력해주세요 (예: 길동)"
@@ -155,7 +152,7 @@ const RegisterForm = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 45px;
-    .pw,.pw2{
+    .pw{
         margin-top: 16px;
     }
     .name{
@@ -172,16 +169,12 @@ const RegisterForm = styled.div`
         border-radius: 5px;
         outline: none;
     }
-    div{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+
     @media only screen  and (max-width: 300px){
         margin-top: 30px;
     }
     @media only screen  and (min-width: 700px) and (max-width: 850px){
-        .pw,.pw2{
+        .pw{
         margin-top: 26px;
         }
         .name{
@@ -189,7 +182,31 @@ const RegisterForm = styled.div`
         }
     }
 `
+const PW2 = styled.div`
+    width: 112%;
+    height: auto;
+    margin-top: 16px;
+    input{
+        width: ${vw(262)};
+    }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    #check{
+        width: ${vw(20)};
+        height: ${vw(20)};
+        color: var(--green);
+        margin-left: 5px;
+    }
+    @media only screen  and (min-width: 700px) and (max-width: 850px){
+        margin-top: 26px;
+    }
+`
 const RegisterBtn = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     aspect-ratio: 6 / 1;
 
     border-style: none;
