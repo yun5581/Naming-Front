@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAppSelector,useAppDispatch} from "../../redux/store";
+import { setDictionaryID, setOption } from "../../redux/dictionarySlice";
+// api
+import { Logout, SubmitCustom } from "../../api/user";
 //components
-import { vw, vh } from "../../components/SizeConvert";
+import { vw, vh, useResize } from "../../components/SizeConvert";
 import Footer from "../../components/Footer";
 import Dictionary from "../../components/customPage/Dictionary";
 import SelectColor from "../../components/customPage/SelectColor";
@@ -15,14 +20,20 @@ import SelectScolor from "../../components/customPage/SelectScolor";
 
 
 const CustomPage = () =>{
-    // 커스텀 메뉴 관리 
-    const [option, setOption] = useState(0); // 표지색:0, 실루엣: 1, 실루엣 색: 2, 기타: 3
+    const navigate = useNavigate();
+
+    // 유저 정보 가져오기
+    const {name, userId} = useAppSelector(state=>state.user);
+
+    // 커스텀 메뉴 관리
+    const dispatch =useAppDispatch();
+    const {option} = useAppSelector(state=>state.dictionary); 
+
     const saveOption = (optionNum) =>{
-        setOption(optionNum);
-        sessionStorage.setItem("option",optionNum);
+        dispatch(setOption({option: optionNum}));
     }
     const checkOption = () =>{
-        var num = sessionStorage.getItem("option"); 
+        var num = option;
         if(num==null) num=0; 
         return num;
     }
@@ -32,33 +43,43 @@ const CustomPage = () =>{
     const [shapeColor, setShapeColor] = useState(1);
     const [deco, setDeco] = useState(1);
 
-    // 커스텀 정보 가져오기 (test 코드)
-    var name = "채원"; // 유저 정보 받아오는 걸로 변경
-
-    // 선택 값 초기화 (test 코드)
-    const reset = () =>{
-        sessionStorage.setItem("option","");
-        sessionStorage.setItem("Bcolor",""); 
-        sessionStorage.setItem("shapeNum","");
-        sessionStorage.setItem("Scolor","");
-        sessionStorage.setItem("decoNum","");
+    // 커스텀 정보 전달 코드
+    const submit_custom = ()=>{
+        SubmitCustom(userId, bookColor, shape, shapeColor, deco)
+        .then(res=>{
+            if(res.message=="성공"){
+                // 사전 아이디 저장
+                dispatch(setDictionaryID({dictionaryId: res.data.dictionaryId})); 
+                // 커스텀 페이지 저장 정보 삭제
+                reset();
+                navigate("/home");
+            }
+        }).catch((error)=>{
+            alert("사전 정보 저장 실패\n 다시 시도해주세요");
+        })
     }
-
     // 새로고침 방지 경고 코드 
     const preventClose = (e=BeforeUnloadEvent) => {
         e.preventDefault();
         e.returnValue = ""; //Chrome에서 동작하도록; deprecated
-        };
-        
-        useEffect(() => {
+    };  
+    useEffect(() => {
         (() => {
             window.addEventListener("beforeunload", preventClose);
-        })();
-        
+        })();   
         return () => {
             window.removeEventListener("beforeunload", preventClose);
         };
         }, []);
+    // 선택 값 초기화 (test 코드)
+    const reset = () =>{
+        dispatch(setOption({option: ""}));
+        sessionStorage.setItem("Bcolor",""); 
+        sessionStorage.setItem("shapeNum","");
+        sessionStorage.setItem("Scolor","");
+        sessionStorage.setItem("decoNum","");
+        window.location.reload();
+    }
     return(
         <>
             <Background>
@@ -66,7 +87,9 @@ const CustomPage = () =>{
                     나만의 사전을 만들어보세요!
                     <hr style={{marginTop: "10px"}}/>
                 </Title>
-                <Dictionary bookColor={bookColor} name={name} shape={shape}/>
+                <Dictionary  title={name} color={bookColor}
+                            shapeNum={shape} shpaeColor={shapeColor}
+                            decoNum={deco}/>
                 <CustomForm>
                     <MenuBar>
                         <div onClick={()=>saveOption(0)} className={checkOption()==0 ? 'active' : ''}>표지색</div><hr/>
@@ -74,14 +97,17 @@ const CustomPage = () =>{
                         <div onClick={()=>saveOption(2)} className={checkOption()==2 ? 'active' : ''}>실루엣 색</div><hr/>
                         <div onClick={()=>saveOption(3)} className={checkOption()==3 ? 'active' : ''}>기타</div>
                     </MenuBar>
-                    {checkOption()==0 ? <SelectColor setBookColor={setBookColor}/>: null} 
+                    {checkOption()==0 ? <SelectColor setBookColor={setBookColor} />: null} 
                     {checkOption()==1 ? <SelectShape setShape={setShape}/>: null}
                     {checkOption()==2 ? <SelectScolor setShapeColor={setShapeColor}/>: null}
                     {checkOption()==3 ? <SelectDeco setDeco={setDeco}/>: null}
                 </CustomForm>
                 <SubmitButton onClick={()=>{
-                    reset();
+                    submit_custom();
                 }}>완료</SubmitButton>
+                {/* 리셋용 임시 코드 */}
+                <button onClick={()=> reset()}>리셋</button>
+                <button onClick={()=> Logout()}>로그아웃</button>
                 <FooterWrapper>
                     <Footer/>
                 </FooterWrapper>
@@ -151,7 +177,6 @@ const MenuBar = styled.div`
     hr{
         width: ${vw(80)};
     }
-   
 `
 const SubmitButton = styled.button`
     width: ${vw(270)};
