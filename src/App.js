@@ -15,12 +15,14 @@ import RegisterPage from './pages/authPage/RegisterPage';
 import CustomPage from './pages/customPage/CustomPage';
 // 가입자 홈 페이지
 import HomePage from './pages/homePage/HomePage';
-// 방문자 랜딩 페이지
-import VisitorLandingPage from './pages/visitorPage/VisitorLandingPage';
 // 검색 페이지
 import SearchPage from './pages/searchPage/SearchPage';
 //정의 페이지
 import DefinitionPage from './pages/definitionPage/DefinitionPage';
+// 방문자 랜딩 페이지
+import VisitorLandingPage from "./pages/visitorPage/VisitorLandingPage";
+// 방문자 정의 첫작성 페이지
+import VisitorFirstPage from "./pages/visitorPage/VisitorFirstPage";
 
 function App() {
 	return (
@@ -29,11 +31,12 @@ function App() {
 				<Route exact path="/" element={<LandingPage />} />
 				<Route exact path="/login" element={<LoginPage />} />
 				<Route exact path="/home" element={<HomePage />} />
-				<Route exact path="/visitorlanding" element={<VisitorLandingPage />} />
 				<Route exact path="/register" element={<RegisterPage />} />
 				<Route exact path="/custom" element={<CustomPage />} />
 				<Route exact path="/search" element={<SearchPage />} />
 				<Route exact path="/definition" element={<DefinitionPage />} />
+        <Route exact path="/visitorlanding" element={<VisitorLandingPage />} />
+        <Route exact path="/visitorfirst" element={<VisitorFirstPage/>} />
 			</Routes>
 		</Router>
 	);

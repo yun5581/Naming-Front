@@ -5,19 +5,32 @@ import { Link } from 'react-router-dom';
 import { vw, vh } from '../../components/SizeConvert';
 import Sidebar from '../../components/Sidebar';
 import { SF_HambakSnow, Pretendard } from '../../components/Text';
+import DefinitionInputModal from '../../components/TxtModal/DefinitionInputModal';
 
 //images
 import background from '../../images/background.svg';
 import like from '../../images/like.svg';
 import deleteIcon from '../../images/definePage/delete.svg';
 import Footer from '../../components/Footer';
+import plusBtn from '../../images/definePage/+Btn.svg'
 
 const DefinitionPage = () => {
+	const [isLogin, setIsLogin] = useState(false)
 	const [edit, setEdit] = useState(false);
 
 	const editItem = () => {
 		setEdit(!edit);
 	};
+
+
+  //모달
+  const [modal, setModal] = useState(false)
+  const OpenModal = () => {
+    setModal(true)
+  }
+  const CloseModal = () => {
+    setModal(false)
+  }
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -38,7 +51,10 @@ const DefinitionPage = () => {
 							<Title>
 								<Pretendard>이름하다</Pretendard>
 							</Title>
-							<EditBtn onClick={editItem}>수정</EditBtn>
+							{isLogin ? (<EditBtn onClick={editItem}>수정</EditBtn>
+							):(
+								null
+							)}
 						</TitleBox>
 						<ContentWrapper>
 							<ContentBox>
@@ -68,6 +84,18 @@ const DefinitionPage = () => {
 										</div>
 									)}
 								</Content>
+                {isLogin ? (
+                  null
+              ):(      
+                <>         
+              <PlusBtn onClick={OpenModal}/>
+              <DefinitionInputModal
+              isIinput = {true}
+              open={modal}
+              close={CloseModal}
+                />
+            </> )}
+
 							</ContentBox>
 						</ContentWrapper>
 					</DicPage>
@@ -91,6 +119,9 @@ const ContentWrapper = styled.div`
 const ContentBox = styled.div`
 	overflow-y: scroll;
 	height: 100%;
+  display: flex;
+  flex-direction: column;
+
 	&::-webkit-scrollbar {
 		width: 6px;
 		height: 100%;
@@ -214,3 +245,13 @@ const FooterWrapper = styled.div`
 	flex-direction: column;
 	justify-content: flex-end;
 `;
+
+const PlusBtn = styled.button`
+background-image: url(${plusBtn});
+background-size: cover;
+width: 40px;
+height: 40px;
+border: none;
+background-color: transparent;
+margin: 0 auto;
+`
