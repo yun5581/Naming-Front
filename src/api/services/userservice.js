@@ -15,20 +15,20 @@ const UserService = {
     initDictionary();
     window.location.href = "http://localhost:3000/"; //url 수정 필요
   },
-  // 회원가입
-    postUser: (id,name, password) =>
+  //회원가입
+    postUser: (id, password, name) =>
     axios.post('https://kj173456.pythonanywhere.com/accounts/signup/', { 
         userId: id,
         firstName: name,
         password: password
   }),
+
   // 로그인
   getUser: (id, password) =>
     axios.post("https://kj173456.pythonanywhere.com/accounts/login/", {
       userId: id,
       password: password
   }),
-
   // 커스텀 정보 전달 
   submitCustom:  (userId, color, shadow, shadowColor, border) =>
     axios.post("https://kj173456.pythonanywhere.com/dictionary/",{ 

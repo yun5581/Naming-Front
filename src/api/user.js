@@ -7,9 +7,9 @@ export const Logout = () => {
 };
 
 // 회원가입
-export const PostUser = async (name, id, password) => {
+export const PostUser = async (id, password, name) => {
   try {
-    const response = await UserService.postUser(name,id, password);
+    const response = await UserService.postUser(id, password, name);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error, "회원가입 실패");

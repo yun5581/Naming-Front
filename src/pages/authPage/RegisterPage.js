@@ -44,17 +44,18 @@ const RegisterPage = () =>{
     }
     // 회원가입 함수 
     const register=(e, async)=>{
-        //setModal(true);
         if(id!=""&&password!=""&&checkInput()){
-            PostUser(name, id, password)
+            PostUser(id, password, name)
                 .then((res)=>{
+                    console.log(res);
                     if(res.message=="회원가입 성공"){
                         login();
                         setModal(true);
                     }
                 })
                 .catch((error)=>{
-                    if(error.message=="회원가입 실패"){
+                    console.log(error.response.data);
+                    if(error.response.data.message=="회원가입 실패"){
                         alert("이미 존재하는 아이디입니다.");
                     }
                 })
