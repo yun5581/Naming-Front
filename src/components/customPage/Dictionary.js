@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useAppSelector } from "../../redux/store";
 import styled from "styled-components";
 //components
 import { vw, vh } from "../../components/SizeConvert";
@@ -43,8 +44,6 @@ import Cshape6_2 from "../../images/customPage/Cshape/Cshape6_2.svg";
 import Cshape6_3 from "../../images/customPage/Cshape/Cshape6_3.svg";
 import Cshape6_4 from "../../images/customPage/Cshape/Cshape6_4.svg";
 import Cshape6_5 from "../../images/customPage/Cshape/Cshape6_5.svg";
-
-
 // 기타 iamges
 import Dcircle from "../../images/customPage/deco/Dcircle.svg";
 import Darch from "../../images/customPage/deco/Darch.svg";
@@ -57,10 +56,9 @@ const Dictionary = props =>{
     var shapeNum = Number(sessionStorage.getItem("shapeNum"));
     var shapeColor = Number(sessionStorage.getItem("Scolor"));
     var decoNum = sessionStorage.getItem("decoNum");
-
+    
     // 사전 표지색 리턴 함수
     const Bcolor =()=>{
-        // switch(props.bookColor){
         switch(color){
             case "grey": color=grey; break;
             case "green": color=green; break;
@@ -76,8 +74,6 @@ const Dictionary = props =>{
     const shape= () =>{
         if(shapeNum==0) shapeNum = 1;
         if(shapeColor==0) shapeColor =1;
-        //shapeNum=`Cshape${shapeNum}_${shapeColor}`;
-        //shapeNum=eval("Cshape"+shapeNum+"_"+shapeColor);
         switch(shapeColor){
             case 1:
                 switch(shapeNum){
@@ -129,8 +125,6 @@ const Dictionary = props =>{
         }
         return decoNum;
     }
-
-    
     return(
         <>
             <Wrapper>
