@@ -2,7 +2,7 @@ import UserService from "./services/userservice";
 
 // 로그아웃
 export const Logout = () => {
-  alert("세션 만료, 다시 로그인해주세요.");
+  alert("로그아웃");
   UserService.logout();
 };
 
