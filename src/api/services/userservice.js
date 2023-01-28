@@ -18,26 +18,27 @@ const UserService = {
   //회원가입
     postUser: (id, password, name) =>
     axios.post('https://kj173456.pythonanywhere.com/accounts/signup/', { 
-        userId: id,
         firstName: name,
+        username: id,
         password: password
   }),
 
   // 로그인
   getUser: (id, password) =>
     axios.post("https://kj173456.pythonanywhere.com/accounts/login/", {
-      userId: id,
+      username: id,
       password: password
   }),
   // 커스텀 정보 전달 
   submitCustom:  (userId, color, shadow, shadowColor, border) =>
-    axios.post("https://kj173456.pythonanywhere.com/dictionary/",{ 
+    http.post("https://kj173456.pythonanywhere.com/dictionary/",{ 
         userId: userId,
         color: color,
         shadow: shadow,
         shadowColor: shadowColor,
         border: border
-    })
+    }
+    )
 };
 
 export default UserService;
