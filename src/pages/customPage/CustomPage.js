@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAppSelector,useAppDispatch} from "../../redux/store";
@@ -42,9 +43,10 @@ const CustomPage = () =>{
     const [shape, setShape] = useState(1);
     const [shapeColor, setShapeColor] = useState(1);
     const [deco, setDeco] = useState(1);
-
+    
     // 커스텀 정보 전달 코드
     const submit_custom = ()=>{
+        console.log(userId, bookColor, shape, shapeColor, deco);
         SubmitCustom(userId, bookColor, shape, shapeColor, deco)
         .then(res=>{
             if(res.message=="성공"){
@@ -55,6 +57,8 @@ const CustomPage = () =>{
                 navigate("/home");
             }
         }).catch((error)=>{
+            // console.log(error);
+            // console.log(error.response.config.headers.Authorization);
             alert("사전 정보 저장 실패\n 다시 시도해주세요");
         })
     }
