@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 //data
 import { colorData } from "../../_mock/customInfo"
@@ -7,8 +6,6 @@ import { vw, vh } from "../../components/SizeConvert";
 import check from "../../images/customPage/check.svg";
 
 const SelectColor = props =>{
-    //색상 선택 관리 
-    const [select, setSelect] =useState("grey");
     return(
         <>
         <Wrapper>
@@ -16,9 +13,8 @@ const SelectColor = props =>{
             map((data,code,color)=>{
                 return (<div style={{backgroundColor: data.code}}
                             className={data.color}
-                            onClick={()=>{{
-                                props.setBookColor(data.color)};
-                                setSelect(data.color);
+                            onClick={()=>{
+                                props.setBookColor(data.color);
                                 sessionStorage.setItem("Bcolor",data.color);
                             }}>
                             {sessionStorage.getItem("Bcolor")==data.color? <object type="image/svg+xml" data={check} className="check"/>: 

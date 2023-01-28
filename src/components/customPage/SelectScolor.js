@@ -16,13 +16,14 @@ const SelectScolor = props =>{
     }
     const return_scolor = ()=>{
         var scolor = sessionStorage.getItem("Scolor");
+        if(scolor==null) scolor=0;
         return scolor;
     }
     return(
         <>
             <Wrapper>
                <div style={{ backgroundImage: `url(${Scolor1})`}} onClick={()=>save_sColor(1)}>
-                    {(return_scolor()==1)||(return_scolor()=="") ? <object type="image/svg+xml" data={check} className="check"/>: null}
+                    {(return_scolor()==1)||(return_scolor()==0) ? <object type="image/svg+xml" data={check} className="check"/>: null}
                </div>
                <div style={{ backgroundImage: `url(${Scolor2})`}} onClick={()=>save_sColor(2)}>
                     {return_scolor()==2 ? <object type="image/svg+xml" data={check} className="check"/>: null}

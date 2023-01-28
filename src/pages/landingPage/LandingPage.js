@@ -28,9 +28,9 @@ const LandingPage = () => {
                             <Link to="/register">
                                 <RegisterBtn style={{color:"#2F333E"}}>회원가입 하기</RegisterBtn>
                             </Link>
-                            <Link to="/kakao">
+                            {/* <Link to="/kakao">
                                 <KakaoBtn style={{color:"#2F333E"}}>카카오 계정으로 계속하기</KakaoBtn>
-                            </Link>
+                            </Link> */}
                         </ButtonWrapper>
                 <FooterWrapper>
                     <Footer/>
