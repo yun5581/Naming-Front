@@ -6,9 +6,10 @@ export const http = axios.create({
 
 http.defaults.withCredentials = true;
 
-const token = localStorage.getItem("token") ?? false;
-// const token = JSON.parse(localStorage.getItem("token")) ?? false;
+const token = JSON.parse(localStorage.getItem("token")) ?? false;
 
 http.defaults.headers.common["Authorization"] = token
   ? `Bearer ${token}`
   : null;
+
+
