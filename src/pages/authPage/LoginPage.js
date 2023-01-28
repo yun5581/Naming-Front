@@ -27,8 +27,9 @@ const LoginPage = () =>{
         .then((res)=>{
             if(res.message=="로그인 성공"){
                 window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
+                console.log(res.data);
                 dispatch(setUser({
-                    userId: res.data.userid,
+                    userId: res.data.user_id,
                     name: res.data.firstName,
                     ID: id,
                     PW: password
