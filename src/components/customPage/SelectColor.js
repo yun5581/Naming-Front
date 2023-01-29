@@ -18,7 +18,8 @@ const SelectColor = props =>{
                                 sessionStorage.setItem("Bcolor",data.color);
                             }}>
                             {sessionStorage.getItem("Bcolor")==data.color? <object type="image/svg+xml" data={check} className="check"/>: 
-                            sessionStorage.getItem("Bcolor")==""&&data.color=="grey"? <object type="image/svg+xml" data={check} className="check"/>: null}
+                            (sessionStorage.getItem("Bcolor")==""||
+                            sessionStorage.getItem("Bcolor")==null)&&data.color=="grey"? <object type="image/svg+xml" data={check} className="check"/>: null}
                         </div>)
                     })}
         </Wrapper>
