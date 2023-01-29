@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {vw, vh} from "../../components/SizeConvert";
 import clap from "../../images/authPage/clap.svg";
 import { SF_HambakSnow } from "../Text";
 
 const RegisterModal = (props) =>{
+    const navigate = useNavigate();
     return(
         <>
         <Wrapper onClick={()=>{props.setModal(false)}}>
@@ -14,11 +15,9 @@ const RegisterModal = (props) =>{
                     <div>{props.number}</div>번째
                     <div style={{marginLeft: vw(4)}}>{props.name}</div>(이)가 되셨군요!
                 </NameWrapper>
-                <DeleteModalBtn>
-                    <Link to="/custom">
+                <DeleteModalBtn onClick={()=> navigate("/custom")}>
                     내 사전 만들러 가기
-                    </Link>	
-					</DeleteModalBtn>
+				</DeleteModalBtn>
             </Modal>
         </Wrapper>
         </>
@@ -89,9 +88,6 @@ const DeleteModalBtn = styled.button`
     font-size: ${vw(14)};
     font-family: var(--hb-font);
     
-    a{
-        text-decoration: none;
-        color: #ffffff;
-    }
+    color: var(--white);
 `
 	
