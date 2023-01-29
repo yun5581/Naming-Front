@@ -67,7 +67,6 @@ const RegisterPage = () =>{
     const login = () =>{
         GetUser(id, password)
         .then(res=>{
-            console.log(res.data.access_token);
             window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
             dispatch(setUser({
                 userId: res.data.user_id,
