@@ -5,7 +5,6 @@ import clap from "../../images/authPage/clap.svg";
 import { SF_HambakSnow } from "../Text";
 
 const RegisterModal = (props) =>{
-    const navigate = useNavigate();
     return(
         <>
         <Wrapper onClick={()=>{props.setModal(false)}}>
@@ -15,7 +14,10 @@ const RegisterModal = (props) =>{
                     <div>{props.number}</div>번째
                     <div style={{marginLeft: vw(4)}}>{props.name}</div>(이)가 되셨군요!
                 </NameWrapper>
-                <DeleteModalBtn onClick={()=> navigate("/custom")}>
+                <DeleteModalBtn onClick={()=> {
+                        window.location.reload();
+                        window.location.href = "http://localhost:3000/custom"; //url 도메인 수정 필요
+                }}>
                     내 사전 만들러 가기
 				</DeleteModalBtn>
             </Modal>
