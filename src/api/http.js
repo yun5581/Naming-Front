@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const http = axios.create({
-  baseURL: "https://kj173456.pythonanywhere.com", //base url 수정 필요 (test code)
+  // baseURL: " http://127.0.0.1:8000", // (test) local 서버용 
+  baseURL: "https://kj173456.pythonanywhere.com",
 });
 
 http.defaults.withCredentials = true;

@@ -21,8 +21,8 @@ import SelectScolor from "../../components/customPage/SelectScolor";
 
 
 const CustomPage = () =>{
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     // 유저 정보 가져오기
     const {name, userId} = useAppSelector(state=>state.user);
 
@@ -46,19 +46,19 @@ const CustomPage = () =>{
     
     // 커스텀 정보 전달 코드
     const submit_custom = ()=>{
-        console.log(userId, bookColor, shape, shapeColor, deco);
         SubmitCustom(userId, bookColor, shape, shapeColor, deco)
         .then(res=>{
-            if(res.message=="성공"){
+            console.log(res);
+            if(res.message=="사전 만들기 성공"){
                 // 사전 아이디 저장
-                dispatch(setDictionaryID({dictionaryId: res.data.dictionaryId})); 
+                dispatch(setDictionaryID({dictionaryId: res.data.id})); // test 코드
+                // dispatch(setDictionaryID({dictionaryId: res.data.dictionaryId})); 
                 // 커스텀 페이지 저장 정보 삭제
                 reset();
                 navigate("/home");
             }
         }).catch((error)=>{
-            // console.log(error);
-            // console.log(error.response.config.headers.Authorization);
+            console.log(error);
             alert("사전 정보 저장 실패\n 다시 시도해주세요");
         })
     }
@@ -75,14 +75,14 @@ const CustomPage = () =>{
             window.removeEventListener("beforeunload", preventClose);
         };
         }, []);
-    // 선택 값 초기화 (test 코드)
+    // 선택 값 초기화 
     const reset = () =>{
         dispatch(setOption({option: ""}));
         sessionStorage.setItem("Bcolor",""); 
         sessionStorage.setItem("shapeNum","");
         sessionStorage.setItem("Scolor","");
         sessionStorage.setItem("decoNum","");
-        window.location.reload();
+        //window.location.reload();
     }
     return(
         <>

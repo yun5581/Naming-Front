@@ -26,6 +26,7 @@ const RegisterPage = () =>{
     const [password, setPW] = useState("");
     const [password2, setPW2] = useState("");
     const [name, setName] = useState("");
+    const [number, setNumber] = useState(""); // n번째 지은이
 
     // 필수 필드 확인 함수
     const checkInput =()=>{
@@ -50,11 +51,12 @@ const RegisterPage = () =>{
                     console.log(res);
                     if(res.message=="회원가입 성공"){
                         login();
+                        setNumber(res.number);
                         setModal(true);
                     }
                 })
                 .catch((error)=>{
-                    console.log(error.response.data);
+                    console.log(error);
                     if(error.response.data.message=="회원가입 실패"){
                         alert("이미 존재하는 아이디입니다.");
                     }
@@ -65,7 +67,6 @@ const RegisterPage = () =>{
     const login = () =>{
         GetUser(id, password)
         .then(res=>{
-            console.log(res.data.access_token);
             window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
             dispatch(setUser({
                 userId: res.data.user_id,
@@ -75,10 +76,6 @@ const RegisterPage = () =>{
             }));
         }).catch((error)=> console.log(error));
     }
-
-    // 모달 정보 
-    var number = 3;
-    var name2 = "채원";
     return(
         <>
             <Background>
