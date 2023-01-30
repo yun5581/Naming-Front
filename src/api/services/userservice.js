@@ -18,7 +18,7 @@ const UserService = {
   //회원가입
     postUser: (id, password, name) =>
     // axios.post('http://127.0.0.1:8000/accounts/signup/', { // (test) local 서버용
-    axios.post('https://kj173456.pythonanywhere.com/accounts/signup/', { 
+    axios.post('https://kj273456.pythonanywhere.com/accounts/signup/', { 
         firstName: name,
         username: id,
         password: password
@@ -27,14 +27,14 @@ const UserService = {
   // 로그인
   getUser: (id, password) =>
     // axios.post("http://127.0.0.1:8000/accounts/login/", { // (test) local 서버용
-    axios.post("https://kj173456.pythonanywhere.com/accounts/login/", {
+    axios.post("https://kj273456.pythonanywhere.com/accounts/login/", {
       username: id,
       password: password
   }),
   // 커스텀 정보 전달 
   submitCustom:  (userId, color, shadow, shadowColor, border) =>
     // http.post("http://127.0.0.1:8000/dictionary/",{ // (test) local 서버용
-    http.post("https://kj173456.pythonanywhere.com/dictionary/",{ 
+    http.post("https://kj273456.pythonanywhere.com/dictionary/",{ 
         userId: userId,
         color: color,
         shadow: shadow,
