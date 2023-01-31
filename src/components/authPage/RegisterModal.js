@@ -16,7 +16,7 @@ const RegisterModal = (props) =>{
                 </NameWrapper>
                 <DeleteModalBtn onClick={()=> {
                         window.location.reload();
-                        window.location.href = "http://localhost:3000/custom"; //url 도메인 수정 필요
+                        window.location.href = "https://naming-front.vercel.app/custom"; //url 도메인 수정 필요
                 }}>
                     내 사전 만들러 가기
 				</DeleteModalBtn>
