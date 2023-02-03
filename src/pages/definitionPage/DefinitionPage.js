@@ -68,10 +68,10 @@ const DefinitionPage = () => {
                 {arrCount ? (
                   <Content>
                     <div className="countNum">
-                      <Pretendard>3.</Pretendard>
+                      <Pretendard>{data.postId}.</Pretendard>
                     </div>
                     <div className="comment">
-                      <Pretendard>넌 재미없어</Pretendard>
+                      <Pretendard>{data.contents}</Pretendard>
                     </div>
                     {edit ? (
                       <object
@@ -87,7 +87,7 @@ const DefinitionPage = () => {
                           className="likeIcon"
                         />
                         <div className="likeNum">
-                          <SF_HambakSnow>80</SF_HambakSnow>
+                          <SF_HambakSnow>{data.likes}</SF_HambakSnow>
                         </div>
                       </div>
                     )}
