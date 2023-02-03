@@ -53,8 +53,8 @@ const Background = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     .dic{
-        width: ${vw(192.65)};
-        height: ${vh(280)};
+        width: ${vw(315)};
+        height: ${vh(252)};
         margin:  ${vh(28)} 0 ${vh(32)} 0;
     }
 `
