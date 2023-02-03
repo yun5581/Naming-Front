@@ -52,9 +52,7 @@ const UserService = {
       contents,
     });
   },
-  postDictionary: () => {
-    http.post("https://kj273456.pythonanywhere.com/", {});
-  },
+
   getNames: (keyword) => {
     axios.get(
       `https://kj273456.pythonanywhere.com/dictionary/search/?keyword=${keyword}`
