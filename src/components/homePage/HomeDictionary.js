@@ -1,6 +1,8 @@
-import { useEffect } from "react";
-import { useAppSelector } from "../../redux/store";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useAppSelector} from "../../redux/store";
+import {http} from "../../api/http.js";
+import { createPath, NavLink } from "react-router-dom"; 
 //components
 import { vw, vh } from "../../components/SizeConvert";
 // data
@@ -50,13 +52,25 @@ import Darch from "../../images/customPage/deco/Darch.svg";
 import Drectangle from "../../images/customPage/deco/Drectangle.svg";
 import Dcircle2 from "../../images/customPage/deco/Dcircle2.svg";
 
-const Dictionary = props =>{
+
+const HomeDictionary = props =>{
     // 사전 꾸미기 정보 가져오기 
-    var color = sessionStorage.getItem("Bcolor"); 
-    var shapeNum = Number(sessionStorage.getItem("shapeNum"));
-    var shapeColor = Number(sessionStorage.getItem("Scolor"));
-    var decoNum = sessionStorage.getItem("decoNum");
-    
+    const {name} = useAppSelector(state=>state.user);
+    // 리덕스에 저장된 정보 가져오기
+    const {colors, shapeNums, shapeColors, decoNums} = useAppSelector(state=>state.dictionary);
+
+    // 리덕스 값으로 설정 
+    // var color = colors;
+    // var shapeNum = shapeNums;
+    // var shapeColor =shapeColors;
+    // var decoNum = decoNums;
+
+    // api 값으로 설정 
+    var color = props.color;
+    var shapeNum = props.shapeNum;
+    var shapeColor = props.shapeColor;
+    var decoNum = props.decoNum;
+
     // 사전 표지색 리턴 함수
     const Bcolor =()=>{
         switch(color){
@@ -117,10 +131,10 @@ const Dictionary = props =>{
     // 사전 기타 꾸미기 리턴 함수
     const deco = () =>{
         switch(decoNum){
-            case "1": decoNum=Dcircle; break;
-            case "2": decoNum=Darch; break;
-            case "3": decoNum=Drectangle; break;
-            case "4": decoNum=Dcircle2; break;
+            case 1: decoNum=Dcircle; break;
+            case 2: decoNum=Darch; break;
+            case 3: decoNum=Drectangle; break;
+            case 4: decoNum=Dcircle2; break;
             default: decoNum=Dcircle;
         }
         return decoNum;
@@ -134,7 +148,7 @@ const Dictionary = props =>{
                 <Container>
                     <object type="image/svg+xml" data={star} className="star"/>
                     <Title>
-                        <div>{props.title}하다</div>
+                        <div>{name}하다</div>
                         <hr/>
                     </Title>
                     <Shape style={{ backgroundImage: `url(${deco()})`}}>
@@ -158,24 +172,28 @@ const Dictionary = props =>{
     )
 }
 
-export default Dictionary;
+export default HomeDictionary;
 
 const Wrapper = styled.div`
     display:flex;
-    padding-left: ${vw(11)};
+    height: ${vh(468)};
+	margin: ${vh(110)} 0 ${vh(32)} 0;
+    font-family: var(--hb-font);
 `
 const Background = styled.div`
-    aspect-ratio: 0.7/ 1;
-    height: ${vh(249)};
+    height: ${vh(458)};
+    aspect-ratio: 0.63/ 1;
     position: relative;
     z-index: 0;
     display: flex;
+    @media only screen  and (max-width: 299px){
+        aspect-ratio: 0.6/1;
+    }
 `
 const Line = styled.div`
     height: 100%;
-    width: 0.5px;
-    margin-left: ${vw(12)};
-
+    width: 1px;
+    margin-left: ${vw(20)};
     background: #404040;
     box-shadow: 0px 0px 9px #000000;
 `
@@ -185,21 +203,25 @@ const Container=styled.div`
     flex-direction: column;
     align-items: center;
     .star{
-        margin-top: ${vh(16)};
+        margin-top: ${vh(30)};
         width: ${vw(3)};
     }
 `
 const Title=styled.div`
-    width: ${vw(70)};
+    width: ${vw(90)};
     color: #FFFFFF;
-    margin-top: ${vh(7)};
+    margin-top: ${vh(14)};
     text-align: center;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
     div{
-        font-size: ${vw(14)};
+        font-size: ${vw(20)};
         color: var(--white);
     }
     hr{
         margin-top: 3px;
+        width: 110%;
         border-width: 0  0px 1px 1px;
         border-color: var(--white);
     }
@@ -226,16 +248,16 @@ const Bookfooter = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: ${vh(12)};
+    margin-top: ${vh(22)};
 
     color: var(--white);
     div{
-        font-size: ${vw(10)};
+        font-size: ${vw(16)};
         zoom: 0.7;
     }
     p{
         margin-top: 2px;
-        font-size: ${vw(7)};
+        font-size: ${vw(12)};
         font-family: var(--sm-font);
         zoom: 0.5;
     }
@@ -245,7 +267,7 @@ const Bookmark = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: ${vh(12)};
+    width: ${vh(23)};
     
     div{
         display: flex;
@@ -254,6 +276,6 @@ const Bookmark = styled.div`
         height: 5%;
         background: var(--white);
         border-radius: 0 2px 2px 0;
-        font-size: 2px;
+        font-size: ${vw(13)};
     }
 `

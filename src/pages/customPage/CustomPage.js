@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAppSelector,useAppDispatch} from "../../redux/store";
-import { setDictionaryID, setOption } from "../../redux/dictionarySlice";
+import { setDictionaryID, setOption, setDictionary } from "../../redux/dictionarySlice";
 // api
 import { Logout, SubmitCustom } from "../../api/user";
 //components
@@ -21,7 +21,6 @@ import SelectScolor from "../../components/customPage/SelectScolor";
 
 
 const CustomPage = () =>{
-
     const navigate = useNavigate();
     // 유저 정보 가져오기
     const {name, userId} = useAppSelector(state=>state.user);
@@ -51,8 +50,14 @@ const CustomPage = () =>{
             console.log(res);
             if(res.message=="사전 만들기 성공"){
                 // 사전 아이디 저장
-                dispatch(setDictionaryID({dictionaryId: res.data.id})); // test 코드
-                // dispatch(setDictionaryID({dictionaryId: res.data.dictionaryId})); 
+                dispatch(setDictionaryID({dictionaryId: res.data.id})); 
+                // 사전 커스텀 정보 리덕스 저장
+                dispatch(setDictionary({
+                    colors: res.data.color,
+                    shapeNums: res.data.shadow,
+                    shapeColors: res.data.shadowColor,
+                    decoNums: res.data.border
+                }))
                 // 커스텀 페이지 저장 정보 삭제
                 reset();
                 navigate("/home");

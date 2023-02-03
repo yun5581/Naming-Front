@@ -1,12 +1,15 @@
 // vw, vh 연습용 코드
 import React, { useEffect, useState, useRef } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useResize, vh, vw } from '../../components/SizeConvert';
+import { useAppSelector } from '../../redux/store';
+import { http } from "../../api/http.js";
 
 //components
 import { SF_HambakSnow, Simonetta } from '../../components/Text';
 import Sidebar from '../../components/Sidebar';
+import HomeDictionary from '../../components/homePage/HomeDictionary';
 //images
 import getLink from '../../images/homePage/share.svg';
 import background from '../../images/background.svg';
@@ -17,22 +20,46 @@ import Footer from '../../components/Footer';
 //const copyLinkRef = useRef();
 
 const HomePage = () => {
+	// 사전 아이디 가져오기
+	const {dictionaryId} = useAppSelector(state=>state.dictionary);
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
+		getInfo();
 	}, []);
 
+	const navigate = useNavigate();
+
+	// 사전 커스텀 정보 관리
+	const [color,setColor] = useState("");
+	const [shapeNum,setShapeNum] = useState(0);
+	const [shapeColor,setShapeColor] = useState(0);
+	const [decoNum,setDecoNum] = useState(0);
+
+	// 사전 커스텀 정보 가져오기
+	const getInfo = () =>{
+		http.get(`https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/`)
+		.then((res)=>{
+			setShapeColor(res.data.data.shadowColor);
+			setColor(res.data.data.color);
+			setShapeNum(res.data.data.shadow);
+			setDecoNum(res.data.data.border);
+		})
+		.catch((error)=>{
+			alert("사전 커스텀 정보 가져오기 실패");
+			navigate(-1);
+		})
+	}
 	const [show, setShow] = useState(false);
 	const alertMessage = (e) => {
 		setShow(true);
 		return { show };
 	};
-
-	useResize();
 	return (
 		<>
 			<Sidebar />
 			<Background>
-				<object type="image/svg+xml" data={dictionary} className="dic" />
+				<HomeDictionary color={color} shapeNum={shapeNum} shapeColor={shapeColor} decoNum={decoNum}/>
 				<ButtonWrapper onClick={alertMessage}>
 					<Button>
 						<object type="image/svg+xml" data={getLink} className="getLink" />
@@ -68,11 +95,6 @@ const Background = styled.div`
 	background-image: url(${background});
 	background-repeat: no-repeat;
 	background-size: cover;
-	.dic {
-		width: ${vw(324)};
-		height: ${vh(468)};
-		margin: ${vh(100)} 0 ${vh(32)} 0;
-	}
 `;
 
 const AlertMSG = styled.div`

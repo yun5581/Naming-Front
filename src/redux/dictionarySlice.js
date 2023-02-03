@@ -6,6 +6,10 @@ const name = "DictionarySlice";
 const initialState = {
     option: 0,
     dictionaryId: "", // 사전 고유 번호
+    colors: "",
+    shapeNums: 0,
+    shapeColors: 0,
+    decoNums: 0,
 };
 
 export const dictionarySlice = createSlice({
@@ -21,6 +25,12 @@ export const dictionarySlice = createSlice({
     },
     setDictionaryID: (state, action) => {
       state.dictionaryId = action.payload.dictionaryId;
+    },
+    setDictionary: (state,action) =>{
+      state.colors = action.payload.colors;
+      state.shapeNums = action.payload.shapeNums;
+      state.shapeColors = action.payload.shapeColors;
+      state.decoNums = action.payload.decoNums;
     }
   },
   extraReducers: builder => {
@@ -28,6 +38,6 @@ export const dictionarySlice = createSlice({
   },
 });
 
-export const { setDictionaryID, setOption, initDictionary } = dictionarySlice.actions;
+export const { setDictionaryID, setOption, initDictionary, setDictionary } = dictionarySlice.actions;
 
 export default dictionarySlice.reducer;
