@@ -6,6 +6,7 @@ import Sidebar from "../../components/Sidebar";
 import { SF_HambakSnow, Pretendard } from "../../components/Text";
 import DefinitionInputModal from "../../components/TxtModal/DefinitionInputModal";
 import { makrData } from "../../_mock/customInfo";
+import { getDictionary } from "../../api/user";
 
 //images
 import background from "../../images/background.svg";
@@ -30,6 +31,16 @@ const DefinitionPage = () => {
   const CloseModal = () => {
     setModal(false);
   };
+  const [arrCount, setArrCount] = useState(0);
+  const [data, setData] = useState(null);
+  const changeConsonant = (e) => {
+    const consonant = e.target.getAttribute("data-set");
+    const consonantIndex = makrData.filter((data) => data.text === consonant);
+    const idx = Object.values(consonantIndex)[0].id;
+    const promise = getDictionary(1, idx);
+    promise.then((result) => setArrCount(result.data.length));
+    promise.then((result) => setData(result.data));
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,7 +51,7 @@ const DefinitionPage = () => {
         <Sidebar />
         <NumText>
           <SF_HambakSnow>
-            총 <span>20</span>개의 문장이 쌓여있어요!
+            총 <span>{arrCount}</span>개의 문장이 쌓여있어요!
           </SF_HambakSnow>
         </NumText>
         <DicBook>
@@ -54,32 +65,35 @@ const DefinitionPage = () => {
             </TitleBox>
             <ContentWrapper>
               <ContentBox>
-                <Content>
-                  <div className="countNum">
-                    <Pretendard>3.</Pretendard>
-                  </div>
-                  <div className="comment">
-                    <Pretendard>넌 재미없어</Pretendard>
-                  </div>
-                  {edit ? (
-                    <object
-                      type="image/svg+xml"
-                      data={deleteIcon}
-                      className="deleteIcon"
-                    />
-                  ) : (
-                    <div className="like">
+                {arrCount ? (
+                  <Content>
+                    <div className="countNum">
+                      <Pretendard>3.</Pretendard>
+                    </div>
+                    <div className="comment">
+                      <Pretendard>넌 재미없어</Pretendard>
+                    </div>
+                    {edit ? (
                       <object
                         type="image/svg+xml"
-                        data={like}
-                        className="likeIcon"
+                        data={deleteIcon}
+                        className="deleteIcon"
                       />
-                      <div className="likeNum">
-                        <SF_HambakSnow>80</SF_HambakSnow>
+                    ) : (
+                      <div className="like">
+                        <object
+                          type="image/svg+xml"
+                          data={like}
+                          className="likeIcon"
+                        />
+                        <div className="likeNum">
+                          <SF_HambakSnow>80</SF_HambakSnow>
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </Content>
+                    )}
+                  </Content>
+                ) : null}
+
                 {isLogin ? null : (
                   <>
                     <PlusBtn onClick={OpenModal} />
@@ -95,8 +109,12 @@ const DefinitionPage = () => {
           </DicPage>
           <DicIndexWrapper>
             <Bookmark>
-              {makrData.map((mark, text) => {
-                return <div>{mark.text}</div>;
+              {makrData.map((mark) => {
+                return (
+                  <div data-set={mark.text} onClick={changeConsonant}>
+                    {mark.text}
+                  </div>
+                );
               })}
             </Bookmark>
           </DicIndexWrapper>

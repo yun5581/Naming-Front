@@ -1,4 +1,5 @@
 import UserService from "./services/userservice";
+import axios from "axios";
 
 // 로그아웃
 export const Logout = () => {
@@ -51,19 +52,21 @@ export const SubmitCustom = async (
 export const deleteDictionary = async (consonant, contents) => {
   try {
     const response = await UserService.deleteDictionary(consonant, contents);
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (error) {
     return Promise.reject(error, "정의 등록 실패");
   }
 };
 
 //자음으로 시작하는 정의들 모아서 보여주기
-export const getDictionary = () => {
+export const getDictionary = async (dictionaryId, consonant) => {
   try {
-    const response = UserService.getDictionary();
-    return Promise.resolve(response.data);
+    const res = await axios.get(
+      `https://kj273456.pythonanywhere.com/dictionary/1/post/?consonant=${consonant}`
+    );
+    return Promise.resolve(res.data);
   } catch (error) {
-    return Promise.reject(error, "정의 가져오기 실패");
+    return error;
   }
 };
 

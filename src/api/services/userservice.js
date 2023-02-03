@@ -41,8 +41,10 @@ const UserService = {
       shadowColor: shadowColor,
       border: border,
     }),
-  getDictionary: () => {
-    http.get("https://kj273456.pythonanywhere.com/", {});
+  getDictionary: (consonant) => {
+    axios.get(
+      `https://kj273456.pythonanywhere.com/dictionary/1/post/?consonant=${consonant}`
+    );
   },
   deleteDictionary: (consonant, contents) => {
     http.delete("https://kj273456.pythonanywhere.com/", {
@@ -54,7 +56,7 @@ const UserService = {
     http.post("https://kj273456.pythonanywhere.com/", {});
   },
   getNames: (keyword) => {
-    http.get(
+    axios.get(
       `https://kj273456.pythonanywhere.com/dictionary/search/?keyword=${keyword}`
     );
   },

@@ -57,7 +57,9 @@ const SearchPage = () => {
           <Input
             placeholder="다른 사전을 검색해 보세요"
             value={keyword || ""}
-            onChange={(e) => setkeyword(e.target.value)}
+            onChange={(e) => {
+              setkeyword(e.target.value);
+            }}
           />
           <object type="image/svg+xml" data={cancelImg} className="cancelImg" />
         </InputBox>
