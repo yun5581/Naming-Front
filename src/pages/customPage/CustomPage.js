@@ -110,8 +110,8 @@ const CustomPage = () =>{
                     submit_custom();
                 }}>완료</SubmitButton>
                 {/* 리셋용 임시 코드 */}
-                <button onClick={()=> reset()}>리셋</button>
-                <button onClick={()=> Logout()}>로그아웃</button>
+                {/* <button onClick={()=> reset()}>리셋</button>
+                <button onClick={()=> Logout()}>로그아웃</button> */}
                 <FooterWrapper>
                     <Footer/>
                 </FooterWrapper>
