@@ -196,7 +196,7 @@ const Title=styled.div`
     text-align: center;
     div{
         font-size: ${vw(14)};
-        //text-shadow: 0px 1px 9px rgba(0, 0, 0, 0.2), inset 1px 1px 2px rgba(0, 0, 0, 0.53);
+        color: var(--white);
     }
     hr{
         margin-top: 3px;
