@@ -41,9 +41,9 @@ const UserService = {
       shadowColor: shadowColor,
       border: border,
     }),
-  getDictionary: (consonant) => {
+  getDictionary: (dictionaryId, consonant) => {
     axios.get(
-      `https://kj273456.pythonanywhere.com/dictionary/1/post/?consonant=${consonant}`
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/?consonant=${consonant}`
     );
   },
   deleteDictionary: (consonant, contents) => {
