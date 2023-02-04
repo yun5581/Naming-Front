@@ -1,17 +1,42 @@
 import React, {useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { vw, vh } from "../../components/SizeConvert.js";
+//api 
+import { http } from "../../api/http";
 
 //component
 import Footer from "../../components/Footer";
 import TxtInputModal from "../../components/TxtModal/NameInputModal";
+import VisitorDictionary from "../../components/visitorLandingPage/VisitorDictionary";
 
 //image
 import background from "../../images/background.svg";
-import dic from '../../images/VisitorPage/dic_visitor.svg'
 
 const VisitorLandingPage = () => {
-  // 사전 주인 이름
-  const [name, setName] = useState('이름')
+  const navigate = useNavigate();
+  // 사전 정보 가져오기
+  const [name, setName] = useState("이름"); 
+  const [color, setColor] = useState("");
+  const [shapeNum, setShapeNum] = useState(0);
+  const [shapeColor, setShapeColor] = useState(0);
+  const [decoNum, setDecoNum] = useState(0);
+
+  useEffect(() => {
+    const location = window.location.pathname;
+    const id = Number(location.split('/')[3]); //url에서 사전 아이디 받아오기
+    http
+    .get(`https://kj273456.pythonanywhere.com/dictionary/${id}/`)
+    .then((res) => {
+      // setName(res.data.data.firstName);
+      setShapeColor(res.data.data.shadowColor);
+      setColor(res.data.data.color);
+      setShapeNum(res.data.data.shadow);
+      setDecoNum(res.data.data.border);
+    })
+    .catch((error) => {
+    });
+  }, []);
 
   //모달
   const [modal, setModal] = useState(false)
@@ -28,17 +53,19 @@ const VisitorLandingPage = () => {
     <Background>
       <BodyContainer>
         <TitleBox>
-          <span style={{'fontSize':'26px'}}>이름하여 이름하다</span>
+          <span style={{'fontSize':vw(26)}}>이름하여 이름하다</span>
           <Line/>
-          <p style={{'fontSize':'13px'}}>
+          <p style={{'fontSize':vw(13)}}>
             {name}에 대한 나만의 정의로 <br/> 
           {name}의 이름 사전을 채워주세요! </p>
         </TitleBox>
-      <DicContainer>
-        <object type='image/svg+xml' data={dic}>
-          <img src={dic}/>
-        </object>
-      </DicContainer>
+        <VisitorDictionary
+            name={name} 
+            color={color}
+            shapeNum={shapeNum}
+            shapeColor={shapeColor}
+            decoNum={decoNum}
+          />
           <Button onClick={OpenModal}>
             <p>{name}하다 정의 작성하기</p>
           </Button>
@@ -78,37 +105,25 @@ const BodyContainer = styled.div`
 `
 
 const TitleBox = styled.div`
-  margin-top: 91px;
+  margin-top: ${vh(54)};
   font-family: "SF_HambakSnow";
   color: var(--white);
   text-align: center;
-  line-height: 16px;
+  line-height: ${vh(20)};
   p{
-    margin: 0 auto 18px;
+    margin: 0 auto ${vh(18)};
   }
 `
 const Line = styled.div`
 border: 0.5px solid var(--white);
-width: 214px;
-margin: 14px auto 21px;
-`
-const DicContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin: 0 auto 21px;
-
-  img{
-    width: 265.85px;
-    height: 384px;
-  }
+width: ${vw(214)};
+margin: ${vh(14)} auto ${vh(21)};
 `
 
 const Button = styled.div`
   box-sizing: border-box;
-  width: 272px;
-  height: 48px;
+  width: ${vw(272)};
+  aspect-ratio: 7/ 1;
   background-color: var(--white);
   border-radius: 5px;
 
@@ -119,11 +134,13 @@ const Button = styled.div`
   p{
     color: var(--blue);
     font-family:'SF_HambakSnow'}
-    font-size: 13px;
+    font-size: ${vw(13)};
     `
 
 const FooterWrapper = styled.div`
-  margin-top: 60px;
+    position:absolute;
+    bottom: 0;
+    padding-bottom: ${vh(42)};
   `
 
 export default VisitorLandingPage

@@ -319,40 +319,40 @@ const Background = styled.div`
   }
 `;
 const Line = styled.div`
-  height: 100%;
-  width: 1px;
-  margin-left: 5%;
-  background: #404040;
-  box-shadow: 0px 0px 9px #000000;
-`;
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .star {
-    margin-top: ${vh(30)};
-    width: ${vw(3)};
-  }
-`;
-const Title = styled.div`
-  width: ${vw(90)};
-  color: #ffffff;
-  margin-top: ${vh(14)};
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  div {
-    font-size: ${vw(20)};
-    color: var(--white);
-  }
-  hr {
-    margin-top: 3px;
-    width: 110%;
-    border-width: 0 0px 1px 1px;
-    border-color: var(--white);
-  }
+    height: 100%;
+    width: 1px;
+    margin-left: 5%;
+    background: #404040;
+    box-shadow: 0px 0px 9px #000000;
+`
+const Container=styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .star{
+        margin-top: ${vh(30)};
+        width: ${vw(3)};
+    }
+`
+const Title=styled.div`
+    width: ${vw(90)};
+    color: #FFFFFF;
+    margin-top: ${vh(14)};
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    div{
+        font-size: ${vw(20)};
+        color: var(--white);
+    }
+    hr{
+        margin-top: 3px;
+        width: 110%;
+        border-width: 0  0px 1px 1px;
+        border-color: var(--white);
+    }
 `;
 const Shape = styled.div`
   /* border: solid; */

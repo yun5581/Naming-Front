@@ -28,7 +28,7 @@ export const GetUser = async (id, password) => {
 };
 // 커스텀 정보 저장
 export const SubmitCustom = async (
-  userId,
+  firstName,
   color,
   shadow,
   shadowColor,
@@ -36,7 +36,7 @@ export const SubmitCustom = async (
 ) => {
   try {
     const response = await UserService.submitCustom(
-      userId,
+      firstName,
       color,
       shadow,
       shadowColor,
