@@ -12,9 +12,6 @@ import VisitorDictionary from "../../components/visitorLandingPage/VisitorDictio
 
 //image
 import background from "../../images/background.svg";
-import dic from '../../images/VisitorPage/dic_visitor.svg'
-
-var name; var color; var shapeNum; var shapeColor; var decoNum;
 
 const VisitorLandingPage = () => {
   const navigate = useNavigate();
