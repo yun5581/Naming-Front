@@ -21,7 +21,8 @@ const DefinitionPage = () => {
   const { dictionaryId } = useAppSelector((state) => state.dictionary);
   const [isLogin, setIsLogin] = useState(false);
   const [edit, setEdit] = useState(false);
-
+  const { userId, name, token } = useAppSelector((state) => state.user);
+  console.log(userId, name, token);
   const editItem = () => {
     setEdit(!edit);
   };
@@ -51,7 +52,7 @@ const DefinitionPage = () => {
   return (
     <>
       <Background>
-        <Sidebar />
+        {token === undefined ? null : <Sidebar />}
         <NumText>
           <SF_HambakSnow>
             총 <span>{arrCount}</span>개의 문장이 쌓여있어요!
@@ -62,7 +63,7 @@ const DefinitionPage = () => {
           <DicPage>
             <TitleBox>
               <Title>
-                <Pretendard>이름하다</Pretendard>
+                <Pretendard>{name}하다</Pretendard>
               </Title>
               {isLogin ? <EditBtn onClick={editItem}>수정</EditBtn> : null}
             </TitleBox>

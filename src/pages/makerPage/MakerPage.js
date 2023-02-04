@@ -123,24 +123,6 @@ const Content = styled.div`
   }
 `;
 
-const EditBtn = styled.div`
-  font-weight: 400;
-  font-size: ${vw(12)};
-  color: #818181;
-`;
-const Title = styled.div`
-  color: #2b787d;
-  font-weight: 900;
-  font-size: ${vw(20)};
-  text-decoration-line: underline;
-  text-decoration-thickness: 3px;
-`;
-const TitleBox = styled.div`
-  display: flex;
-  margin-bottom: ${vh(29)};
-  align-items: baseline;
-  justify-content: space-between;
-`;
 const Background = styled.div`
   width: 100%;
   height: 100vh;
@@ -153,23 +135,11 @@ const Background = styled.div`
   background-size: cover;
 `;
 
-const NumText = styled.div`
-  color: white;
-  font-weight: 800;
-  font-size: ${vw(18)};
-  margin-top: ${vh(65)};
-  margin-left: ${vw(25)};
-  span {
-    color: #85d2d7;
-  }
-`;
 const DicBook = styled.div`
   display: flex;
+  margin-top: ${vh(80)};
 `;
-const DicIndexWrapper = styled.div`
-  height: ${vh(400)};
-  margin-top: ${vh(40)};
-`;
+
 const DicSidePage = styled.div`
   height: ${vh(400)};
   width: ${vw(25)};
@@ -195,22 +165,4 @@ const FooterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-`;
-
-const Bookmark = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  width: ${vh(25)};
-  cursor: pointer;
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 6%;
-    background: var(--white);
-    border-radius: 0 2px 2px 0;
-    font-size: 2px;
-  }
 `;
