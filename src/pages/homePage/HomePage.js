@@ -19,6 +19,8 @@ import Footer from "../../components/Footer";
 //const copyLinkRef = useRef();
 
 const HomePage = () => {
+  // 유저 아이디 가져오기 
+  const {userId} = useAppSelector((state)=>state.user);
   // 사전 아이디 가져오기
   const { dictionaryId } = useAppSelector((state) => state.dictionary);
 
@@ -47,14 +49,22 @@ const HomePage = () => {
       })
       .catch((error) => {
         alert("사전 커스텀 정보 가져오기 실패");
-        navigate(-1);
+        // navigate(-1); 
       });
   };
+  // 사전 링크 복사하기 
+  const copyLink  = async () => {
+    try {
+      await navigator.clipboard.
+      // 도메인 수정 필요
+      writeText(`http://localhost:3000/${userId}/visitorLanding/${dictionaryId}`);
+      setShow(true);
+    } catch (e) {
+      setShow(false);
+      alert('사전 링크 복사 실패. 버튼을 다시 눌러주세요!');
+    }
+};
   const [show, setShow] = useState(false);
-  const alertMessage = (e) => {
-    setShow(true);
-    return { show };
-  };
   return (
     <>
       <Sidebar />
@@ -65,7 +75,7 @@ const HomePage = () => {
           shapeColor={shapeColor}
           decoNum={decoNum}
         />
-        <ButtonWrapper onClick={alertMessage}>
+        <ButtonWrapper onClick={copyLink}>
           <Button>
             <object type="image/svg+xml" data={getLink} className="getLink" />
             <SF_HambakSnow>내 사전 링크 복사하기</SF_HambakSnow>
@@ -77,7 +87,8 @@ const HomePage = () => {
               사전 링크가 클립보드에 복사되었습니다.
             </SF_HambakSnow>
           ) : (
-            <SF_HambakSnow> </SF_HambakSnow>
+            <SF_HambakSnow>
+             </SF_HambakSnow>
           )}
         </AlertMSG>
         <FooterWrapper>

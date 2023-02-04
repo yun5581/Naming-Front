@@ -45,7 +45,7 @@ const CustomPage = () =>{
     
     // 커스텀 정보 전달 코드
     const submit_custom = ()=>{
-        SubmitCustom(userId, bookColor, shape, shapeColor, deco)
+        SubmitCustom(name, bookColor, shape, shapeColor, deco)
         .then(res=>{
             console.log(res);
             if(res.message=="사전 만들기 성공"){

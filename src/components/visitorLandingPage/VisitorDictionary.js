@@ -4,7 +4,7 @@ import { useAppSelector} from "../../redux/store";
 import {http} from "../../api/http.js";
 import { createPath, NavLink } from "react-router-dom"; 
 //components
-import { vw, vh } from "../../components/SizeConvert";
+import { vw, vh } from "../SizeConvert";
 // data
 import { makrData } from "../../_mock/customInfo";
 // 배경 images
@@ -53,19 +53,9 @@ import Drectangle from "../../images/customPage/deco/Drectangle.svg";
 import Dcircle2 from "../../images/customPage/deco/Dcircle2.svg";
 
 
-const HomeDictionary = props =>{
+const VisitorDictionary = props =>{
     // 사전 꾸미기 정보 가져오기 
-    const {name} = useAppSelector(state=>state.user);
-    // 리덕스에 저장된 정보 가져오기
-    const {colors, shapeNums, shapeColors, decoNums} = useAppSelector(state=>state.dictionary);
-
-    // 리덕스 값으로 설정 
-    // var color = colors;
-    // var shapeNum = shapeNums;
-    // var shapeColor =shapeColors;
-    // var decoNum = decoNums;
-
-    // api 값으로 설정 
+    var name = props.name;
     var color = props.color;
     var shapeNum = props.shapeNum;
     var shapeColor = props.shapeColor;
@@ -172,16 +162,17 @@ const HomeDictionary = props =>{
     )
 }
 
-export default HomeDictionary;
+export default VisitorDictionary;
 
 const Wrapper = styled.div`
     display:flex;
-    height: ${vh(468)};
-	margin: ${vh(110)} 0 ${vh(32)} 0;
+    justify-content: center;
+    height: ${vh(384)};
+	margin: ${vh(26)} 0 ${vh(32)} 0;
     font-family: var(--hb-font);
 `
 const Background = styled.div`
-    height: ${vh(458)};
+    height: ${vh(384)};
     aspect-ratio: 0.63/ 1;
     position: relative;
     z-index: 0;

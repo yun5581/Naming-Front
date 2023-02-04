@@ -26,6 +26,7 @@ const LoginPage = () =>{
         GetUser(id, password)
         .then((res)=>{
             if(res.message=="로그인 성공"){
+
                 window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
                 dispatch(setUser({
                     userId: res.data.user_id,
@@ -120,16 +121,6 @@ const LoginForm = styled.form`
         outline: none;
     }
 `
-// const SaveUser = styled.div`
-//     font-size: ${vw(9)};
-//     zoom: 0.9;
-//     font-family: 'SF_HambakSnow';
-//     color: white;
-//     margin-bottom: 5px;
-//     @media only screen  and (min-width: 700px) and (max-width: 850px){
-//         margin-bottom: 10px;
-//     }
-// `
 const LoginBtn = styled.div`
     display: flex;
     justify-content: center;
