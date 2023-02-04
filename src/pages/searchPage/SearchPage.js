@@ -80,7 +80,9 @@ const SearchPage = () => {
             ) : (
               <div className="resultText">
                 <div className="searchResult">
-                  <SF_HambakSnow>{dataLength}번째 춘향하다</SF_HambakSnow>
+                  <SF_HambakSnow>
+                    {dataLength}번째 {keyword}하다
+                  </SF_HambakSnow>
                 </div>
                 <div className="resultCount">
                   <SF_HambakSnow>쌓인 문장 : {dataLength}개</SF_HambakSnow>
@@ -108,8 +110,9 @@ const ResultWrapper = styled.div`
   border-radius: 5px;
   .nullresult {
     font-size: ${vw(14)};
-    margin: 10px 10px;
+    margin: 10px auto;
     color: #b8b8b8;
+    width: fit-content;
   }
   .resultText {
     display: flex;
