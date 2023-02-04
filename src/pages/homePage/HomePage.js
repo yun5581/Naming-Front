@@ -32,6 +32,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   // 사전 커스텀 정보 관리
+  const [name, setName] = useState("");
   const [color, setColor] = useState("");
   const [shapeNum, setShapeNum] = useState(0);
   const [shapeColor, setShapeColor] = useState(0);
@@ -42,6 +43,7 @@ const HomePage = () => {
     http
       .get(`https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/`)
       .then((res) => {
+        setName(res.data.data.firstName);
         setShapeColor(res.data.data.shadowColor);
         setColor(res.data.data.color);
         setShapeNum(res.data.data.shadow);
@@ -70,6 +72,7 @@ const HomePage = () => {
       <Sidebar />
       <Background>
         <HomeDictionary
+          name={name}
           color={color}
           shapeNum={shapeNum}
           shapeColor={shapeColor}

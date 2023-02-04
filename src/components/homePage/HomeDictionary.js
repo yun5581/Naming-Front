@@ -54,23 +54,18 @@ import Dcircle2 from "../../images/customPage/deco/Dcircle2.svg";
 
 
 const HomeDictionary = props =>{
-    // 사전 꾸미기 정보 가져오기 
-    const {name} = useAppSelector(state=>state.user);
-    // 리덕스에 저장된 정보 가져오기
-    const {colors, shapeNums, shapeColors, decoNums} = useAppSelector(state=>state.dictionary);
-
-    // 리덕스 값으로 설정 
-    // var color = colors;
-    // var shapeNum = shapeNums;
-    // var shapeColor =shapeColors;
-    // var decoNum = decoNums;
-
-    // api 값으로 설정 
+    var name = props.name;
     var color = props.color;
     var shapeNum = props.shapeNum;
     var shapeColor = props.shapeColor;
     var decoNum = props.decoNum;
 
+    // 사전 정보를 다 받아왔는지 확인 하는 함수
+    const checkInfo = () =>{
+        var check = false;
+        shapeNum!=0 ? check = true : check = false;
+        return check;
+    }
     // 사전 표지색 리턴 함수
     const Bcolor =()=>{
         switch(color){
@@ -141,7 +136,7 @@ const HomeDictionary = props =>{
     }
     return(
         <>
-            <Wrapper>
+            <Wrapper className={ !checkInfo() ? 'false' : ''}>
                 <Background style={{
                     backgroundImage: `url(${Bcolor()})`}}>
                 <Line/>
@@ -179,6 +174,9 @@ const Wrapper = styled.div`
     height: ${vh(468)};
 	margin: ${vh(110)} 0 ${vh(32)} 0;
     font-family: var(--hb-font);
+    &.false{
+        visibility: hidden;
+    }
 `
 const Background = styled.div`
     height: ${vh(458)};
@@ -193,7 +191,7 @@ const Background = styled.div`
 const Line = styled.div`
     height: 100%;
     width: 1px;
-    margin-left: 5%;
+    margin-left: 8%;
     background: #404040;
     box-shadow: 0px 0px 9px #000000;
 `

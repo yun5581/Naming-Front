@@ -28,7 +28,7 @@ const VisitorLandingPage = () => {
     http
     .get(`https://kj273456.pythonanywhere.com/dictionary/${id}/`)
     .then((res) => {
-      // setName(res.data.data.firstName);
+      setName(res.data.data.firstName);
       setShapeColor(res.data.data.shadowColor);
       setColor(res.data.data.color);
       setShapeNum(res.data.data.shadow);
@@ -37,6 +37,13 @@ const VisitorLandingPage = () => {
     .catch((error) => {
     });
   }, []);
+
+  // 사전 정보를 다 받아왔는지 확인 하는 함수
+  const checkInfo = () =>{
+    var check = false;
+    shapeNum!=0 ? check = true : check = false;
+    return check;
+  }
 
   //모달
   const [modal, setModal] = useState(false)
@@ -51,7 +58,7 @@ const VisitorLandingPage = () => {
   return(
   <>
     <Background>
-      <BodyContainer>
+      <BodyContainer className={ !checkInfo() ? 'false' : ''}>
         <TitleBox>
           <span style={{'fontSize':vw(26)}}>이름하여 이름하다</span>
           <Line/>
@@ -102,6 +109,9 @@ const Background = styled.div`
 
 const BodyContainer = styled.div`
   margin: 0 auto 0;
+  &.false{
+        visibility: hidden;
+    }
 `
 
 const TitleBox = styled.div`
