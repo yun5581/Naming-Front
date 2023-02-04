@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { useAppSelector } from "../../redux/store";
 import { http } from "../../api/http.js";
 import { createPath, NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
-
 //components
 import { vw, vh } from "../../components/SizeConvert";
 // data
@@ -323,7 +321,7 @@ const Background = styled.div`
 const Line = styled.div`
   height: 100%;
   width: 1px;
-  margin-left: ${vw(20)};
+  margin-left: 5%;
   background: #404040;
   box-shadow: 0px 0px 9px #000000;
 `;
@@ -361,15 +359,12 @@ const Shape = styled.div`
   aspect-ratio: 1 / 1.5;
   height: 56%;
   margin-top: ${vh(12)};
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100%;
-
   .shape {
     width: 50%;
   }
@@ -379,7 +374,6 @@ const Bookfooter = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: ${vh(22)};
-
   color: var(--white);
   div {
     font-size: ${vw(16)};

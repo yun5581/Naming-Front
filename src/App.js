@@ -23,8 +23,6 @@ import DefinitionPage from "./pages/definitionPage/DefinitionPage";
 import VisitorLandingPage from "./pages/visitorPage/VisitorLandingPage";
 // 방문자 정의 첫작성 페이지
 import VisitorFirstPage from "./pages/visitorPage/VisitorFirstPage";
-// 방문자 정의 첫작성 페이지
-import MakerPage from "./pages/makerPage/MakerPage.js";
 
 function App() {
   return (
