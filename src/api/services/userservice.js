@@ -11,37 +11,53 @@ const UserService = {
     window.localStorage.removeItem("token");
     // 유저 정보 초기화
     initUser();
-    // 사전 정보 초기화 
+    // 사전 정보 초기화
     initDictionary();
     window.location.href = "http://localhost:3000/"; //url 수정 필요
   },
   //회원가입
-    postUser: (id, password, name) =>
+  postUser: (id, password, name) =>
     // axios.post('http://127.0.0.1:8000/accounts/signup/', { // (test) local 서버용
-    axios.post('https://kj273456.pythonanywhere.com/accounts/signup/', { 
-        firstName: name,
-        username: id,
-        password: password
-  }),
+    axios.post("https://kj273456.pythonanywhere.com/accounts/signup/", {
+      firstName: name,
+      username: id,
+      password: password,
+    }),
 
   // 로그인
   getUser: (id, password) =>
     // axios.post("http://127.0.0.1:8000/accounts/login/", { // (test) local 서버용
     axios.post("https://kj273456.pythonanywhere.com/accounts/login/", {
       username: id,
-      password: password
-  }),
-  // 커스텀 정보 전달 
-  submitCustom:  (userId, color, shadow, shadowColor, border) =>
+      password: password,
+    }),
+  // 커스텀 정보 전달
+  submitCustom: (userId, color, shadow, shadowColor, border) =>
     // http.post("http://127.0.0.1:8000/dictionary/",{ // (test) local 서버용
-    http.post("https://kj273456.pythonanywhere.com/dictionary/",{ 
-        userId: userId,
-        color: color,
-        shadow: shadow,
-        shadowColor: shadowColor,
-        border: border
-    }
-    )
+    http.post("https://kj273456.pythonanywhere.com/dictionary/", {
+      userId: userId,
+      color: color,
+      shadow: shadow,
+      shadowColor: shadowColor,
+      border: border,
+    }),
+  getDictionary: (consonant) => {
+    axios.get(
+      `https://kj273456.pythonanywhere.com/dictionary/1/post/?consonant=${consonant}`
+    );
+  },
+  deleteDictionary: (consonant, contents) => {
+    http.delete("https://kj273456.pythonanywhere.com/", {
+      consonant,
+      contents,
+    });
+  },
+
+  getNames: (keyword) => {
+    axios.get(
+      `https://kj273456.pythonanywhere.com/dictionary/search/?keyword=${keyword}`
+    );
+  },
 };
 
 export default UserService;
