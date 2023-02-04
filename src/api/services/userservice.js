@@ -58,6 +58,11 @@ const UserService = {
       `https://kj273456.pythonanywhere.com/dictionary/search/?keyword=${keyword}`
     );
   },
+  postLike: (dictionaryId, postId) => {
+    axios.post(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${postId}/likes`
+    );
+  },
 };
 
 export default UserService;

@@ -25,7 +25,6 @@ const SearchPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setkeyword(e.target.value);
-    console.log(keyword);
     getNames(keyword)
       .then((res) => {
         setSearch(true);

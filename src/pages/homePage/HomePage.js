@@ -35,7 +35,6 @@ const HomePage = () => {
   const [shapeColor, setShapeColor] = useState(0);
   const [decoNum, setDecoNum] = useState(0);
 
-  // 사전 커스텀 정보 가져오기
   const getInfo = () => {
     http
       .get(`https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/`)

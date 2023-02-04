@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useResize, vh, vw } from "./SizeConvert";
+import { Logout } from "../api/user";
 
 //components
 import { SF_HambakSnow, Simonetta } from "./Text";
@@ -61,7 +62,7 @@ const Sidebar = (props) => {
               <Link to="/maker">만든이들</Link>
             </SF_HambakSnow>
           </LinkWrapper>
-          <LogoutWrapper>
+          <LogoutWrapper onClick={Logout}>
             <SF_HambakSnow>
               <Link to="/">로그아웃</Link>
             </SF_HambakSnow>
