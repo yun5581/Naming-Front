@@ -184,7 +184,7 @@ const Background = styled.div`
 const Line = styled.div`
     height: 100%;
     width: 1px;
-    margin-left: ${vw(20)};
+    margin-left: 5%;
     background: #404040;
     box-shadow: 0px 0px 9px #000000;
 `
