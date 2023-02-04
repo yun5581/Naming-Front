@@ -99,3 +99,12 @@ export const deleteLike = async () => {
     return Promise.reject(error, "좋아요 취소 실패");
   }
 };
+
+export const PostVisitor = async(dictionaryId, nickname) => {
+  try{
+    const response = await UserService.postVisitor(nickname);
+    return Promise.resolve(response.data);
+  } catch (error) {
+    return Promise.reject(error, "방문자 이름입력 실패");
+  }
+};

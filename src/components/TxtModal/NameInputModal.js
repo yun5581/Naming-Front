@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useAppSelector} from "../../redux/store"; 
 import styled from "styled-components";
 import './NameInputModal.css'
 import { Link } from "react-router-dom";
@@ -8,6 +9,12 @@ import { Pretendard,SF_HambakSnow } from "../Text";
 import GreenBtn from "./GreenBtn";
 //image
 import Xbtn from '../../images/Modal/Xbtn.svg'
+
+//api
+import { PostVisitor } from "../../api/user";
+
+
+
 
 const XButton = ({onClick}) => {
   return (
@@ -36,12 +43,35 @@ const NameInputModal = props => {
   const [isInput, setIsInput] = useState(false)
   const [name,setName] = useState('')
 
+  const {dictionaryId} = useAppSelector(state=>state.dictionary); 
+  console.log(dictionaryId);
+
+  // 방문자 이름
+  const [nickname, setNickname] = useState('');
+
+
+// 방문자 이름 입력 함수
+const inputname = () => {
+  PostVisitor(nickname)
+  .then((res)=>{
+    if(res.message=="닉네임 생성 성공"){
+      setNickname(res.nickname);
+  }
+})
+.catch((error)=>{
+  if(error.response.detail=="자격 인증데이터(authentication credentials)가 제공되지 않았습니다."){
+    alert("이미 존재하는 아이디입니다.");
+}
+  })
+  }
+
+
   const changeButton = (e) => {
     // e.preventDefault();
-    setInput(e.target.value)
-    console.log(input)
+    setNickname(e.target.value)
+    console.log(nickname)
 
-    if (input.length > 0) {
+    if (nickname.length > 0) {
       setIsInput(true);
     } else {
       setIsInput(false);
@@ -89,14 +119,14 @@ const NameInputModal = props => {
                     padding:'0 15px'
                     }}
                     onChange={changeButton}
-                    value={name}
+                    input={nickname}
                     />
                 </InputBox>
               </main>
                 <footer>
                 {isInput ? (
                   <Link to='/visitorfirst'>
-                    <GreenBtn onClick={onClick}>
+                    <GreenBtn onClick={inputname()}>
                         완료
                     </GreenBtn>
                   </Link>

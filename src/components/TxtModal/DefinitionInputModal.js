@@ -99,7 +99,7 @@ const DefinitionInputModal = props => {
                     padding:'0 15px'
                     }}
                     onChange={changeButton}
-                    value={definition}
+                    input={definition}
                     />
                     <InfoCircle/>
                     

@@ -9,9 +9,13 @@ import TxtInputModal from "../../components/TxtModal/NameInputModal";
 import background from "../../images/background.svg";
 import dic from '../../images/VisitorPage/dic_visitor.svg'
 
+
+
 const VisitorLandingPage = () => {
-  // 사전 주인 이름
+  // 사전 주인 이름 
   const [name, setName] = useState('이름')
+
+
 
   //모달
   const [modal, setModal] = useState(false)
