@@ -7,6 +7,7 @@ import { SF_HambakSnow, Pretendard } from "../../components/Text";
 import DefinitionInputModal from "../../components/TxtModal/DefinitionInputModal";
 import { makrData } from "../../_mock/customInfo";
 import { getDictionary } from "../../api/user";
+import { useAppSelector } from "../../redux/store";
 
 //images
 import background from "../../images/background.svg";
@@ -16,6 +17,8 @@ import Footer from "../../components/Footer";
 import plusBtn from "../../images/definePage/+Btn.svg";
 
 const DefinitionPage = () => {
+  // 사전 아이디 가져오기
+  const { dictionaryId } = useAppSelector((state) => state.dictionary);
   const [isLogin, setIsLogin] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -37,7 +40,7 @@ const DefinitionPage = () => {
     const consonant = e.target.getAttribute("data-set");
     const consonantIndex = makrData.filter((data) => data.text === consonant);
     const idx = Object.values(consonantIndex)[0].id;
-    const promise = getDictionary(1, idx);
+    const promise = getDictionary(dictionaryId, idx);
     promise.then((result) => setArrCount(result.data.length));
     promise.then((result) => setData(result.data));
   };
@@ -65,34 +68,36 @@ const DefinitionPage = () => {
             </TitleBox>
             <ContentWrapper>
               <ContentBox>
-                {arrCount ? (
-                  <Content>
-                    <div className="countNum">
-                      <Pretendard>{data.postId}.</Pretendard>
-                    </div>
-                    <div className="comment">
-                      <Pretendard>{data.contents}</Pretendard>
-                    </div>
-                    {edit ? (
-                      <object
-                        type="image/svg+xml"
-                        data={deleteIcon}
-                        className="deleteIcon"
-                      />
-                    ) : (
-                      <div className="like">
-                        <object
-                          type="image/svg+xml"
-                          data={like}
-                          className="likeIcon"
-                        />
-                        <div className="likeNum">
-                          <SF_HambakSnow>{data.likes}</SF_HambakSnow>
+                {arrCount
+                  ? data.map((ele) => {
+                      <Content>
+                        <div className="countNum">
+                          <Pretendard>{ele.postId}.</Pretendard>
                         </div>
-                      </div>
-                    )}
-                  </Content>
-                ) : null}
+                        <div className="comment">
+                          <Pretendard>{ele.contents}</Pretendard>
+                        </div>
+                        {edit ? (
+                          <object
+                            type="image/svg+xml"
+                            data={deleteIcon}
+                            className="deleteIcon"
+                          />
+                        ) : (
+                          <div className="like">
+                            <object
+                              type="image/svg+xml"
+                              data={like}
+                              className="likeIcon"
+                            />
+                            <div className="likeNum">
+                              <SF_HambakSnow>{ele.likes}</SF_HambakSnow>
+                            </div>
+                          </div>
+                        )}
+                      </Content>;
+                    })
+                  : null}
 
                 {isLogin ? null : (
                   <>
