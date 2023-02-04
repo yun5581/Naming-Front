@@ -137,11 +137,13 @@ const Button = styled.div`
   p{
     color: var(--blue);
     font-family:'SF_HambakSnow'}
-    font-size: 13px;
+    font-size: ${vw(13)};
     `
 
 const FooterWrapper = styled.div`
-  margin-top: 60px;
+    position:absolute;
+    bottom: 0;
+    padding-bottom: ${vh(42)};
   `
 
 export default VisitorLandingPage
