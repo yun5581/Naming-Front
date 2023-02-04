@@ -49,7 +49,7 @@ const HomePage = () => {
       })
       .catch((error) => {
         alert("사전 커스텀 정보 가져오기 실패");
-        navigate(-1);
+        // navigate(-1); 
       });
   };
   // 사전 링크 복사하기 
