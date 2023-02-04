@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useResize, vh, vw } from "../../components/SizeConvert";
 import { useSelector } from "react-redux";
-import { getNames } from "../../api/user";
+import { http } from "../../api/http.js";
 
 import Sidebar from "../../components/Sidebar";
 import Footer from "../../components/Footer";
@@ -16,6 +16,8 @@ import { SF_HambakSnow } from "../../components/Text";
 const SearchPage = () => {
   const [search, setSearch] = useState(false);
   const [keyword, setkeyword] = useState();
+  const [data, setdata] = useState();
+  const [dataLength, setdatalength] = useState();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -24,27 +26,30 @@ const SearchPage = () => {
     e.preventDefault();
     setkeyword(e.target.value);
     console.log(keyword);
-    if (keyword === "") {
-      alert("검색어를 입력해주세요!");
-    } else {
-      getNames(keyword)
-        .then((res) => {
-          console.log(res);
-          setSearch(true);
-        })
-        .catch((err) => console.log(err));
-    }
+    getNames(keyword)
+      .then((res) => {
+        setSearch(true);
+        setdata(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const getNames = (keyword) => {
+    if (keyword === undefined) return;
+    http
+      .get(
+        `https://kj273456.pythonanywhere.com/dictionary/search/?keyword=${keyword}/`
+      )
+      .then((res) => {
+        setdatalength(res.data.data.length);
+      })
+      .catch((error) => {
+        alert("검색 실패");
+      });
   };
 
   useEffect(() => {
     if (keyword !== "") {
-      console.log(keyword);
-      getNames("min")
-        .then((res) => {
-          console.log(res);
-          setSearch(true);
-        })
-        .catch((err) => console.log(err));
+      getNames(keyword);
     }
   }, []);
 
@@ -52,7 +57,7 @@ const SearchPage = () => {
     <>
       <Background>
         <Sidebar />
-        <InputBox onSubmit={onSubmit}>
+        <InputBox onChange={onSubmit}>
           <object type="image/svg+xml" data={searchImg} className="searchImg" />
           <Input
             placeholder="다른 사전을 검색해 보세요"
@@ -64,16 +69,26 @@ const SearchPage = () => {
           <object type="image/svg+xml" data={cancelImg} className="cancelImg" />
         </InputBox>
 
-        <ResultWrapper>
-          <div className="resultText">
-            <div className="searchResult">
-              <SF_HambakSnow>번째 춘향하다</SF_HambakSnow>
-            </div>
-            <div className="resultCount">
-              <SF_HambakSnow>쌓인 문장 : 39개</SF_HambakSnow>
-            </div>
-          </div>
-        </ResultWrapper>
+        {keyword === undefined ? null : (
+          <ResultWrapper>
+            {dataLength === 0 ? (
+              <div className="nullresult">
+                <SF_HambakSnow>
+                  {keyword}는 아직 만들어지지 않았습니다.
+                </SF_HambakSnow>
+              </div>
+            ) : (
+              <div className="resultText">
+                <div className="searchResult">
+                  <SF_HambakSnow>{dataLength}번째 춘향하다</SF_HambakSnow>
+                </div>
+                <div className="resultCount">
+                  <SF_HambakSnow>쌓인 문장 : {dataLength}개</SF_HambakSnow>
+                </div>
+              </div>
+            )}
+          </ResultWrapper>
+        )}
 
         <FooterWrapper>
           <Footer />
@@ -91,6 +106,11 @@ const ResultWrapper = styled.div`
   height: ${vh(10000)};
   background: #f2f2f2;
   border-radius: 5px;
+  .nullresult {
+    font-size: ${vw(14)};
+    margin: 10px 10px;
+    color: #b8b8b8;
+  }
   .resultText {
     display: flex;
     width: ${vw(274)};

@@ -7,6 +7,7 @@ import { SF_HambakSnow, Pretendard } from "../../components/Text";
 import DefinitionInputModal from "../../components/TxtModal/DefinitionInputModal";
 import { makrData } from "../../_mock/customInfo";
 import { getDictionary } from "../../api/user";
+import { useAppSelector } from "../../redux/store";
 
 //images
 import background from "../../images/background.svg";
@@ -16,6 +17,8 @@ import Footer from "../../components/Footer";
 import plusBtn from "../../images/definePage/+Btn.svg";
 
 const DefinitionPage = () => {
+  // 사전 아이디 가져오기
+  const { dictionaryId } = useAppSelector((state) => state.dictionary);
   const [isLogin, setIsLogin] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -37,7 +40,7 @@ const DefinitionPage = () => {
     const consonant = e.target.getAttribute("data-set");
     const consonantIndex = makrData.filter((data) => data.text === consonant);
     const idx = Object.values(consonantIndex)[0].id;
-    const promise = getDictionary(1, idx);
+    const promise = getDictionary(dictionaryId, idx);
     promise.then((result) => setArrCount(result.data.length));
     promise.then((result) => setData(result.data));
   };
