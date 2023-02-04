@@ -46,11 +46,10 @@ const UserService = {
       `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/?consonant=${consonant}`
     );
   },
-  deleteDictionary: (consonant, contents) => {
-    http.delete("https://kj273456.pythonanywhere.com/", {
-      consonant,
-      contents,
-    });
+  removeDictionary: (dictionaryId, id) => {
+    http.delete(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}`
+    );
   },
 
   getNames: (keyword) => {

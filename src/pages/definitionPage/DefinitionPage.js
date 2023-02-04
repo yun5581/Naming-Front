@@ -6,7 +6,7 @@ import Sidebar from "../../components/Sidebar";
 import { SF_HambakSnow, Pretendard } from "../../components/Text";
 import DefinitionInputModal from "../../components/TxtModal/DefinitionInputModal";
 import { makrData } from "../../_mock/customInfo";
-import { getDictionary, postLike, deleteDictionary } from "../../api/user";
+import { getDictionary, postLike, removeDictionary } from "../../api/user";
 import { useAppSelector } from "../../redux/store";
 
 //images
@@ -60,14 +60,15 @@ const DefinitionPage = () => {
   };
   const Like = (id) => {
     //setContent({ ...booth, is_liked: true });
+    console.log(id);
     postLike(dictionaryId, id)
       .then()
       .catch((err) => err);
   };
-  const deleteContent = (id) => {
-    deleteDictionary(dictionaryId, id)
-      .then()
-      .catch((err) => alert("삭제 실패", err.data));
+  const removeContent = (e) => {
+    const id = e.target.getAttribute("id");
+    console.log(id);
+    removeDictionary(dictionaryId, id);
   };
   return (
     <>
@@ -102,13 +103,13 @@ const DefinitionPage = () => {
                               <Pretendard>{ele.contents}</Pretendard>
                             </div>
                             {edit ? (
-                              <object
-                                type="image/svg+xml"
-                                data={deleteIcon}
+                              <div
+                                id={ele.id}
                                 className="deleteIcon"
-                              />
+                                onClick={removeContent}
+                              ></div>
                             ) : (
-                              <div className="like">
+                              <div className="like" onClick={Like(ele.id)}>
                                 <object
                                   type="image/svg+xml"
                                   data={like}
@@ -191,7 +192,11 @@ const Content = styled.div`
   margin-bottom: ${vw(16)};
   display: flex;
   align-items: center;
-
+  .deleteIcon {
+    background-image: url(${deleteIcon});
+    width: ${vw(16)};
+    height: ${vw(16)};
+  }
   .countNum {
     margin-left: ${vw(16)};
     margin-right: ${vw(6)};

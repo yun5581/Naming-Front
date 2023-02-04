@@ -37,9 +37,12 @@ function App() {
         <Route exact path="/custom" element={<CustomPage />} />
         <Route exact path="/search" element={<SearchPage />} />
         <Route exact path="/definition" element={<DefinitionPage />} />
-        <Route exact path="/visitorlanding" element={<VisitorLandingPage />} />
+        <Route
+          exact
+          path="/:userId/visitorLanding/:dictionaryId"
+          element={<VisitorLandingPage />}
+        />
         <Route exact path="/visitorfirst" element={<VisitorFirstPage />} />
-        <Route exact path="/maker" element={<MakerPage />} />
       </Routes>
     </Router>
   );

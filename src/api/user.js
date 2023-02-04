@@ -62,7 +62,7 @@ export const getNames = (keyword) => {
 export const postLike = async (dictionaryId, postId) => {
   try {
     const response = await UserService.postLike(dictionaryId, postId);
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   } catch (error) {
     return Promise.reject(error, "좋아요 실패");
   }
@@ -89,13 +89,17 @@ export const getDictionary = async (dictionaryId, consonant) => {
   }
 };
 
-export const deleteDictionary = async (dictionaryId, consonant) => {
+export const removeDictionary = async (dictionaryId, id) => {
   try {
-    const res = await axios.delete(
-      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/?consonant=${consonant}`
+    const res = await UserService.delete(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}`,
+      {
+        data: {
+          id,
+        },
+      }
     );
-    return Promise.resolve(res.data.data);
   } catch (error) {
-    return error;
+    return console.log(error);
   }
 };
