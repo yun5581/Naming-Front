@@ -68,34 +68,36 @@ const DefinitionPage = () => {
             </TitleBox>
             <ContentWrapper>
               <ContentBox>
-                {arrCount ? (
-                  <Content>
-                    <div className="countNum">
-                      <Pretendard>{data.postId}.</Pretendard>
-                    </div>
-                    <div className="comment">
-                      <Pretendard>{data.contents}</Pretendard>
-                    </div>
-                    {edit ? (
-                      <object
-                        type="image/svg+xml"
-                        data={deleteIcon}
-                        className="deleteIcon"
-                      />
-                    ) : (
-                      <div className="like">
-                        <object
-                          type="image/svg+xml"
-                          data={like}
-                          className="likeIcon"
-                        />
-                        <div className="likeNum">
-                          <SF_HambakSnow>{data.likes}</SF_HambakSnow>
+                {arrCount
+                  ? data.map((ele) => {
+                      <Content>
+                        <div className="countNum">
+                          <Pretendard>{ele.postId}.</Pretendard>
                         </div>
-                      </div>
-                    )}
-                  </Content>
-                ) : null}
+                        <div className="comment">
+                          <Pretendard>{ele.contents}</Pretendard>
+                        </div>
+                        {edit ? (
+                          <object
+                            type="image/svg+xml"
+                            data={deleteIcon}
+                            className="deleteIcon"
+                          />
+                        ) : (
+                          <div className="like">
+                            <object
+                              type="image/svg+xml"
+                              data={like}
+                              className="likeIcon"
+                            />
+                            <div className="likeNum">
+                              <SF_HambakSnow>{ele.likes}</SF_HambakSnow>
+                            </div>
+                          </div>
+                        )}
+                      </Content>;
+                    })
+                  : null}
 
                 {isLogin ? null : (
                   <>
