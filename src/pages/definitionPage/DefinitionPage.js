@@ -24,7 +24,7 @@ const DefinitionPage = () => {
   const { name } = useAppSelector((state) => state.user);
   const Login = localStorage.getItem("token"); // 사전 커스텀 정보 가져오기
   const [arrCount, setArrCount] = useState();
-  let [contents, setContent] = useState({});
+  const [contents, setContent] = useState({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -53,9 +53,10 @@ const DefinitionPage = () => {
     const consonant = e.target.getAttribute("data-set");
     const consonantIndex = makrData.filter((data) => data.text === consonant);
     const idx = Object.values(consonantIndex)[0].id;
-    const promise = getDictionary(dictionaryId, idx);
-    promise.then((result) => (contents = result));
-    promise.then((contents) => setArrCount(contents.length));
+    getDictionary(dictionaryId, idx).then((res) => {
+      setContent(res);
+      setArrCount(res.length);
+    });
   };
   const Like = (id) => {
     //setContent({ ...booth, is_liked: true });
@@ -84,7 +85,7 @@ const DefinitionPage = () => {
               <Title>
                 <Pretendard>{name}하다</Pretendard>
               </Title>
-              {isLogin ? <EditBtn onClick={editItem}>수정</EditBtn> : null}
+              {Login ? <EditBtn onClick={editItem}>수정</EditBtn> : null}
             </TitleBox>
             <ContentWrapper>
               <ContentBox>
