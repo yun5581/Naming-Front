@@ -6,9 +6,10 @@ import Sidebar from "../../components/Sidebar";
 import { SF_HambakSnow, Pretendard } from "../../components/Text";
 import DefinitionInputModal from "../../components/TxtModal/DefinitionInputModal";
 import { makrData } from "../../_mock/customInfo";
-import { getDictionary, postLike, removeDictionary } from "../../api/user";
+import { getDictionary, postLike } from "../../api/user";
 import { useAppSelector } from "../../redux/store";
-
+import { http } from "../../api/http";
+import axios from "axios";
 //images
 import background from "../../images/background.svg";
 import like from "../../images/like.svg";
@@ -28,7 +29,6 @@ const DefinitionPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
     getDictionary(dictionaryId, 1).then((res) => {
       setContent(res);
       setArrCount(res.length);
@@ -58,17 +58,25 @@ const DefinitionPage = () => {
       setArrCount(res.length);
     });
   };
-  const Like = (id) => {
-    //setContent({ ...booth, is_liked: true });
+  const Like = (e) => {
+    const id = e.target.getAttribute("id");
     console.log(id);
-    postLike(dictionaryId, id)
-      .then()
-      .catch((err) => err);
+    axios.post(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}/like`
+    );
+    setTimeout(() => {
+      window.location.reload();
+    }, 300);
   };
   const removeContent = (e) => {
     const id = e.target.getAttribute("id");
     console.log(id);
-    removeDictionary(dictionaryId, id);
+    http.delete(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}`
+    );
+    setTimeout(() => {
+      window.location.reload();
+    }, 300);
   };
   return (
     <>
@@ -109,13 +117,9 @@ const DefinitionPage = () => {
                                 onClick={removeContent}
                               ></div>
                             ) : (
-                              <div className="like" onClick={Like(ele.id)}>
-                                <object
-                                  type="image/svg+xml"
-                                  data={like}
-                                  className="likeIcon"
-                                />
-                                <div className="likeNum">
+                              <div className="like" onClick={Like} id={ele.id}>
+                                <div className="likeImg" id={ele.id}></div>
+                                <div className="likeNum" id={ele.id}>
                                   <SF_HambakSnow>{ele.likes}</SF_HambakSnow>
                                 </div>
                               </div>
@@ -143,7 +147,9 @@ const DefinitionPage = () => {
               {makrData.map((mark) => {
                 return (
                   <div data-set={mark.text} onClick={changeConsonant}>
-                    {mark.text}
+                    <SF_HambakSnow data-set={mark.text}>
+                      {mark.text}
+                    </SF_HambakSnow>
                   </div>
                 );
               })}
@@ -205,6 +211,12 @@ const Content = styled.div`
   }
   .likeIcon {
     width: ${vw(13)};
+  }
+  .likeImg {
+    background-image: url(${like});
+    background-repeat: none;
+    width: ${vw(16)};
+    height: ${vw(16)};
   }
   .likeNum {
     font-weight: 800;
