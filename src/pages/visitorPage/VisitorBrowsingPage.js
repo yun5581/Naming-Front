@@ -1,9 +1,7 @@
 import React from "react";
 
 const VisitorBrowsingPage = () => {
-    return(
-        <div></div>
-    )
-}
+  return <div></div>;
+};
 
-export default VisitorBrowsingPage
+export default VisitorBrowsingPage;

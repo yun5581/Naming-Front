@@ -25,7 +25,6 @@ const SearchPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setkeyword(e.target.value);
-    console.log(keyword);
     getNames(keyword)
       .then((res) => {
         setSearch(true);
@@ -34,7 +33,10 @@ const SearchPage = () => {
       .catch((err) => console.log(err));
   };
   const getNames = (keyword) => {
-    if (keyword === undefined) return;
+    if (keyword === undefined) {
+      setSearch(false);
+      return;
+    }
     http
       .get(
         `https://kj273456.pythonanywhere.com/dictionary/search/?keyword=${keyword}/`
@@ -50,6 +52,7 @@ const SearchPage = () => {
   useEffect(() => {
     if (keyword !== "") {
       getNames(keyword);
+      setSearch(true);
     }
   }, []);
 
