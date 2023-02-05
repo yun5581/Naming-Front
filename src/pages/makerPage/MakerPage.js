@@ -22,7 +22,7 @@ const MakerPage = () => {
   const getPeople = () => {
     http
       .get(
-        `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/people`
+        `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/people/`
       )
       .then((res) => {
         setData(res.data.data);
@@ -42,15 +42,17 @@ const MakerPage = () => {
           <DicSidePage></DicSidePage>
           <DicPage>
             <ContentWrapper>
-              {data
-                ? data.map((ele) => {
-                    <ContentBox>
-                      <Content>
-                        <SF_HambakSnow>ele</SF_HambakSnow>
-                      </Content>
-                    </ContentBox>;
-                  })
-                : null}
+              <ContentBox>
+                {data
+                  ? data.map((ele) => {
+                      return (
+                        <Content>
+                          <SF_HambakSnow>{ele.nickname}</SF_HambakSnow>
+                        </Content>
+                      );
+                    })
+                  : null}
+              </ContentBox>
             </ContentWrapper>
           </DicPage>
         </DicBook>
