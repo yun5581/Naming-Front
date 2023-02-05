@@ -23,6 +23,7 @@ import DefinitionPage from "./pages/definitionPage/DefinitionPage";
 import VisitorLandingPage from "./pages/visitorPage/VisitorLandingPage";
 // 방문자 정의 첫작성 페이지
 import VisitorFirstPage from "./pages/visitorPage/VisitorFirstPage";
+import TestPage from "./pages/TestPage";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
                 path="/:userId/visitorLanding/:dictionaryId"
                 element={<VisitorLandingPage />} />
         <Route exact path="/visitorfirst" element={<VisitorFirstPage />} />
+        <Route exact path="/test" element={<TestPage/>}/>
       </Routes>
     </Router>
   );
