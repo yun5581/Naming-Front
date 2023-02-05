@@ -66,7 +66,7 @@ const DefinitionPage = () => {
     );
     setTimeout(() => {
       window.location.reload();
-    }, 800);
+    }, 300);
   };
   const removeContent = (e) => {
     const id = e.target.getAttribute("id");
@@ -76,7 +76,7 @@ const DefinitionPage = () => {
     );
     setTimeout(() => {
       window.location.reload();
-    }, 800);
+    }, 300);
   };
   return (
     <>
@@ -147,7 +147,9 @@ const DefinitionPage = () => {
               {makrData.map((mark) => {
                 return (
                   <div data-set={mark.text} onClick={changeConsonant}>
-                    {mark.text}
+                    <SF_HambakSnow data-set={mark.text}>
+                      {mark.text}
+                    </SF_HambakSnow>
                   </div>
                 );
               })}
