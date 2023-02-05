@@ -6,9 +6,10 @@ import Sidebar from "../../components/Sidebar";
 import { SF_HambakSnow, Pretendard } from "../../components/Text";
 import DefinitionInputModal from "../../components/TxtModal/DefinitionInputModal";
 import { makrData } from "../../_mock/customInfo";
-import { getDictionary, postLike, removeDictionary } from "../../api/user";
+import { getDictionary, postLike } from "../../api/user";
 import { useAppSelector } from "../../redux/store";
-
+import { http } from "../../api/http";
+import axios from "axios";
 //images
 import background from "../../images/background.svg";
 import like from "../../images/like.svg";
@@ -28,7 +29,6 @@ const DefinitionPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
     getDictionary(dictionaryId, 1).then((res) => {
       setContent(res);
       setArrCount(res.length);
@@ -58,17 +58,19 @@ const DefinitionPage = () => {
       setArrCount(res.length);
     });
   };
-  const Like = (id) => {
-    //setContent({ ...booth, is_liked: true });
+  const Like = (e) => {
+    const id = e.target.getAttribute("id");
     console.log(id);
-    postLike(dictionaryId, id)
-      .then()
-      .catch((err) => err);
+    axios.post(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}/like`
+    );
   };
   const removeContent = (e) => {
     const id = e.target.getAttribute("id");
     console.log(id);
-    removeDictionary(dictionaryId, id);
+    http.delete(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}`
+    );
   };
   return (
     <>
@@ -109,7 +111,7 @@ const DefinitionPage = () => {
                                 onClick={removeContent}
                               ></div>
                             ) : (
-                              <div className="like" onClick={Like(ele.id)}>
+                              <div className="like" onClick={Like} id={ele.id}>
                                 <object
                                   type="image/svg+xml"
                                   data={like}
