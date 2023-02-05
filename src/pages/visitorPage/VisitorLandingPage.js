@@ -2,6 +2,7 @@ import React, {useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { vw, vh } from "../../components/SizeConvert.js";
+import { useAppDispatch } from "../../redux/store.js";
 //api 
 import { http } from "../../api/http";
 
@@ -12,9 +13,11 @@ import VisitorDictionary from "../../components/visitorLandingPage/VisitorDictio
 
 //image
 import background from "../../images/background.svg";
+import { setVisit_dictionaryID } from "../../redux/dictionarySlice.js";
 
 const VisitorLandingPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   // 사전 정보 가져오기
   const [name, setName] = useState("이름"); 
   const [color, setColor] = useState("");
@@ -25,6 +28,9 @@ const VisitorLandingPage = () => {
   useEffect(() => {
     const location = window.location.pathname;
     const id = Number(location.split('/')[3]); //url에서 사전 아이디 받아오기
+    dispatch(setVisit_dictionaryID({
+      visit_dictionaryId: id,
+    }))
     http
     .get(`https://kj273456.pythonanywhere.com/dictionary/${id}/`)
     .then((res) => {
