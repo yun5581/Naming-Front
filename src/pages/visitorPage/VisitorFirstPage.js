@@ -1,7 +1,11 @@
 import React, {useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
+import { getDictionary } from "../../api/user";
+//redux
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 //component
 import { Pretendard,SF_HambakSnow} from "../../components/Text";
 import Footer from "../../components/Footer";
@@ -24,9 +28,22 @@ const GreenBtn = ({ children, onClick, margin }) => {
 
 
 const VisitorFirstPage = () => {
+  const { dictionaryId } = useAppSelector((state) => state.dictionary);
+  const { name } = useAppSelector((state) => state.user);
   const [page,setPage] = useState(1)
   const [input,setInput] = useState(0)
   const [isInput, setIsInput] = useState(true)
+  const [consonant,setConsonant] = useState('ㄴ')
+  const [example,setExample] = useState('(ex. 넉살이 좋은, 나눔을 잘하는, 노는 것을 좋아하는)')
+
+  useEffect(()=>{
+    ranConsonant()
+    },[])
+  const ranConsonant = () =>{
+    const n = Math.floor(Math.random()*15)
+    setConsonant(consonants[n].con)
+    setExample(consonants[n].ex)
+  }
 
   const changeButton = (e) => {
     // e.preventDefault();
@@ -40,9 +57,6 @@ const VisitorFirstPage = () => {
     }
   };
 
-  const name = '멋진 사자'
-  const consonant = 'ㄴ'
-
 
   const Next = () =>{
     setPage(page+1)
@@ -51,9 +65,8 @@ const VisitorFirstPage = () => {
 
 
   const pages = () => {
-    
+   
 
-    console.log(page)
     
     if (page === 1){
       return (
@@ -135,7 +148,7 @@ const VisitorFirstPage = () => {
           size='10px'
           height = '12px'
           style={{marginBottom:'80px'}}>
-            <br/> (ex. 넉살이 좋은, 나눔을 잘하는, 노는 것을 좋아하는)
+            <br/> {example}
           </Pretendard>
           </TextBox>
           <InputBox>
@@ -221,6 +234,23 @@ const VisitorFirstPage = () => {
 }
 
 export default VisitorFirstPage
+
+const consonants = [
+  {'con':'ㄱ','ex':"(ex. 관대한, 꼼꼼한, 개나리를 좋아하는)"},
+  {'con':'ㄴ','ex':"(ex. 넉살이 좋은, 나눔을 잘하는, 노는 것을 좋아하는)"},
+  {'con':'ㄷ','ex':"(ex. 다정한, 독창적인, 똑똑한, 다람쥐를 닮은)"},
+  {'con':'ㄹ','ex':"(ex. 로망, 리코더를 잘 부는, 레몬색이 잘 어울리는)"},
+  {'con':'ㅁ','ex':"(ex. 마음이 따뜻한, 멋진, 미식가, 믿을만한)"},
+  {'con':'ㅂ','ex':"(ex. 배려를 잘하는, 박식한, 보라색을 좋아하는)"},
+  {'con':'ㅅ','ex':"(ex. 사려깊은, 신중한, 생기있는, 수다쟁이)"},
+  {'con':'ㅇ','ex':"(ex. 용감한, 영리한, 애정이 넘치는, 옷을 잘 입는)"},
+  {'con':'ㅈ','ex':"(ex. 적극적인, 재치있는, 정확한 계산을 잘하는)"},
+  {'con':'ㅊ','ex':"(ex. 천진난만한, 초록색을 좋아하는, 창의적인)"},
+  {'con':'ㅋ','ex':"(ex. 쾌활한, 쿠키를 잘 만드는)"},
+  {'con':'ㅌ','ex':"(ex. 타고난, 특이한, 태권도를 잘하는)"},
+  {'con':'ㅍ','ex':"(ex. 편견이 없는, 폼생폼사, 피자를 좋아하는)"},
+  {'con':'ㅎ','ex':"(ex. 활동적인, 합리적인, 하늘색이 잘 어울리는)"},
+]
 
 const Background = styled.div`
   width: 100%;
