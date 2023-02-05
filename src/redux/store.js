@@ -8,10 +8,12 @@ import { persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
 import userReducer from "./userSlice";
 import dictionaryReducer from "./dictionarySlice";
+import visitorReducer from "./visitorSlice";
 
 const reducers = combineReducers({
   user: userReducer,
   dictionary: dictionaryReducer,
+  visitor: visitorReducer,
 });
 
 const persistConfig = {

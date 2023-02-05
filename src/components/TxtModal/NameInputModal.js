@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useAppSelector} from "../../redux/store"; 
 import styled from "styled-components";
 import './NameInputModal.css'
-import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+//redux
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { setVisitor } from "../../redux/visitorSlice";
 //components
 import { Pretendard,SF_HambakSnow } from "../Text";
 import GreenBtn from "./GreenBtn";
 //image
 import Xbtn from '../../images/Modal/Xbtn.svg'
-
-//api
-import { PostVisitor } from "../../api/user";
-
-
-
+import axios from "axios";
 
 const XButton = ({onClick}) => {
   return (
@@ -39,44 +35,41 @@ const NameInputModal = props => {
     };
   }, []);
 
-  const [input,setInput] = useState(0)
-  const [isInput, setIsInput] = useState(false)
-  const [name,setName] = useState('')
+  const [name,setName] = useState('');
 
-  const {dictionaryId} = useAppSelector(state=>state.dictionary); 
-  console.log(dictionaryId);
-
-  // 방문자 이름
-  const [nickname, setNickname] = useState('');
-
-
-// 방문자 이름 입력 함수
-const inputname = () => {
-  PostVisitor(nickname)
-  .then((res)=>{
-    if(res.message=="닉네임 생성 성공"){
-      setNickname(res.nickname);
-  }
-})
-.catch((error)=>{
-  if(error.response.detail=="자격 인증데이터(authentication credentials)가 제공되지 않았습니다."){
-    alert("이미 존재하는 아이디입니다.");
-}
-  })
-  }
-
-
+  // 여기서부터 코드 수정 + 추가 코드 작성, 포맷팅은 윤이 편한대로 하셔요!
+  // state로 관리하는 경우 1개씩 밀려서 코드를 수정함
   const changeButton = (e) => {
-    // e.preventDefault();
-    setNickname(e.target.value)
-    console.log(nickname)
-
-    if (nickname.length > 0) {
-      setIsInput(true);
-    } else {
-      setIsInput(false);
-    }
+    var isInput=false;
+    name != "" ? isInput=true : isInput=false;
+    return isInput;
   };
+
+  // 페이지 라우팅 navigate
+  const navigate = useNavigate();
+  // visitor redux 
+  const dispatch = useAppDispatch();
+  const {nickname} = useAppSelector(state=>state.visitor);  // nickname 저장되었는지 확인용 코드
+  const {dictionaryId} = useAppSelector(state=>state.dictionary);  // 써줄 사전 아이디
+
+  // 작성자 이름 전달 함수
+  const submitName = () => {
+    // 리덕스에 작성자 이름 저장 
+    dispatch(setVisitor({
+      nickname: name
+    }));
+    // 충돌 날까봐 api 연결 여기다 바로했어요 ~ 
+    axios.post(`https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/people`, {
+      nickname: nickname
+      }).then((res)=>{
+          console.log(res);
+          navigate("/visitorfirst");
+      })
+      .catch((error)=>{
+        console.log(error);
+        alert("작성자 이름 저장 실패");
+      })
+  }
 
   return (
     <>
@@ -109,7 +102,7 @@ const inputname = () => {
                   {subtext}
                 </Pretendard>
                 <InputBox>
-                  <input placeholder="내용을 입력해주세요" style={{
+                  <input placeholder="이름을 입력해주세요" style={{
                     width: '100%',
                     backgroundColor:'transparent', 
                     color:'var(--black)',
@@ -118,18 +111,19 @@ const inputname = () => {
                     fontSize:'16px',
                     padding:'0 15px'
                     }}
-                    onChange={changeButton}
-                    input={nickname}
+                    onChange={(e)=>{setName(e.target.value)}}
+                    value={name}
                     />
                 </InputBox>
               </main>
                 <footer>
-                {isInput ? (
-                  <Link to='/visitorfirst'>
-                    <GreenBtn onClick={inputname()}>
-                        완료
-                    </GreenBtn>
-                  </Link>
+                {changeButton() ? (
+                  <GreenBtn onClick={()=>{submitName()}}>
+                    완료
+                  </GreenBtn>
+                  /* Link 대신 이름 값 전달 성공하면 페이지 이동하는걸로 변경 */
+                  // <Link to='/visitorfirst'>
+                  // </Link>
                  ):(
                   <DisabledBtn>
                   완료
@@ -158,7 +152,7 @@ const InputBox = styled.div`
   background-color: var(--gray0);
 
   display: flex;
-  align-items: center;
+  //align-items: center; input창이랑 div 크기 맞추려고 주석 처리함
   margin: 0 auto;
 
 `
