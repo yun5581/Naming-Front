@@ -13,13 +13,7 @@ import VisitorDictionary from "../../components/visitorLandingPage/VisitorDictio
 //image
 import background from "../../images/background.svg";
 
-
-
 const VisitorLandingPage = () => {
-<<<<<<< HEAD
-  // 사전 주인 이름 
-  const [name, setName] = useState('이름')
-=======
   const navigate = useNavigate();
   // 사전 정보 가져오기
   const [name, setName] = useState("이름"); 
@@ -43,9 +37,6 @@ const VisitorLandingPage = () => {
     .catch((error) => {
     });
   }, []);
->>>>>>> 0eadf64aacb77929c7ff81044489361247421574
-
-
 
   //모달
   const [modal, setModal] = useState(false)

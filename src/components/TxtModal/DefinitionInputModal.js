@@ -3,6 +3,8 @@ import styled from "styled-components";
 import './DefinitionInputModal.css'
 import { Link } from "react-router-dom";
 
+//redux
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 //components
 import { Pretendard,SF_HambakSnow } from "../Text";
 import GreenBtn from "./GreenBtn";
@@ -53,8 +55,7 @@ const DefinitionInputModal = props => {
       setIsInput(false);
     }
   };
-
-
+  
   return (
     <>
       <div className={open ? "openModal modal" : "modal"}>
@@ -166,3 +167,4 @@ const InfoCircle = styled.div`
   background-image: url(${infoCircleGrey});
   background-repeat: no-repeat ;
 `
+

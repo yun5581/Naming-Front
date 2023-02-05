@@ -78,15 +78,6 @@ export const deleteLike = async (dictionaryId, postId) => {
   }
 };
 
-export const PostVisitor = async(dictionaryId, nickname) => {
-  try{
-    const response = await UserService.postVisitor(nickname);
-    return Promise.resolve(response.data);
-  } catch (error) {
-    return Promise.reject(error, "방문자 이름입력 실패");
-  }
-};
-
 export const getDictionary = async (dictionaryId, consonant) => {
   try {
     const res = await axios.get(
@@ -112,4 +103,3 @@ export const removeDictionary = async (dictionaryId, id) => {
     return console.log(error);
   }
 };
-
