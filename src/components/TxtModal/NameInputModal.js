@@ -58,7 +58,7 @@ const NameInputModal = props => {
     dispatch(setVisitor({
       nickname: name
     }));
-    axios.post(`https://kj273456.pythonanywhere.com/dictionary/${visit_dictionaryId}/people`, {
+    axios.post(`https://kj273456.pythonanywhere.com/dictionary/${visit_dictionaryId}/people/`, {
       nickname: nickname
       }).then((res)=>{
           console.log(res);
