@@ -28,7 +28,7 @@ export const GetUser = async (id, password) => {
 };
 // 커스텀 정보 저장
 export const SubmitCustom = async (
-  userId,
+  firstName,
   color,
   shadow,
   shadowColor,
@@ -36,7 +36,7 @@ export const SubmitCustom = async (
 ) => {
   try {
     const response = await UserService.submitCustom(
-      userId,
+      firstName,
       color,
       shadow,
       shadowColor,
@@ -45,28 +45,6 @@ export const SubmitCustom = async (
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error, "커스텀 정보 저장 실패");
-  }
-};
-
-//정의 삭제
-export const deleteDictionary = async (consonant, contents) => {
-  try {
-    const response = await UserService.deleteDictionary(consonant, contents);
-    return Promise.resolve(response);
-  } catch (error) {
-    return Promise.reject(error, "정의 등록 실패");
-  }
-};
-
-//자음으로 시작하는 정의들 모아서 보여주기
-export const getDictionary = async (dictionaryId, consonant) => {
-  try {
-    const res = await axios.get(
-      `https://kj273456.pythonanywhere.com/dictionary/1/post/?consonant=${consonant}`
-    );
-    return Promise.resolve(res.data);
-  } catch (error) {
-    return error;
   }
 };
 
@@ -81,19 +59,19 @@ export const getNames = (keyword) => {
 };
 
 //정의 좋아요
-export const postLike = async () => {
+export const postLike = async (dictionaryId, postId) => {
   try {
-    const response = await UserService.postLike();
-    return Promise.resolve(response.data);
+    const response = await UserService.postLike(dictionaryId, postId);
+    return Promise.resolve(response);
   } catch (error) {
     return Promise.reject(error, "좋아요 실패");
   }
 };
 
 //정의 좋아요 취소
-export const deleteLike = async () => {
+export const deleteLike = async (dictionaryId, postId) => {
   try {
-    const response = await UserService.deleteLike();
+    const response = await UserService.deleteLike(dictionaryId, postId);
     return Promise.resolve(response);
   } catch (error) {
     return Promise.reject(error, "좋아요 취소 실패");
@@ -108,3 +86,30 @@ export const PostVisitor = async(dictionaryId, nickname) => {
     return Promise.reject(error, "방문자 이름입력 실패");
   }
 };
+
+export const getDictionary = async (dictionaryId, consonant) => {
+  try {
+    const res = await axios.get(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/?consonant=${consonant}`
+    );
+    return Promise.resolve(res.data.data);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const removeDictionary = async (dictionaryId, id) => {
+  try {
+    const res = await UserService.delete(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}`,
+      {
+        data: {
+          id,
+        },
+      }
+    );
+  } catch (error) {
+    return console.log(error);
+  }
+};
+

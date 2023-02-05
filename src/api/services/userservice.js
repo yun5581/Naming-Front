@@ -32,10 +32,10 @@ const UserService = {
       password: password,
     }),
   // 커스텀 정보 전달
-  submitCustom: (userId, color, shadow, shadowColor, border) =>
+  submitCustom: (firstName, color, shadow, shadowColor, border) =>
     // http.post("http://127.0.0.1:8000/dictionary/",{ // (test) local 서버용
     http.post("https://kj273456.pythonanywhere.com/dictionary/", {
-      userId: userId,
+      firstName: firstName,
       color: color,
       shadow: shadow,
       shadowColor: shadowColor,
@@ -46,16 +46,20 @@ const UserService = {
       `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/?consonant=${consonant}`
     );
   },
-  deleteDictionary: (consonant, contents) => {
-    http.delete("https://kj273456.pythonanywhere.com/", {
-      consonant,
-      contents,
-    });
+  removeDictionary: (dictionaryId, id) => {
+    http.delete(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}`
+    );
   },
 
   getNames: (keyword) => {
     axios.get(
       `https://kj273456.pythonanywhere.com/dictionary/search/?keyword=${keyword}`
+    );
+  },
+  postLike: (dictionaryId, postId) => {
+    axios.post(
+      `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${postId}/likes`
     );
   },
 };
