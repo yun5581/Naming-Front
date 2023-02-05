@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { vw, vh } from "../../components/SizeConvert.js";
 import { useAppDispatch } from "../../redux/store.js";
 //api 
-import { http } from "../../api/http";
 import axios from "axios";
 
 //component
