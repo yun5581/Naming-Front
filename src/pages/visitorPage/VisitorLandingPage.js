@@ -5,6 +5,7 @@ import { vw, vh } from "../../components/SizeConvert.js";
 import { useAppDispatch } from "../../redux/store.js";
 //api 
 import { http } from "../../api/http";
+import axios from "axios";
 
 //component
 import Footer from "../../components/Footer";
@@ -31,7 +32,7 @@ const VisitorLandingPage = () => {
     dispatch(setVisit_dictionaryID({
       visit_dictionaryId: id,
     }))
-    http
+    axios
     .get(`https://kj273456.pythonanywhere.com/dictionary/${id}/`)
     .then((res) => {
       setName(res.data.data.firstName);
