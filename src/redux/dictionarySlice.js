@@ -33,7 +33,7 @@ export const dictionarySlice = createSlice({
       state.shapeColors = action.payload.shapeColors;
       state.decoNums = action.payload.decoNums;
     },
-    setVisit_DictionaryID: (state, action) => {
+    setVisit_dictionaryID: (state, action) => {
       state.visit_dictionaryId = action.payload.visit_dictionaryId;
     }
   },
@@ -42,6 +42,6 @@ export const dictionarySlice = createSlice({
   },
 });
 
-export const { setDictionaryID, setOption, initDictionary, setDictionary, setVisit_DictionaryID } = dictionarySlice.actions;
+export const { setDictionaryID, setOption, initDictionary, setDictionary, setVisit_dictionaryID } = dictionarySlice.actions;
 
 export default dictionarySlice.reducer;
