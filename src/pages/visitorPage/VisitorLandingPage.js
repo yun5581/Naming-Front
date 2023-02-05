@@ -2,6 +2,7 @@ import React, {useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { vw, vh } from "../../components/SizeConvert.js";
+import { useAppDispatch } from "../../redux/store.js";
 //api 
 import { http } from "../../api/http";
 
@@ -12,9 +13,11 @@ import VisitorDictionary from "../../components/visitorLandingPage/VisitorDictio
 
 //image
 import background from "../../images/background.svg";
+import { setVisit_dictionaryID } from "../../redux/dictionarySlice.js";
 
 const VisitorLandingPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   // 사전 정보 가져오기
   const [name, setName] = useState("이름"); 
   const [color, setColor] = useState("");
@@ -25,10 +28,13 @@ const VisitorLandingPage = () => {
   useEffect(() => {
     const location = window.location.pathname;
     const id = Number(location.split('/')[3]); //url에서 사전 아이디 받아오기
+    dispatch(setVisit_dictionaryID({
+      visit_dictionaryId: id,
+    }))
     http
     .get(`https://kj273456.pythonanywhere.com/dictionary/${id}/`)
     .then((res) => {
-      // setName(res.data.data.firstName);
+      setName(res.data.data.firstName);
       setShapeColor(res.data.data.shadowColor);
       setColor(res.data.data.color);
       setShapeNum(res.data.data.shadow);
@@ -37,6 +43,13 @@ const VisitorLandingPage = () => {
     .catch((error) => {
     });
   }, []);
+
+  // 사전 정보를 다 받아왔는지 확인 하는 함수
+  const checkInfo = () =>{
+    var check = false;
+    shapeNum!=0 ? check = true : check = false;
+    return check;
+  }
 
   //모달
   const [modal, setModal] = useState(false)
@@ -51,7 +64,7 @@ const VisitorLandingPage = () => {
   return(
   <>
     <Background>
-      <BodyContainer>
+      <BodyContainer className={ !checkInfo() ? 'false' : ''}>
         <TitleBox>
           <span style={{'fontSize':vw(26)}}>이름하여 이름하다</span>
           <Line/>
@@ -102,6 +115,9 @@ const Background = styled.div`
 
 const BodyContainer = styled.div`
   margin: 0 auto 0;
+  &.false{
+        visibility: hidden;
+    }
 `
 
 const TitleBox = styled.div`

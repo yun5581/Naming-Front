@@ -176,7 +176,6 @@ const ContentBox = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-
   &::-webkit-scrollbar {
     width: 6px;
     height: 100%;
@@ -303,7 +302,6 @@ const FooterWrapper = styled.div`
   margin-top: 30px;
   padding-bottom: 30px;
   position: relative;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

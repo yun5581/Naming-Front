@@ -25,6 +25,8 @@ import VisitorLandingPage from "./pages/visitorPage/VisitorLandingPage";
 import VisitorFirstPage from "./pages/visitorPage/VisitorFirstPage";
 // 방문자 정의 모아보기 페이지
 import MakerPage from "./pages/makerPage/MakerPage";
+// 테스트 페이지
+import TestPage from "./pages/TestPage";
 
 function App() {
   return (
@@ -43,6 +45,7 @@ function App() {
           element={<VisitorLandingPage />}
         />
         <Route exact path="/visitorfirst" element={<VisitorFirstPage />} />
+        <Route exact path="/test" element={<TestPage/>}/>
         <Route exact path="/maker" element={<MakerPage />} />
       </Routes>
     </Router>

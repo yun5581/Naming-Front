@@ -37,7 +37,7 @@ const NameInputModal = props => {
 
   const [name,setName] = useState('');
 
-  // 여기서부터 코드 수정 + 추가 코드 작성, 포맷팅은 윤이 편한대로 하셔요!
+  // 여기서부터 코드 수정 + 추가 코드 작성
   // state로 관리하는 경우 1개씩 밀려서 코드를 수정함
   const changeButton = (e) => {
     var isInput=false;
@@ -50,7 +50,7 @@ const NameInputModal = props => {
   // visitor redux 
   const dispatch = useAppDispatch();
   const {nickname} = useAppSelector(state=>state.visitor);  // nickname 저장되었는지 확인용 코드
-  const {dictionaryId} = useAppSelector(state=>state.dictionary);  // 써줄 사전 아이디
+  const {visit_dictionaryId} = useAppSelector(state=>state.dictionary);  // 써줄 사전 아이디
 
   // 작성자 이름 전달 함수
   const submitName = () => {
@@ -58,8 +58,7 @@ const NameInputModal = props => {
     dispatch(setVisitor({
       nickname: name
     }));
-    // 충돌 날까봐 api 연결 여기다 바로했어요 ~ 
-    axios.post(`https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/people`, {
+    axios.post(`https://kj273456.pythonanywhere.com/dictionary/${visit_dictionaryId}/people/`, {
       nickname: nickname
       }).then((res)=>{
           console.log(res);
