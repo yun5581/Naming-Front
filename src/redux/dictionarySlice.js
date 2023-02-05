@@ -10,6 +10,7 @@ const initialState = {
     shapeNums: 0,
     shapeColors: 0,
     decoNums: 0,
+    visit_dictionaryId: "", // 방문한 사전 고유 번호
 };
 
 export const dictionarySlice = createSlice({
@@ -31,6 +32,9 @@ export const dictionarySlice = createSlice({
       state.shapeNums = action.payload.shapeNums;
       state.shapeColors = action.payload.shapeColors;
       state.decoNums = action.payload.decoNums;
+    },
+    setVisit_DictionaryID: (state, action) => {
+      state.visit_dictionaryId = action.payload.visit_dictionaryId;
     }
   },
   extraReducers: builder => {
@@ -38,6 +42,6 @@ export const dictionarySlice = createSlice({
   },
 });
 
-export const { setDictionaryID, setOption, initDictionary, setDictionary } = dictionarySlice.actions;
+export const { setDictionaryID, setOption, initDictionary, setDictionary, setVisit_DictionaryID } = dictionarySlice.actions;
 
 export default dictionarySlice.reducer;
