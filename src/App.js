@@ -24,6 +24,8 @@ import VisitorLandingPage from "./pages/visitorPage/VisitorLandingPage";
 // 방문자 정의 첫작성 페이지
 import VisitorFirstPage from "./pages/visitorPage/VisitorFirstPage";
 // 방문자 정의 모아보기 페이지
+import VisitorBrowsingPage from "./pages/visitorPage/VisitorBrowsingPage";
+// 만든이들 페이지
 import MakerPage from "./pages/makerPage/MakerPage";
 // 테스트 페이지
 import TestPage from "./pages/TestPage";
@@ -45,6 +47,7 @@ function App() {
           element={<VisitorLandingPage />}
         />
         <Route exact path="/visitorfirst" element={<VisitorFirstPage />} />
+        <Route exact path="/visitor/definition/:dictionaryId" element={<VisitorBrowsingPage/>} />
         <Route exact path="/test" element={<TestPage/>}/>
         <Route exact path="/maker" element={<MakerPage />} />
       </Routes>
