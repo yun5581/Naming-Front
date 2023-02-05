@@ -6,7 +6,7 @@ import Sidebar from "../../components/Sidebar";
 import { SF_HambakSnow, Pretendard } from "../../components/Text";
 import DefinitionInputModal from "../../components/TxtModal/DefinitionInputModal";
 import { makrData } from "../../_mock/customInfo";
-import { getDictionary } from "../../api/user";
+import { getDictionary, postLike, removeDictionary } from "../../api/user";
 import { useAppSelector } from "../../redux/store";
 
 //images
@@ -21,37 +21,59 @@ const DefinitionPage = () => {
   const { dictionaryId } = useAppSelector((state) => state.dictionary);
   const [isLogin, setIsLogin] = useState(false);
   const [edit, setEdit] = useState(false);
+  const { name } = useAppSelector((state) => state.user);
+  const Login = localStorage.getItem("token"); // 사전 커스텀 정보 가져오기
+  const [arrCount, setArrCount] = useState();
+  const [contents, setContent] = useState({});
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    getDictionary(dictionaryId, 1).then((res) => {
+      setContent(res);
+      setArrCount(res.length);
+    });
+  }, []);
+  //모달
+  const [modal, setModal] = useState(false);
+
+  const OpenModal = () => {
+    setModal(true);
+  };
+
+  const CloseModal = () => {
+    setModal(false);
+  };
 
   const editItem = () => {
     setEdit(!edit);
   };
 
-  //모달
-  const [modal, setModal] = useState(false);
-  const OpenModal = () => {
-    setModal(true);
-  };
-  const CloseModal = () => {
-    setModal(false);
-  };
-  const [arrCount, setArrCount] = useState(0);
-  const [data, setData] = useState(null);
   const changeConsonant = (e) => {
     const consonant = e.target.getAttribute("data-set");
     const consonantIndex = makrData.filter((data) => data.text === consonant);
     const idx = Object.values(consonantIndex)[0].id;
-    const promise = getDictionary(dictionaryId, idx);
-    promise.then((result) => setArrCount(result.data.length));
-    promise.then((result) => setData(result.data));
+    getDictionary(dictionaryId, idx).then((res) => {
+      setContent(res);
+      setArrCount(res.length);
+    });
   };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const Like = (id) => {
+    //setContent({ ...booth, is_liked: true });
+    console.log(id);
+    postLike(dictionaryId, id)
+      .then()
+      .catch((err) => err);
+  };
+  const removeContent = (e) => {
+    const id = e.target.getAttribute("id");
+    console.log(id);
+    removeDictionary(dictionaryId, id);
+  };
   return (
     <>
       <Background>
-        <Sidebar />
+        {Login === null ? null : <Sidebar />}
         <NumText>
           <SF_HambakSnow>
             총 <span>{arrCount}</span>개의 문장이 쌓여있어요!
@@ -62,44 +84,48 @@ const DefinitionPage = () => {
           <DicPage>
             <TitleBox>
               <Title>
-                <Pretendard>이름하다</Pretendard>
+                <Pretendard>{name}하다</Pretendard>
               </Title>
-              {isLogin ? <EditBtn onClick={editItem}>수정</EditBtn> : null}
+              {Login ? <EditBtn onClick={editItem}>수정</EditBtn> : null}
             </TitleBox>
             <ContentWrapper>
               <ContentBox>
                 {arrCount
-                  ? data.map((ele) => {
-                      <Content>
-                        <div className="countNum">
-                          <Pretendard>{ele.postId}.</Pretendard>
-                        </div>
-                        <div className="comment">
-                          <Pretendard>{ele.contents}</Pretendard>
-                        </div>
-                        {edit ? (
-                          <object
-                            type="image/svg+xml"
-                            data={deleteIcon}
-                            className="deleteIcon"
-                          />
-                        ) : (
-                          <div className="like">
-                            <object
-                              type="image/svg+xml"
-                              data={like}
-                              className="likeIcon"
-                            />
-                            <div className="likeNum">
-                              <SF_HambakSnow>{ele.likes}</SF_HambakSnow>
+                  ? contents.map((ele) => {
+                      return (
+                        <>
+                          {" "}
+                          <Content>
+                            <div className="countNum">
+                              <Pretendard>{ele.id}.</Pretendard>
                             </div>
-                          </div>
-                        )}
-                      </Content>;
+                            <div className="comment">
+                              <Pretendard>{ele.contents}</Pretendard>
+                            </div>
+                            {edit ? (
+                              <div
+                                id={ele.id}
+                                className="deleteIcon"
+                                onClick={removeContent}
+                              ></div>
+                            ) : (
+                              <div className="like" onClick={Like(ele.id)}>
+                                <object
+                                  type="image/svg+xml"
+                                  data={like}
+                                  className="likeIcon"
+                                />
+                                <div className="likeNum">
+                                  <SF_HambakSnow>{ele.likes}</SF_HambakSnow>
+                                </div>
+                              </div>
+                            )}
+                          </Content>
+                        </>
+                      );
                     })
                   : null}
-
-                {isLogin ? null : (
+                {Login ? null : (
                   <>
                     <PlusBtn onClick={OpenModal} />
                     <DefinitionInputModal
@@ -166,7 +192,11 @@ const Content = styled.div`
   margin-bottom: ${vw(16)};
   display: flex;
   align-items: center;
-
+  .deleteIcon {
+    background-image: url(${deleteIcon});
+    width: ${vw(16)};
+    height: ${vw(16)};
+  }
   .countNum {
     margin-left: ${vw(16)};
     margin-right: ${vw(6)};
