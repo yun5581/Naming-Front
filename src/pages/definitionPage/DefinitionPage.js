@@ -64,6 +64,9 @@ const DefinitionPage = () => {
     axios.post(
       `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}/like`
     );
+    setTimeout(() => {
+      window.location.reload();
+    }, 800);
   };
   const removeContent = (e) => {
     const id = e.target.getAttribute("id");
@@ -71,6 +74,9 @@ const DefinitionPage = () => {
     http.delete(
       `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}`
     );
+    setTimeout(() => {
+      window.location.reload();
+    }, 800);
   };
   return (
     <>
@@ -112,12 +118,8 @@ const DefinitionPage = () => {
                               ></div>
                             ) : (
                               <div className="like" onClick={Like} id={ele.id}>
-                                <object
-                                  type="image/svg+xml"
-                                  data={like}
-                                  className="likeIcon"
-                                />
-                                <div className="likeNum">
+                                <div className="likeImg" id={ele.id}></div>
+                                <div className="likeNum" id={ele.id}>
                                   <SF_HambakSnow>{ele.likes}</SF_HambakSnow>
                                 </div>
                               </div>
@@ -207,6 +209,12 @@ const Content = styled.div`
   }
   .likeIcon {
     width: ${vw(13)};
+  }
+  .likeImg {
+    background-image: url(${like});
+    background-repeat: none;
+    width: ${vw(16)};
+    height: ${vw(16)};
   }
   .likeNum {
     font-weight: 800;
