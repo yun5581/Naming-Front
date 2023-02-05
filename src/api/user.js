@@ -58,16 +58,6 @@ export const getNames = (keyword) => {
   }
 };
 
-//정의 좋아요
-export const postLike = async (dictionaryId, postId) => {
-  try {
-    const response = await UserService.postLike(dictionaryId, postId);
-    return Promise.resolve(response);
-  } catch (error) {
-    return Promise.reject(error, "좋아요 실패");
-  }
-};
-
 //정의 좋아요 취소
 export const deleteLike = async (dictionaryId, postId) => {
   try {
