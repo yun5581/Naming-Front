@@ -23,6 +23,9 @@ import DefinitionPage from "./pages/definitionPage/DefinitionPage";
 import VisitorLandingPage from "./pages/visitorPage/VisitorLandingPage";
 // 방문자 정의 첫작성 페이지
 import VisitorFirstPage from "./pages/visitorPage/VisitorFirstPage";
+// 방문자 정의 모아보기 페이지
+import MakerPage from "./pages/makerPage/MakerPage";
+// 테스트 페이지
 import TestPage from "./pages/TestPage";
 
 function App() {
@@ -36,11 +39,14 @@ function App() {
         <Route exact path="/custom" element={<CustomPage />} />
         <Route exact path="/search" element={<SearchPage />} />
         <Route exact path="/definition" element={<DefinitionPage />} />
-        <Route exact 
-                path="/:userId/visitorLanding/:dictionaryId"
-                element={<VisitorLandingPage />} />
+        <Route
+          exact
+          path="/:userId/visitorLanding/:dictionaryId"
+          element={<VisitorLandingPage />}
+        />
         <Route exact path="/visitorfirst" element={<VisitorFirstPage />} />
         <Route exact path="/test" element={<TestPage/>}/>
+        <Route exact path="/maker" element={<MakerPage />} />
       </Routes>
     </Router>
   );
