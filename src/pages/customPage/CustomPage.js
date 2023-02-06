@@ -18,6 +18,7 @@ import background from "../../images/background.svg";
 // data
 import { colorData } from "../../_mock/customInfo";
 import SelectScolor from "../../components/customPage/SelectScolor";
+import Background from "../../components/Background";
 
 
 const CustomPage = () =>{
@@ -91,7 +92,8 @@ const CustomPage = () =>{
     }
     return(
         <>
-            <Background>
+            <Background/>
+            <Container>
                 <Title>
                     나만의 사전을 만들어보세요!
                     <hr style={{marginTop: "10px"}}/>
@@ -120,26 +122,23 @@ const CustomPage = () =>{
                 <FooterWrapper>
                     <Footer/>
                 </FooterWrapper>
-            </Background>
+            </Container>
         </>
     )
 }
 
 export default CustomPage;
 
-const Background = styled.div`
-    width: 100%;
-    height: 100vh;
-    overflow: scroll;
-
+const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    background-image: url(${background});
-    background-repeat: no-repeat;
-    background-size: cover;
+    width: 100vw;
+    height: 100vh;
 
+    position: absolute;
+    top: 0;
     font-family: var(--hb-font);
 `
 const Title = styled.div`
@@ -153,23 +152,24 @@ const Title = styled.div`
 const CustomForm = styled.div`
     width: 100vw;
     height: ${vh(206)};
+    /* aspect-ratio: 1/ 0.67; */
     margin: ${vh(27)} 0 ${vh(9)} 0;
 
     display: flex;
     justify-content: space-between;
-    @media only screen  and (min-width: 1000px){
+    @media only screen  and (min-width: 500px){
         width: ${vw(375)};
     }
 `
 const MenuBar = styled.div`
     width: 25%;
-    height: ${vh(206)};
+    /* height: ${vh(206)}; */
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    border-radius: 0 ${vw(5)} ${vw(5)} 0;
+    border-radius: 0 5px 5px 0;
     background-color: var(--white);
     font-size: ${vw(14)};
     color: var(--black);
@@ -189,7 +189,7 @@ const MenuBar = styled.div`
 `
 const SubmitButton = styled.button`
     width: ${vw(270)};
-    aspect-ratio: 5.8 / 1;
+    aspect-ratio: 1 / 0.2;
     margin-top: ${vh(29)};
 
     background-color: var(--green);
@@ -201,11 +201,7 @@ const SubmitButton = styled.button`
     font-size: ${vw(16)};
 `
 const FooterWrapper = styled.div`
-    margin-top: 30px;
-    padding-bottom: 30px;
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
 `

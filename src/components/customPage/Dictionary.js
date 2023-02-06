@@ -170,6 +170,9 @@ const Background = styled.div`
     position: relative;
     z-index: 0;
     display: flex;
+    /* @media only screen  and (min-width: 500px){
+        height: ${vh(249)};
+    } */
 `
 const Line = styled.div`
     height: 100%;
@@ -231,13 +234,13 @@ const Bookfooter = styled.div`
     color: var(--white);
     div{
         font-size: ${vw(10)};
-        zoom: 0.7;
+        zoom: 0.65;
     }
     p{
         margin-top: 2px;
         font-size: ${vw(7)};
         font-family: var(--sm-font);
-        zoom: 0.5;
+        zoom: 0.4;
     }
 `
 const Bookmark = styled.div`
@@ -254,6 +257,8 @@ const Bookmark = styled.div`
         height: 5%;
         background: var(--white);
         border-radius: 0 2px 2px 0;
-        font-size: 2px;
+        /* font-size: ${vw(9)}; */
+        font-size: ${vh(6)};
+        /* zoom: 0.7; */
     }
 `
