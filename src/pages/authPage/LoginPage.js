@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState} from "react";
+import { useNavigate } from "react-router-dom";
 import { vw } from "../../components/SizeConvert";
 //components
 import Footer from "../../components/Footer";
 import Title from "../../components/authPage/Title";
-//images
-import background from "../../images/background.svg";
-import { useNavigate } from "react-router-dom";
+import Background from "../../components/Background";
 // api, 유저 정보
 import { GetUser } from "../../api/user";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
@@ -59,7 +58,8 @@ const LoginPage = () =>{
     }
     return(
         <>
-            <Background>
+            <Background/>
+            <Container>
                 <Title/>
                 <LoginForm>
                             <input 
@@ -85,24 +85,22 @@ const LoginPage = () =>{
                 <FooterWrapper>
                     <Footer/>
                 </FooterWrapper>
-            </Background>
+            </Container>
         </>
     )
 }
 export default LoginPage;
 
-const Background = styled.div`
-    width: 100%;
-    height: 100vh;
-    overflow: scroll;
-
+const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    background-image: url(${background});
-    background-repeat: no-repeat;
-    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    top: 0;
 `
 const LoginForm = styled.form`
     width: ${vw(250)};

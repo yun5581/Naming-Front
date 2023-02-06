@@ -9,7 +9,7 @@ import dictionary from "../../images/landingPage/dictionary.svg";
 //components
 import Title from "../../components/authPage/Title";
 import Footer from "../../components/Footer";
-import StarBackground from "../../components/StarBackground";
+import Background from "../../components/Background";
 
 const LandingPage = () => {
   useEffect(() => {
@@ -18,9 +18,7 @@ const LandingPage = () => {
 
   return (
     <>
-      <Background>
-        <StarBackground/>
-      </Background>
+      <Background/>
       <Container>
         <Title />
         <object type="image/svg+xml" data={dictionary} className="dic" />
@@ -43,17 +41,6 @@ const LandingPage = () => {
   );
 };
 
-const Background = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: relative;
-  z-index: 0;
-  /* background-color: #2c303a; */
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-size: cover;
- 
-`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,7 +51,6 @@ const Container = styled.div`
 
   position: absolute;
   top: 0;
-  z-index: 3;
 
    .dic {
     width: ${vw(310)};
