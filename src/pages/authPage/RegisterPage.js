@@ -184,14 +184,17 @@ const PW2 = styled.div`
     aspect-ratio: 1 / 0.18;
     margin-top: 16px;
     border-radius: 5px;
+    border:none;
 
     background-color: var(--white);
+    color: var(--white);
     
     input{
         width: 85%;
         padding-left: 16px;
         border-style: none;
         outline: none;
+        background-color: var(--white);
     }
     display: flex;
     align-items: center;
