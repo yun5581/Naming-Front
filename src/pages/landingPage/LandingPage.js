@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
 import { vw, vh } from "../../components/SizeConvert";
-
-//components
-import Title from "../../components/authPage/Title";
 //images
 import background from "../../images/background.svg";
 import dictionary from "../../images/landingPage/dictionary.svg";
+//components
+import Title from "../../components/authPage/Title";
 import Footer from "../../components/Footer";
+import Background from "../../components/Background";
 
 const LandingPage = () => {
   useEffect(() => {
@@ -18,7 +18,8 @@ const LandingPage = () => {
 
   return (
     <>
-      <Background>
+      <Background/>
+      <Container>
         <Title />
         <object type="image/svg+xml" data={dictionary} className="dic" />
         <ButtonWrapper>
@@ -30,41 +31,42 @@ const LandingPage = () => {
               회원가입 하기
             </RegisterBtn>
           </Link>
-          {/* <Link to="/kakao">
-                                <KakaoBtn style={{color:"#2F333E"}}>카카오 계정으로 계속하기</KakaoBtn>
-                            </Link> */}
         </ButtonWrapper>
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
-      </Background>
+      </Container>
+      
     </>
   );
 };
 
-const Background = styled.div`
-  width: 100%;
-  height: 100vh;
-  overflow: scroll;
-
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-size: cover;
-  .dic {
-    width: ${vw(315)};
-    height: ${vh(252)};
+  width: 100vw;
+  height: 100vh;
+
+  position: absolute;
+  top: 0;
+
+   .dic {
+    width: ${vw(310)};
+    border: none;
+    /* height: ${vh(252)}; */
     margin: ${vh(28)} 0 ${vh(32)} 0;
   }
-`;
+`
 const ButtonWrapper = styled.div`
   width: ${vw(250)};
 
   display: flex;
   flex-direction: column;
+
+  position: relative;
+  z-index: 10;
 
   font-family: var(--hb-font);
   div {
@@ -88,17 +90,9 @@ const RegisterBtn = styled.div`
   background-color: #fbfbfb;
   margin: ${vh(14)} 0 ${vh(14)} 0;
 `;
-const KakaoBtn = styled.div`
-  background-color: #fee500;
-`;
 const FooterWrapper = styled.div`
-  height: 100vh;
-  margin-top: 30px;
-  padding-bottom: 30px;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  position: absolute;
+  bottom: 0;
+  padding: 20px;
 `;
 export default LandingPage;
