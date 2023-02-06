@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
 import { vw, vh } from "../../components/SizeConvert";
-
-//components
-import Title from "../../components/authPage/Title";
 //images
 import background from "../../images/background.svg";
 import dictionary from "../../images/landingPage/dictionary.svg";
+//components
+import Title from "../../components/authPage/Title";
 import Footer from "../../components/Footer";
+import StarBackground from "../../components/StarBackground";
 
 const LandingPage = () => {
   useEffect(() => {
@@ -19,6 +19,7 @@ const LandingPage = () => {
   return (
     <>
       <Background>
+        <StarBackground/>
         <Title />
         <object type="image/svg+xml" data={dictionary} className="dic" />
         <ButtonWrapper>
@@ -47,9 +48,12 @@ const Background = styled.div`
   flex-direction: column;
   align-items: center;
 
-  background-image: url(${background});
+  position:relative;
+  z-index: -2;
+  background-color: #2c303a;
+  /* background-image: url(${background});
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
   .dic {
     width: ${vw(310)};
     border: none;
@@ -85,12 +89,9 @@ const RegisterBtn = styled.div`
   background-color: #fbfbfb;
   margin: ${vh(14)} 0 ${vh(14)} 0;
 `;
-const KakaoBtn = styled.div`
-  background-color: #fee500;
-`;
 const FooterWrapper = styled.div`
   position: absolute;
   bottom: 0;
-  padding: ${vh(30)} 0;
+  padding: 20px;
 `;
 export default LandingPage;
