@@ -91,6 +91,6 @@ const KakaoBtn = styled.div`
 const FooterWrapper = styled.div`
   position: absolute;
   bottom: 0;
-  padding-bottom: 30px;
+  padding: ${vh(30)} 0;
 `;
 export default LandingPage;
