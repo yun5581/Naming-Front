@@ -76,7 +76,7 @@ const RegisterPage = () =>{
     }
     return(
         <>
-            <Background>
+            <Container>
                 {modal? <RegisterModal number={number} name={name} setModal={setModal}/> :null}
                         <Title/>
                             <RegisterForm>
@@ -121,14 +121,14 @@ const RegisterPage = () =>{
                 <FooterWrapper>
                     <Footer/>
                 </FooterWrapper>
-            </Background>
+            </Container>
         </>
     );
 };
 
 export default RegisterPage;
 
-const Background = styled.div`
+const Container = styled.div`
     width: 100%;
     height: 100vh;
     overflow: scroll;

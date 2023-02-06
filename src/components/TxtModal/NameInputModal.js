@@ -59,14 +59,11 @@ const NameInputModal = props => {
       nickname: name
     }));
     axios.post(`https://kj273456.pythonanywhere.com/dictionary/${visit_dictionaryId}/people/`, {
-      nickname: nickname
+      nickname: name
       }).then((res)=>{
-          console.log(res);
           navigate("/visitorfirst");
       })
       .catch((error)=>{
-        console.log(error);
-        alert("작성자 이름 저장 실패");
       })
   }
 

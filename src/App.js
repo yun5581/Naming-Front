@@ -27,8 +27,6 @@ import VisitorFirstPage from "./pages/visitorPage/VisitorFirstPage";
 import VisitorBrowsingPage from "./pages/visitorPage/VisitorBrowsingPage";
 // 만든이들 페이지
 import MakerPage from "./pages/makerPage/MakerPage";
-// 테스트 페이지
-import TestPage from "./pages/TestPage";
 
 function App() {
   return (
@@ -48,7 +46,6 @@ function App() {
         />
         <Route exact path="/visitorfirst" element={<VisitorFirstPage />} />
         <Route exact path="/visitor/definition/:dictionaryId" element={<VisitorBrowsingPage/>} />
-        <Route exact path="/test" element={<TestPage/>}/>
         <Route exact path="/maker" element={<MakerPage />} />
       </Routes>
     </Router>
