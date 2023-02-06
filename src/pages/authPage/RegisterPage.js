@@ -7,11 +7,12 @@ import Title from "../../components/authPage/Title";
 import RegisterModal from "../../components/authPage/RegisterModal";
 //images
 import background from "../../images/background.svg";
-import { MdOutlineCheckCircle } from"react-icons/md";
+import { BsCheckCircle } from"react-icons/bs";
 // api, 유저 정보
 import { GetUser, PostUser } from "../../api/user";
 import { useAppDispatch } from "../../redux/store";
 import { setUser } from "../../redux/userSlice";
+import Background from "../../components/Background";
 
 const RegisterPage = () =>{
     // 유저 리덕스 
@@ -76,6 +77,7 @@ const RegisterPage = () =>{
     }
     return(
         <>
+            <Background/>
             <Container>
                 {modal? <RegisterModal number={number} name={name} setModal={setModal}/> :null}
                         <Title/>
@@ -94,9 +96,9 @@ const RegisterPage = () =>{
                                 onChange={e => setPW(e.target.value)}
                                 onClick={e=> scrollto(e)}
                                 />
-                            <PW2>
+                            <PW2 className="pw2">
                                 <input
-                                className="pw2"
+                                className="pw2_input"
                                 type="password"
                                 placeholder="비밀번호 확인"
                                 onChange={e => {
@@ -105,13 +107,12 @@ const RegisterPage = () =>{
                                 onClick={e=> scrollto(e)}
                                 >
                                 </input>
-                                {checkPW() ? <MdOutlineCheckCircle id="check"/>: null}
+                                {checkPW() ? <BsCheckCircle id="check"/>: null}
                             </PW2>
                             <input
                                 className="name"
                                 placeholder="이름만 입력해주세요 (예: 길동)"
                                 onChange={e => setName(e.target.value)}
-                                onClick={e=> scrollto(e)}
                                 />
                             <RegisterBtn
                                 onClick={()=>{register()}}
@@ -129,17 +130,15 @@ const RegisterPage = () =>{
 export default RegisterPage;
 
 const Container = styled.div`
-    width: 100%;
-    height: 100vh;
-    overflow: scroll;
-
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    background-image: url(${background});
-    background-repeat: no-repeat;
-    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    top: 0;
 `
 
 const RegisterForm = styled.div`
@@ -154,10 +153,12 @@ const RegisterForm = styled.div`
     .name{
         margin: 16px 0 32px 0;
     }
+    .id,.pw,.name{
+        width: 100%;
+        aspect-ratio: 1 / 0.18;
+    }
     input{
-        aspect-ratio: 5.8 / 1;
         padding-left: 16px;
-
         font-size: ${vw(14)};
         font-family: 'SF_HambakSnow';
 
@@ -179,11 +180,18 @@ const RegisterForm = styled.div`
     }
 `
 const PW2 = styled.div`
-    width: 112%;
-    height: auto;
+    width: 100%;
+    aspect-ratio: 1 / 0.18;
     margin-top: 16px;
+    border-radius: 5px;
+
+    background-color: var(--white);
+    
     input{
-        width: ${vw(262)};
+        width: 85%;
+        padding-left: 16px;
+        border-style: none;
+        outline: none;
     }
     display: flex;
     align-items: center;
@@ -193,17 +201,18 @@ const PW2 = styled.div`
         width: ${vw(20)};
         height: ${vw(20)};
         color: var(--green);
-        margin-left: 5px;
+        margin-right: 10px;
     }
     @media only screen  and (min-width: 700px) and (max-width: 850px){
         margin-top: 26px;
     }
+    border: solid;
 `
 const RegisterBtn = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    aspect-ratio: 6 / 1;
+    aspect-ratio: 1 / 0.2;
 
     border-style: none;
     border-radius: 5px;
@@ -218,12 +227,7 @@ const RegisterBtn = styled.div`
     }
 `
 const FooterWrapper = styled.div`
-    height: 100vh;
-    margin-top: 30px;
-    padding-bottom: 30px;
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
 `
