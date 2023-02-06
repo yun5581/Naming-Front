@@ -258,7 +258,7 @@ const Bookmark = styled.div`
         background: var(--white);
         border-radius: 0 2px 2px 0;
         /* font-size: ${vw(9)}; */
-        font-size: ${vh(6)};
+        font-size: ${vh(8)};
         /* zoom: 0.7; */
     }
 `
