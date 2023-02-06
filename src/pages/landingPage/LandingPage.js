@@ -42,7 +42,6 @@ const LandingPage = () => {
 const Background = styled.div`
   width: 100%;
   height: 100vh;
-  overflow: scroll;
 
   display: flex;
   flex-direction: column;
@@ -89,8 +88,13 @@ const KakaoBtn = styled.div`
   background-color: #fee500;
 `;
 const FooterWrapper = styled.div`
+  height: 100vh;
+  margin-top: 30px;
   padding-bottom: 30px;
-  position: absolute;
-  bottom: 0;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `;
 export default LandingPage;
