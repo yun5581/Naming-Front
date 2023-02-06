@@ -1,5 +1,9 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 const StarBackground = () =>{
+  useEffect(()=>{
+    init();
+  },[]);
     function init(){
         //estrelas
         var style = ["style1", "style2", "style3", "style4"];
@@ -45,9 +49,9 @@ const StarBackground = () =>{
       window.onload = init;
     return (
         <Wrapper>
-        <div class="noite"></div>
-        <div class="constelacao"></div>
-        <div class="chuvaMeteoro"></div>
+          <div class="noite"></div>
+          <div class="constelacao"></div>
+          <div class="chuvaMeteoro"></div>
         </Wrapper>
     )
 }
