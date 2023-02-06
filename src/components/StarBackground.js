@@ -38,10 +38,10 @@ const StarBackground = () =>{
           setTimeout(carregarMeteoro, numeroAleatorio);
           numeroAleatorio = getRandomArbitrary(5000, 10000);
           var meteoro = "<div class='meteoro "+ style[getRandomArbitrary(0, 4)] +"'></div>";
-          document.getElementsByClassName('chuvaMeteoro')[0].innerHTML = meteoro;
-          setTimeout(function(){
-            document.getElementsByClassName('chuvaMeteoro')[0].innerHTML = "";
-          }, 1000);
+          // document.getElementsByClassName('chuvaMeteoro')[0].innerHTML = meteoro;
+          // setTimeout(function(){
+          //   document.getElementsByClassName('chuvaMeteoro')[0].innerHTML = "";
+          // }, 1000);
         }
       
       }
