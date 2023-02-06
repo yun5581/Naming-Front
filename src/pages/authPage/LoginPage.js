@@ -44,7 +44,7 @@ const LoginPage = () =>{
                     window.location.reload();
                 }).catch((error)=>{
                     alert("사전 정보를 가져오지 못했습니다. 재로그인해주세요.");
-                    navigate(-1);
+                    navigate("/login");
                 });
             }
         }).catch((error)=>{
