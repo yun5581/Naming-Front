@@ -30,9 +30,6 @@ const LandingPage = () => {
               회원가입 하기
             </RegisterBtn>
           </Link>
-          {/* <Link to="/kakao">
-                                <KakaoBtn style={{color:"#2F333E"}}>카카오 계정으로 계속하기</KakaoBtn>
-                            </Link> */}
         </ButtonWrapper>
         <FooterWrapper>
           <Footer />
@@ -92,13 +89,8 @@ const KakaoBtn = styled.div`
   background-color: #fee500;
 `;
 const FooterWrapper = styled.div`
-  height: 100vh;
-  margin-top: 30px;
   padding-bottom: 30px;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  position: absolute;
+  bottom: 0;
 `;
 export default LandingPage;
