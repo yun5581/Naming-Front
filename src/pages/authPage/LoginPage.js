@@ -36,7 +36,7 @@ const LoginPage = () =>{
                     ID: id,
                     PW: password
                 }));
-                // 사전 아이디 받아오기
+                // 사전 아이디 받기
                 axios.get(`https://kj273456.pythonanywhere.com/dictionary/id/${res.data.user_id}`)
                 .then((res)=>{
                     dispatch(setDictionaryID({dictionaryId: res.data.data.id}));
