@@ -14,6 +14,7 @@ import HomeDictionary from "../../components/homePage/HomeDictionary";
 import getLink from "../../images/homePage/share.svg";
 import background from "../../images/background.svg";
 import Footer from "../../components/Footer";
+import Background from "../../components/Background";
 
 // link copy
 //const copyLinkRef = useRef();
@@ -49,9 +50,9 @@ const HomePage = () => {
         setDecoNum(res.data.data.border);
       })
       .catch((error) => {
-        alert("사전 커스텀 정보 가져오기 실패");
+        //alert("사전 커스텀 정보 가져오기 실패");
         // navigate(-1); 
-      });
+      })
   };
   // 사전 링크 복사하기 
   const copyLink  = async () => {
@@ -70,7 +71,8 @@ const HomePage = () => {
   return (
     <>
       <Sidebar />
-      <Background>
+      <Background/>
+      <Container>
         <HomeDictionary
           name={name}
           color={color}
@@ -97,24 +99,22 @@ const HomePage = () => {
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
-      </Background>
+      </Container>
     </>
   );
 };
 
-const Background = styled.div`
-  width: 100%;
-  height: 100vh;
-  overflow: scroll;
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 100vw;
+    height: 100vh;
 
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-size: cover;
-`;
+    position: absolute;
+    top: 0;
+`
 
 const AlertMSG = styled.div`
   font-weight: 800;
@@ -149,13 +149,8 @@ const Button = styled.div`
 `;
 
 const FooterWrapper = styled.div`
-  height: 100vh;
-  margin-top: 30px;
-  padding-bottom: 30px;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`;
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
+`
 export default HomePage;
