@@ -120,7 +120,8 @@ const LoginForm = styled.form`
         }
     }
     input{
-        aspect-ratio: 5.8 / 1;
+        width: 100%;
+        aspect-ratio: 1 / 0.18;
         padding-left: 16px;
 
         font-size: ${vw(14)};
@@ -136,7 +137,7 @@ const LoginBtn = styled.div`
     justify-content: center;
     align-items: center;
 
-    aspect-ratio: 6 / 1;
+    aspect-ratio: 1 / 0.2;
 
     border-style: none;
     border-radius: 5px;
@@ -151,12 +152,7 @@ const LoginBtn = styled.div`
 	}
 `
 const FooterWrapper = styled.div`
-    height: 100vh;
-    margin-top: 30px;
-    padding-bottom: 30px;
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
 `
