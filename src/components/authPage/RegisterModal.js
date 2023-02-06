@@ -17,7 +17,7 @@ const RegisterModal = (props) =>{
                 <DeleteModalBtn onClick={()=> {
                         window.location.reload();
                         window.location.href = "http://localhost:3000/custom"; // local용 도메인
-                        // window.location.href = "https://naming-likelion.vercel.app/m"; // 배포용 도메인
+                        //window.location.href = "https://naming-likelion.vercel.app/custom"; // 배포용 도메인
                 }}>
                     내 사전 만들러 가기
 				</DeleteModalBtn>

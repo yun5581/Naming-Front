@@ -11,12 +11,15 @@ import { useNavigate } from "react-router-dom";
 import { GetUser } from "../../api/user";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { setUser } from "../../redux/userSlice";
+import { setDictionaryID } from "../../redux/dictionarySlice";
+import axios from "axios";
 
 const LoginPage = () =>{
     const navigate = useNavigate();
     // 유저 리덕스 
     const dispatch =useAppDispatch();
-    const {ID, PW} = useAppSelector(state=>state.user);
+    const {userId, ID, PW} = useAppSelector(state=>state.user);
+    const { dictionaryId } = useAppSelector((state) => state.dictionary);
 
     // 로그인 정보관리
     const [id, setID] = useState(ID);
@@ -26,7 +29,6 @@ const LoginPage = () =>{
         GetUser(id, password)
         .then((res)=>{
             if(res.message=="로그인 성공"){
-
                 window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
                 dispatch(setUser({
                     userId: res.data.user_id,
@@ -34,7 +36,17 @@ const LoginPage = () =>{
                     ID: id,
                     PW: password
                 }));
-                navigate("/home");
+                // 사전 아이디 받기
+                axios.get(`https://kj273456.pythonanywhere.com/dictionary/id/${res.data.user_id}`)
+                .then((res)=>{
+                    dispatch(setDictionaryID({dictionaryId: res.data.data.id}));
+                }).then(()=>{  
+                    navigate("/home");
+                    window.location.reload();
+                }).catch((error)=>{
+                    alert("사전 정보를 가져오지 못했습니다. 재로그인해주세요.");
+                    navigate(-1);
+                });
             }
         }).catch((error)=>{
             if(error.message=="로그인 실패"){

@@ -58,6 +58,7 @@ const HomePage = () => {
     try {
       await navigator.clipboard.
       // 도메인 수정 필요
+      //writeText(`https://naming-likelion.vercel.app/${userId}/visitorLanding/${dictionaryId}`); 배포용
       writeText(`http://localhost:3000/${userId}/visitorLanding/${dictionaryId}`);
       setShow(true);
     } catch (e) {
