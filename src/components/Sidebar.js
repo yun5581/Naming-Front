@@ -115,7 +115,7 @@ const LinkWrapper = styled.div`
 const BarWrapper = styled.div`
   z-index: 100;
   width: ${vw(200)};
-  height: 70%;
+  height: 80%;
   background: #ffffff;
   border-radius: 0px 5px 5px 0px;
   position: absolute;
