@@ -102,7 +102,6 @@ const DefinitionPage = () => {
                   ? contents.map((ele) => {
                       return (
                         <>
-                          {" "}
                           <Content>
                             <div className="countNum">
                               <Pretendard>{ele.id}.</Pretendard>
