@@ -88,13 +88,8 @@ const KakaoBtn = styled.div`
   background-color: #fee500;
 `;
 const FooterWrapper = styled.div`
-  height: 100vh;
-  margin-top: 30px;
+  position: absolute;
+  bottom: 0;
   padding-bottom: 30px;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 `;
 export default LandingPage;
