@@ -17,7 +17,6 @@ const SearchPage = () => {
   const [search, setSearch] = useState(false);
   const [keyword, setkeyword] = useState();
   const [data, setdata] = useState();
-  const [dataLength, setdatalength] = useState();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -25,12 +24,8 @@ const SearchPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setkeyword(e.target.value);
-    getNames(keyword)
-      .then((res) => {
-        setSearch(true);
-        setdata(res.data.data);
-      })
-      .catch((err) => console.log(err));
+    getNames(keyword);
+    console.log(getNames(keyword));
   };
   const getNames = (keyword) => {
     if (keyword === undefined) {
@@ -39,10 +34,11 @@ const SearchPage = () => {
     }
     http
       .get(
-        `https://kj273456.pythonanywhere.com/dictionary/search/?keyword=${keyword}/`
+        `https://kj273456.pythonanywhere.com/dictionary/search/?keyword=${keyword}`
       )
       .then((res) => {
-        setdatalength(res.data.data.length);
+        setSearch(true);
+        setdata(res.data.data);
       })
       .catch((error) => {
         alert("검색 실패");
@@ -74,23 +70,31 @@ const SearchPage = () => {
 
         {keyword === undefined ? null : (
           <ResultWrapper>
-            {dataLength === 0 ? (
+            {data.length === 0 ? (
               <div className="nullresult">
                 <SF_HambakSnow>
-                  {keyword}는 아직 만들어지지 않았습니다.
+                  {keyword}하다는 아직 만들어지지 않았습니다.
                 </SF_HambakSnow>
               </div>
             ) : (
-              <div className="resultText">
-                <div className="searchResult">
-                  <SF_HambakSnow>
-                    {dataLength}번째 {keyword}하다
-                  </SF_HambakSnow>
-                </div>
-                <div className="resultCount">
-                  <SF_HambakSnow>쌓인 문장 : {dataLength}개</SF_HambakSnow>
-                </div>
-              </div>
+              data.map((ele) => {
+                return (
+                  <>
+                    <div className="resultText">
+                      <div className="searchResult">
+                        <SF_HambakSnow>
+                          {ele.id}번째 {keyword}하다
+                        </SF_HambakSnow>
+                      </div>
+                      <div className="resultCount">
+                        <SF_HambakSnow>
+                          쌓인 문장 : {data.length}개
+                        </SF_HambakSnow>
+                      </div>
+                    </div>
+                  </>
+                );
+              })
             )}
           </ResultWrapper>
         )}
