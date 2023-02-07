@@ -29,6 +29,7 @@ const SearchPage = () => {
       .then((res) => {
         setSearch(true);
         setdata(res.data.data);
+        console.log(data);
       })
       .catch((err) => console.log(err));
   };
@@ -77,20 +78,28 @@ const SearchPage = () => {
             {dataLength === 0 ? (
               <div className="nullresult">
                 <SF_HambakSnow>
-                  {keyword}는 아직 만들어지지 않았습니다.
+                  {keyword}하다는 아직 만들어지지 않았습니다.
                 </SF_HambakSnow>
               </div>
             ) : (
-              <div className="resultText">
-                <div className="searchResult">
-                  <SF_HambakSnow>
-                    {dataLength}번째 {keyword}하다
-                  </SF_HambakSnow>
-                </div>
-                <div className="resultCount">
-                  <SF_HambakSnow>쌓인 문장 : {dataLength}개</SF_HambakSnow>
-                </div>
-              </div>
+              data.map((ele) => {
+                return (
+                  <>
+                    <div className="resultText">
+                      <div className="searchResult">
+                        <SF_HambakSnow>
+                          {ele.id}번째 {keyword}하다
+                        </SF_HambakSnow>
+                      </div>
+                      <div className="resultCount">
+                        <SF_HambakSnow>
+                          쌓인 문장 : {ele.stacked}개
+                        </SF_HambakSnow>
+                      </div>
+                    </div>
+                  </>
+                );
+              })
             )}
           </ResultWrapper>
         )}
@@ -145,11 +154,9 @@ const Background = styled.div`
   width: 100%;
   height: 100vh;
   overflow: scroll;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
   background-image: url(${background});
   background-repeat: no-repeat;
   background-size: cover;
@@ -189,7 +196,6 @@ const FooterWrapper = styled.div`
   margin-top: 30px;
   padding-bottom: 30px;
   position: relative;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
