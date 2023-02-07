@@ -313,7 +313,6 @@ const Content = styled.div`
   .likeNum {
     font-weight: 800;
     font-size: ${vw(2)};
-    zoom: 0.8;
     color: #818181;
     width: fit-content;
     margin: 0 auto;
