@@ -96,8 +96,8 @@ const DefinitionPage = () => {
           <DicPage>
             <TitleBox>
               <Title>
-                <div className="titleName">{name}하다</div>
-                <div className="titleNum">{number}</div>
+                <div className="titleName"><Pretendard>{name}하다</Pretendard></div>
+                <div className="titleNum"><Pretendard>{number}</Pretendard></div>
               </Title>
               {Login ? <EditBtn onClick={editItem}>수정</EditBtn> : null}
             </TitleBox>
@@ -116,12 +116,15 @@ const DefinitionPage = () => {
                               <Pretendard>{ele.contents}</Pretendard>
                             </div>
                             {edit ? (
-                              <div
+                              <div className="delete">
+                                <div
                                 id={ele.id}
                                 className="deleteIcon"
-                                onClick={removeContent}
-                              ></div>
-                            ) : (
+                                onClick={removeContent}>
+                                </div>
+                              </div>   
+                            )
+                              : (
                               <div className="like" onClick={Like} id={ele.id}>
                                 <div className="likeImg" id={ele.id}></div>
                                 <div className="likeNum" id={ele.id}>
@@ -183,6 +186,53 @@ const Container = styled.div`
     position: absolute;
     top: 0;
 `
+const DicBook = styled.div`
+  display: flex;
+  margin-top: ${vh(40)};
+  height: ${vh(468)};
+`;
+const DicSidePage = styled.div`
+  width: ${vw(25)};
+  background-color: white;
+  /* border-right: 1px solid #ecebe8; */
+  box-shadow: 0px 0px 2px #848380 inset;
+`;
+const DicPage = styled.div`
+  background-color: white;
+  width: ${vw(255)};
+  padding: ${vw(16)};
+  box-shadow: 0px 0px 3px #848380 inset;
+`;
+const DicIndexWrapper = styled.div`
+`;
+const Title = styled.div`
+  color: #2b787d;
+  display: flex;
+  .titleName{
+    padding-top: 3px;
+    font-weight: 900;
+    font-size: ${vw(20)};
+    text-decoration-line: underline;
+    text-decoration-thickness: 2.5px;
+    text-underline-offset : 3px; 
+  }
+  .titleNum{
+    font-size: ${vw(14)};
+    margin-left: 3px;
+    font-weight: 600;
+  }
+`;
+const TitleBox = styled.div`
+  display: flex;
+  margin-bottom: ${vh(29)};
+  align-items: baseline;
+  justify-content: space-between;
+`;
+const EditBtn = styled.div`
+  font-weight: 400;
+  font-size: ${vw(12)};
+  color: #818181;
+`;
 const ContentWrapper = styled.div`
   height: 85%;
 `;
@@ -214,57 +264,10 @@ const NumText = styled.div`
     color: #85d2d7;
   }
 `;
-const DicBook = styled.div`
-  display: flex;
-  margin-top: ${vh(40)};
-  height: ${vh(468)};
-`;
-const DicSidePage = styled.div`
-  width: ${vw(25)};
-  background-color: white;
-  border-right: 2px solid #ecebe8;
-  box-shadow: 0px 0px 9px #848380;
-`;
-const DicPage = styled.div`
-  background-color: white;
-  width: ${vw(255)};
-  padding: ${vw(16)};
-  /* border: solid; */
-  box-shadow: 10px 0 0 0 #ECEBE8;
-`;
-const DicIndexWrapper = styled.div`
-`;
-const Title = styled.div`
-  color: #2b787d;
-  display: flex;
-  .titleName{
-    padding-top: 3px;
-    font-weight: 900;
-    font-size: ${vw(20)};
-    text-decoration-line: underline;
-    text-decoration-thickness: 2.5px;
-    text-underline-offset : 3px; 
-  }
-  .titleNum{
-    font-size: ${vw(14)};
-    margin-left: 3px;
-  }
-`;
-const TitleBox = styled.div`
-  display: flex;
-  margin-bottom: ${vh(29)};
-  align-items: baseline;
-  justify-content: space-between;
-`;
-const EditBtn = styled.div`
-  font-weight: 400;
-  font-size: ${vw(12)};
-  color: #818181;
-`;
 const Content = styled.div`
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  height: ${vh(33)};
+  height: auto;
   width: 96%;
   margin-bottom: ${vw(16)};
   display: flex;
@@ -272,38 +275,48 @@ const Content = styled.div`
 
   .deleteIcon {
     background-image: url(${deleteIcon});
-    width: ${vw(16)};
-    height: ${vw(16)};
+    width: ${vw(14)};
+    height: ${vw(14)};
   }
   .countNum {
-    margin-left: ${vw(16)};
-    margin-right: ${vw(6)};
+    width: 13%;
+    height: ${vh(33)};
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: 400;
     font-size: ${vw(12)};
   }
-  .likeIcon {
-    width: ${vw(13)};
+  .comment {
+    width: 70%;
+    font-weight: 400;
+    font-size: ${vw(12)};
+    line-height: 1.5;
+    padding: 7px 3px 7px 3px;
+  }
+  .like, .delete {
+    width: 15%;
+    height: ${vh(33)};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .likeImg {
+    width: ${vw(14)};
+    height: ${vw(14)};
     background-image: url(${like});
-    background-repeat: none;
-    width: ${vw(16)};
-    height: ${vw(16)};
+    background-repeat: no-repeat;
+    background-position: center center;
+
   }
   .likeNum {
     font-weight: 800;
-    font-size: ${vw(8)};
+    font-size: ${vw(2)};
+    zoom: 0.8;
     color: #818181;
     width: fit-content;
     margin: 0 auto;
-  }
-  .comment {
-    width: 72%;
-    font-weight: 400;
-    font-size: ${vw(12)};
-  }
-  .like {
-    align-items: center;
   }
 `;
 const PlusBtn = styled.button`
