@@ -8,7 +8,7 @@ const initialState = {
     name: "", // 유저 이름
     ID: "",
     PW:"",
-    nth:"", // n번째 지은이
+    nth: 0, // n번째 지은이
 };
 
 export const userSlice = createSlice({
