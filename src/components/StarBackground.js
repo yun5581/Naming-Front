@@ -15,7 +15,7 @@ const StarBackground = () =>{
         }
       
         var estrela = "";
-        var qtdeEstrelas = 50;
+        var qtdeEstrelas = 80;
         var noite = document.querySelector(".constelacao");
         var widthWindow = window.innerWidth;
         var heightWindow = window.innerHeight;
@@ -37,7 +37,7 @@ const StarBackground = () =>{
         function carregarMeteoro(){
           setTimeout(carregarMeteoro, numeroAleatorio);
           numeroAleatorio = getRandomArbitrary(5000, 10000);
-          var meteoro = "<div class='meteoro "+ style[getRandomArbitrary(0, 4)] +"'></div>";
+          var meteoro = "<div className='meteoro "+ style[getRandomArbitrary(0, 4)] +"'></div>";
           // document.getElementsByClassName('chuvaMeteoro')[0].innerHTML = meteoro;
           // setTimeout(function(){
           //   document.getElementsByClassName('chuvaMeteoro')[0].innerHTML = "";
@@ -49,9 +49,9 @@ const StarBackground = () =>{
       window.onload = init;
     return (
         <Wrapper>
-          <div class="noite"></div>
-          <div class="constelacao"></div>
-          <div class="chuvaMeteoro"></div>
+          <div className="noite"></div>
+          <div className="constelacao"></div>
+          <div className="chuvaMeteoro"></div>
         </Wrapper>
     )
 }
