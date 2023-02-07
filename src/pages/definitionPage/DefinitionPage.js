@@ -14,6 +14,7 @@ import axios from "axios";
 import Background from "../../components/Background";
 //images
 import like from "../../images/like.svg";
+import likeRed from "../../images/likeRed.svg";
 import deleteIcon from "../../images/definePage/delete.svg";
 import Footer from "../../components/Footer";
 import plusBtn from "../../images/definePage/+Btn.svg";
@@ -25,18 +26,31 @@ const DefinitionPage = () => {
   const [edit, setEdit] = useState(false);
   const { name } = useAppSelector((state) => state.user);
   const Login = localStorage.getItem("token"); // 사전 커스텀 정보 가져오기
-  const [arrCount, setArrCount] = useState();
-  const [contents, setContent] = useState({});
+  const [arrCount, setArrCount] = useState(); // 자음별 정의 갯수 
+  const [contents, setContent] = useState({}); // 가져온 정의
+
   // n번째 지은이 (수정 필요)
   const number = 3;
+  // 선택한 북마크 번호, 한글 자음
+  const selectNum = sessionStorage.getItem("selectNum");
+  const selectMark = sessionStorage.getItem("selectMark");
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getDictionary(dictionaryId, 1).then((res) => {
-      setContent(res);
-      setArrCount(res.length);
-    });
+    if(!!selectNum){
+      getDictionary(dictionaryId, selectNum).then((res) => {
+        setContent(res);
+        setArrCount(res.length);
+      });
+    }
+    else{
+      getDictionary(dictionaryId, 1).then((res) => {
+        setContent(res);
+        setArrCount(res.length);
+      });
+    }
   }, []);
+
   //모달
   const [modal, setModal] = useState(false);
 
@@ -56,14 +70,18 @@ const DefinitionPage = () => {
     const consonant = e.target.getAttribute("data-set");
     const consonantIndex = makrData.filter((data) => data.text === consonant);
     const idx = Object.values(consonantIndex)[0].id;
+    // 페이지 유지용 선택 자음 저장
+    sessionStorage.setItem("selectNum", idx);
+    sessionStorage.setItem("selectMark", e.target.getAttribute("data-set"));
     getDictionary(dictionaryId, idx).then((res) => {
       setContent(res);
       setArrCount(res.length);
     });
   };
+
   const Like = (e) => {
     const id = e.target.getAttribute("id");
-    console.log(id);
+
     axios.post(
       `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}/like`
     );
@@ -71,9 +89,9 @@ const DefinitionPage = () => {
       window.location.reload();
     }, 300);
   };
+
   const removeContent = (e) => {
     const id = e.target.getAttribute("id");
-    console.log(id);
     http.delete(
       `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/post/${id}`
     );
@@ -85,7 +103,7 @@ const DefinitionPage = () => {
     <>
       <Background/>
       <Container>
-        {Login === null ? null : <Sidebar />}
+        {Login === null ? null : <Sidebar/>}
         <NumText>
           <SF_HambakSnow>
             총 <span>{arrCount}</span>개의 문장이 쌓여있어요!
@@ -104,13 +122,13 @@ const DefinitionPage = () => {
             <ContentWrapper>
               <ContentBox>
                 {arrCount
-                  ? contents.map((ele) => {
+                  ? contents.map((ele, index) => {
                       return (
                         <>
                           {" "}
                           <Content>
                             <div className="countNum">
-                              <Pretendard>{ele.id}.</Pretendard>
+                              <Pretendard>{index+1}.</Pretendard>
                             </div>
                             <div className="comment">
                               <Pretendard>{ele.contents}</Pretendard>
@@ -125,8 +143,8 @@ const DefinitionPage = () => {
                               </div>   
                             )
                               : (
-                              <div className="like" onClick={Like} id={ele.id}>
-                                <div className="likeImg" id={ele.id}></div>
+                              <div className="like"  onClick={Like} id={ele.id}>
+                                <div className="likeImg" id={ele.id}/>
                                 <div className="likeNum" id={ele.id}>
                                   <SF_HambakSnow>{ele.likes}</SF_HambakSnow>
                                 </div>
@@ -154,17 +172,23 @@ const DefinitionPage = () => {
             <Bookmark>
               {makrData.map((mark) => {
                 return (
-                  <div data-set={mark.text} onClick={changeConsonant}>
+                 (selectMark == mark.text)||(!selectMark && mark.text=="ㄱ") ? 
+                  (<div data-set={mark.text} onClick={changeConsonant} className="selectM">
                     <SF_HambakSnow data-set={mark.text}>
                       {mark.text}
                     </SF_HambakSnow>
-                  </div>
+                  </div>)
+                  :
+                  (<div data-set={mark.text} onClick={changeConsonant} className="noneM">
+                  <SF_HambakSnow data-set={mark.text}>
+                    {mark.text}
+                  </SF_HambakSnow>
+                </div>)
                 );
               })}
             </Bookmark>
           </DicIndexWrapper>
         </DicBook>
-
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
@@ -312,7 +336,7 @@ const Content = styled.div`
   }
   .likeNum {
     font-weight: 800;
-    font-size: ${vw(4)};
+    font-size: ${vw(8)};
     color: #818181;
     width: fit-content;
     margin: 0 auto;
@@ -335,12 +359,22 @@ const Bookmark = styled.div`
   width: ${vh(25)};
   cursor: pointer;
   div {
+    height: 6%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 6%;
-    background: var(--white);
     border-radius: 0 2px 2px 0;
+  }
+  .selectM{
+    height: 7%;
+    background-color: var(--green);
+    color: white;
+    width: 120%;
+    font-size: ${vw(15)};
+  }
+  .noneM{
+    height: 5.5%;
+    background-color: var(--white);
     font-size: ${vw(13)};
   }
 `;
