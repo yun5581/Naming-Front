@@ -7,16 +7,18 @@ import { http } from "../../api/http.js";
 
 import Sidebar from "../../components/Sidebar";
 import Footer from "../../components/Footer";
-
-import background from "../../images/background.svg";
+import Background from "../../components/Background";
 
 import { SF_HambakSnow } from "../../components/Text";
 
 const MakerPage = () => {
   const { dictionaryId } = useAppSelector((state) => state.dictionary);
+  const { name } = useAppSelector((state)=>state.user);
+  const number = 10;
   const [data, setData] = useState();
   useEffect(() => {
     window.scrollTo(0, 0);
+    getPeople();
   }, []);
 
   const getPeople = () => {
@@ -26,21 +28,30 @@ const MakerPage = () => {
       )
       .then((res) => {
         setData(res.data.data);
+        // setTimeout(() => {
+        //   setData(res.data.data);
+        // }, 5000);
       })
       .catch((error) => {
-        alert("만들이들가져오기 실패");
+        // alert("만들이들가져오기 실패");
+        // window.location.reload();
       });
   };
 
-  useEffect(() => {}, []);
-  getPeople();
   return (
     <>
-      <Background>
+      <Background/>
+      <Container>
         <Sidebar />
+        <Title>
+            {name}하다를 채운 <br/>
+            {number}명의 만든이들 
+        </Title>
         <DicBook>
-          <DicSidePage></DicSidePage>
+          <DicSidePage/>
           <DicPage>
+            {/* {!data? (
+                  <Loading><div>{name}하다를 채운 만든이들 정보를 불러오는 중이에요!</div></Loading>):null} */}
             <ContentWrapper>
               <ContentBox>
                 {data
@@ -56,24 +67,63 @@ const MakerPage = () => {
             </ContentWrapper>
           </DicPage>
         </DicBook>
-
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
-      </Background>
+      </Container>
     </>
   );
 };
 
 export default MakerPage;
 
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    top: 0;
+    font-family: var(--hb-font);
+`
+const Title = styled.div`
+  width: 100%;
+  width: ${vw(277)};
+  height: ${vh(42)};
+  margin-top: ${vh(50)};
+
+  display: flex;
+  justify-content: flex-end;
+  color: var(--white);
+  /* border: solid; */
+`
+const DicBook = styled.div`
+  display: flex;
+  margin-top: ${vh(50)};
+  height: ${vh(468)};
+`;
+const DicSidePage = styled.div`
+  width: ${vw(25)};
+  background-color: white;
+  /* border-right: 1px solid #ecebe8; */
+  box-shadow: 0px 0px 2px #848380 inset;
+`;
+const DicPage = styled.div`
+  background-color: white;
+  width: ${vw(255)};
+  padding: ${vw(16)};
+  box-shadow: 0px 0px 3px #848380 inset;
+`;
 const ContentWrapper = styled.div`
-  height: 85%;
+  height: ${vh(435)};
 `;
 
 const ContentBox = styled.div`
   overflow-y: scroll;
-  height: 100%;
+  height: ${vh(435)};
   display: flex;
   flex-direction: column;
 
@@ -125,39 +175,6 @@ const Content = styled.div`
   }
 `;
 
-const Background = styled.div`
-  width: 100%;
-  height: 100vh;
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-size: cover;
-`;
-
-const DicBook = styled.div`
-  display: flex;
-  margin-top: ${vh(80)};
-`;
-
-const DicSidePage = styled.div`
-  height: ${vh(400)};
-  width: ${vw(25)};
-  margin-top: ${vh(40)};
-  background-color: white;
-  border-right: 2px solid #ecebe8;
-  box-shadow: 0px 0px 9px #848380;
-`;
-const DicPage = styled.div`
-  background-color: white;
-  width: ${vw(255)};
-  height: ${vh(400)};
-  margin-top: ${vh(40)};
-  padding: ${vw(16)};
-`;
-
 const FooterWrapper = styled.div`
   height: 100vh;
   margin-top: 30px;
@@ -168,3 +185,18 @@ const FooterWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-end;
 `;
+
+const Loading = styled.div`
+  width: ${vw(223)};
+  height: ${vh(441)};
+  position: absolute;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--hb-font);
+  div{
+    width: 70%;
+    text-align: center;
+  }
+`
