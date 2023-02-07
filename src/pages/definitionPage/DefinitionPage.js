@@ -10,8 +10,9 @@ import { getDictionary, postLike } from "../../api/user";
 import { useAppSelector } from "../../redux/store";
 import { http } from "../../api/http";
 import axios from "axios";
+//components
+import Background from "../../components/Background";
 //images
-import background from "../../images/background.svg";
 import like from "../../images/like.svg";
 import deleteIcon from "../../images/definePage/delete.svg";
 import Footer from "../../components/Footer";
@@ -26,6 +27,8 @@ const DefinitionPage = () => {
   const Login = localStorage.getItem("token"); // 사전 커스텀 정보 가져오기
   const [arrCount, setArrCount] = useState();
   const [contents, setContent] = useState({});
+  // n번째 지은이 (수정 필요)
+  const number = 3;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -80,7 +83,8 @@ const DefinitionPage = () => {
   };
   return (
     <>
-      <Background>
+      <Background/>
+      <Container>
         {Login === null ? null : <Sidebar />}
         <NumText>
           <SF_HambakSnow>
@@ -92,7 +96,8 @@ const DefinitionPage = () => {
           <DicPage>
             <TitleBox>
               <Title>
-                <Pretendard>{name}하다</Pretendard>
+                <div className="titleName">{name}하다</div>
+                <div className="titleNum">{number}</div>
               </Title>
               {Login ? <EditBtn onClick={editItem}>수정</EditBtn> : null}
             </TitleBox>
@@ -160,13 +165,24 @@ const DefinitionPage = () => {
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
-      </Background>
+      </Container>
     </>
   );
 };
 
 export default DefinitionPage;
 
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    top: 0;
+`
 const ContentWrapper = styled.div`
   height: 85%;
 `;
@@ -188,7 +204,63 @@ const ContentBox = styled.div`
     border-radius: 50px;
   }
 `;
-
+const NumText = styled.div`
+  color: white;
+  font-weight: 800;
+  font-size: ${vw(18)};
+  margin-top: ${vh(65)};
+  margin-left: ${vw(25)};
+  span {
+    color: #85d2d7;
+  }
+`;
+const DicBook = styled.div`
+  display: flex;
+  margin-top: ${vh(40)};
+  height: ${vh(468)};
+`;
+const DicSidePage = styled.div`
+  width: ${vw(25)};
+  background-color: white;
+  border-right: 2px solid #ecebe8;
+  box-shadow: 0px 0px 9px #848380;
+`;
+const DicPage = styled.div`
+  background-color: white;
+  width: ${vw(255)};
+  padding: ${vw(16)};
+  /* border: solid; */
+  box-shadow: 10px 0 0 0 #ECEBE8;
+`;
+const DicIndexWrapper = styled.div`
+`;
+const Title = styled.div`
+  color: #2b787d;
+  display: flex;
+  .titleName{
+    padding-top: 3px;
+    font-weight: 900;
+    font-size: ${vw(20)};
+    text-decoration-line: underline;
+    text-decoration-thickness: 2.5px;
+    text-underline-offset : 3px; 
+  }
+  .titleNum{
+    font-size: ${vw(14)};
+    margin-left: 3px;
+  }
+`;
+const TitleBox = styled.div`
+  display: flex;
+  margin-bottom: ${vh(29)};
+  align-items: baseline;
+  justify-content: space-between;
+`;
+const EditBtn = styled.div`
+  font-weight: 400;
+  font-size: ${vw(12)};
+  color: #818181;
+`;
 const Content = styled.div`
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -197,6 +269,7 @@ const Content = styled.div`
   margin-bottom: ${vw(16)};
   display: flex;
   align-items: center;
+
   .deleteIcon {
     background-image: url(${deleteIcon});
     width: ${vw(16)};
@@ -233,80 +306,6 @@ const Content = styled.div`
     align-items: center;
   }
 `;
-
-const EditBtn = styled.div`
-  font-weight: 400;
-  font-size: ${vw(12)};
-  color: #818181;
-`;
-const Title = styled.div`
-  color: #2b787d;
-  font-weight: 900;
-  font-size: ${vw(20)};
-  text-decoration-line: underline;
-  text-decoration-thickness: 3px;
-`;
-const TitleBox = styled.div`
-  display: flex;
-  margin-bottom: ${vh(29)};
-  align-items: baseline;
-  justify-content: space-between;
-`;
-const Background = styled.div`
-  width: 100%;
-  height: 100vh;
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-size: cover;
-`;
-
-const NumText = styled.div`
-  color: white;
-  font-weight: 800;
-  font-size: ${vw(18)};
-  margin-top: ${vh(65)};
-  margin-left: ${vw(25)};
-  span {
-    color: #85d2d7;
-  }
-`;
-const DicBook = styled.div`
-  display: flex;
-`;
-const DicIndexWrapper = styled.div`
-  height: ${vh(400)};
-  margin-top: ${vh(40)};
-`;
-const DicSidePage = styled.div`
-  height: ${vh(400)};
-  width: ${vw(25)};
-  margin-top: ${vh(40)};
-  background-color: white;
-  border-right: 2px solid #ecebe8;
-  box-shadow: 0px 0px 9px #848380;
-`;
-const DicPage = styled.div`
-  background-color: white;
-  width: ${vw(255)};
-  height: ${vh(400)};
-  margin-top: ${vh(40)};
-  padding: ${vw(16)};
-`;
-
-const FooterWrapper = styled.div`
-  height: 100vh;
-  margin-top: 30px;
-  padding-bottom: 30px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`;
-
 const PlusBtn = styled.button`
   background-image: url(${plusBtn});
   background-size: cover;
@@ -316,7 +315,6 @@ const PlusBtn = styled.button`
   background-color: transparent;
   margin: 0 auto;
 `;
-
 const Bookmark = styled.div`
   height: 100%;
   display: flex;
@@ -331,6 +329,12 @@ const Bookmark = styled.div`
     height: 6%;
     background: var(--white);
     border-radius: 0 2px 2px 0;
-    font-size: 2px;
+    font-size: ${vw(13)};
   }
 `;
+const FooterWrapper = styled.div`
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
+`
+
