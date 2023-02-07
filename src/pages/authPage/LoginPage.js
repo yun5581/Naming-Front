@@ -9,7 +9,7 @@ import Background from "../../components/Background";
 // api, 유저 정보
 import { GetUser } from "../../api/user";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { setUser } from "../../redux/userSlice";
+import { setNth, setUser } from "../../redux/userSlice";
 import { setDictionaryID } from "../../redux/dictionarySlice";
 import axios from "axios";
 
@@ -17,7 +17,7 @@ const LoginPage = () =>{
     const navigate = useNavigate();
     // 유저 리덕스 
     const dispatch =useAppDispatch();
-    const {userId, ID, PW} = useAppSelector(state=>state.user);
+    const {ID, PW} = useAppSelector(state=>state.user);
     const { dictionaryId } = useAppSelector((state) => state.dictionary);
 
     // 로그인 정보관리
@@ -36,16 +36,23 @@ const LoginPage = () =>{
                     PW: password
                 }));
                 // 사전 아이디 받기
-                axios.get(`https://kj273456.pythonanywhere.com/dictionary/id/${res.data.user_id}`)
+                axios.get(`https://kj273456.pythonanywhere.com/dictionary/id/${res.data.user_id}/`)
                 .then((res)=>{
-                    dispatch(setDictionaryID({dictionaryId: res.data.data.id}));
+                    console.log(res);
+                    dispatch(setDictionaryID({dictionaryId: res.data.id}));
                 }).then(()=>{  
                     navigate("/home");
                     window.location.reload();
                 }).catch((error)=>{
+                    console.log(error);
                     alert("사전 정보를 가져오지 못했습니다. 재로그인해주세요.");
                     navigate("/login");
                 });
+                // n번째 지은이 정보 받기
+                axios.get(`https://kj273456.pythonanywhere.com/accounts/number/${res.data.user_id}`)
+                .then((res)=>{
+                    dispatch(setNth({nth: res.data.userNumber}));
+                })
             }
         }).catch((error)=>{
             if(error.message=="로그인 실패"){

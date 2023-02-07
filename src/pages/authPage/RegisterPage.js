@@ -11,7 +11,7 @@ import { BsCheckCircle } from"react-icons/bs";
 // api, 유저 정보
 import { GetUser, PostUser } from "../../api/user";
 import { useAppDispatch } from "../../redux/store";
-import { setUser } from "../../redux/userSlice";
+import { setUser, setNth } from "../../redux/userSlice";
 import Background from "../../components/Background";
 
 const RegisterPage = () =>{
@@ -51,7 +51,8 @@ const RegisterPage = () =>{
                 .then((res)=>{
                     if(res.message=="회원가입 성공"){
                         login();
-                        setNumber(res.number);
+                        setNumber(res.data.userNumber);
+                        dispatch(setNth({nth: res.data.userNumber}));
                         setModal(true);
                     }
                 })

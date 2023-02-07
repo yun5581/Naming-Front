@@ -7,7 +7,8 @@ const initialState = {
     userId: "", // 유저 고유 번호
     name: "", // 유저 이름
     ID: "",
-    PW:""
+    PW:"",
+    nth:"", // n번째 지은이
 };
 
 export const userSlice = createSlice({
@@ -17,6 +18,7 @@ export const userSlice = createSlice({
     initUser: state => {
       state.userId = initialState.userId;
       state.name = initialState.firstname;
+      state.nth = initialState.nth;
     },
     setUser: (state, action) => {
       state.userId = action.payload.userId;
@@ -24,12 +26,15 @@ export const userSlice = createSlice({
       state.ID  = action.payload.ID;
       state.PW = action.payload.PW;
     },
+    setNth: (state, action) =>{
+      state.nth = action.payload.nth;
+    }
   },
   extraReducers: builder => {
     builder.addCase(PURGE, () => initialState);
   },
 });
 
-export const { setUser,initUser } = userSlice.actions;
+export const { setUser,initUser, setNth } = userSlice.actions;
 
 export default userSlice.reducer;
