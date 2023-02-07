@@ -29,8 +29,10 @@ const DefinitionPage = () => {
   const [arrCount, setArrCount] = useState(); // 자음별 정의 갯수 
   const [contents, setContent] = useState({}); // 가져온 정의
 
-  // n번째 지은이 (수정 필요)
+  // n번째 지은이 
   const { nth } = useAppSelector((state)=>state.user);
+  // 총 쌓인 문장 수 
+  const { commentNum } = useAppSelector((state)=>state.dictionary);
   // 선택한 북마크 번호, 한글 자음
   const selectNum = sessionStorage.getItem("selectNum");
   const selectMark = sessionStorage.getItem("selectMark");
@@ -106,7 +108,9 @@ const DefinitionPage = () => {
         {Login === null ? null : <Sidebar/>}
         <NumText>
           <SF_HambakSnow>
-            총 <span>{arrCount}</span>개의 문장이 쌓여있어요!
+            {/* 총 <span>{arrCount}</span>개의 문장이 쌓여있어요! */}
+            {/* 전체 쌓인 문장 수로 변경 */}
+            총 <span>{commentNum}</span>개의 문장이 쌓여있어요!  
           </SF_HambakSnow>
         </NumText>
         <DicBook>

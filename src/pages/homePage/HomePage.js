@@ -1,10 +1,11 @@
-// vw, vh 연습용 코드
 import React, { useEffect, useState, useRef } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useResize, vh, vw } from "../../components/SizeConvert";
-import { useAppSelector } from "../../redux/store";
 import { http } from "../../api/http.js";
+// redux
+import { useAppSelector, useAppDispatch } from "../../redux/store";
+import { setCommentNum } from "../../redux/dictionarySlice";
 
 //components
 import { SF_HambakSnow, Simonetta } from "../../components/Text";
@@ -20,6 +21,8 @@ import Background from "../../components/Background";
 //const copyLinkRef = useRef();
 
 const HomePage = () => {
+  // redux
+  const dispatch = useAppDispatch();
   // 유저 아이디 가져오기 
   const {userId} = useAppSelector((state)=>state.user);
   // 사전 아이디 가져오기
@@ -43,11 +46,13 @@ const HomePage = () => {
     http
       .get(`https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/`)
       .then((res) => {
+        console.log(res.data.data.stacked);
         setName(res.data.data.firstName);
         setShapeColor(res.data.data.shadowColor);
         setColor(res.data.data.color);
         setShapeNum(res.data.data.shadow);
         setDecoNum(res.data.data.border);
+        dispatch(setCommentNum({commentNum: res.data.data.stacked})); // 쌓인 문장 수 저장
       })
       .catch((error) => {
         //alert("사전 커스텀 정보 가져오기 실패");
