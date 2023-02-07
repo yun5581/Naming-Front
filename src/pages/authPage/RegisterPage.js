@@ -51,8 +51,8 @@ const RegisterPage = () =>{
                 .then((res)=>{
                     if(res.message=="회원가입 성공"){
                         login();
-                        setNumber(res.data.userNumber);
-                        dispatch(setNth({nth: res.data.userNumber}));
+                        setNumber(res.data.userNumber+1);
+                        dispatch(setNth({nth: res.data.userNumber+1}));
                         setModal(true);
                     }
                 })
