@@ -15,7 +15,7 @@ const StarBackground = () =>{
         }
       
         var estrela = "";
-        var qtdeEstrelas = 50;
+        var qtdeEstrelas = 80;
         var noite = document.querySelector(".constelacao");
         var widthWindow = window.innerWidth;
         var heightWindow = window.innerHeight;
