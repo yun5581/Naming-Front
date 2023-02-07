@@ -30,7 +30,7 @@ const DefinitionPage = () => {
   const [contents, setContent] = useState({}); // 가져온 정의
 
   // n번째 지은이 (수정 필요)
-  const number = 3;
+  const { nth } = useAppSelector((state)=>state.user);
   // 선택한 북마크 번호, 한글 자음
   const selectNum = sessionStorage.getItem("selectNum");
   const selectMark = sessionStorage.getItem("selectMark");
@@ -115,7 +115,7 @@ const DefinitionPage = () => {
             <TitleBox>
               <Title>
                 <div className="titleName"><Pretendard>{name}하다</Pretendard></div>
-                <div className="titleNum"><Pretendard>{number}</Pretendard></div>
+                <div className="titleNum"><Pretendard>{nth}</Pretendard></div>
               </Title>
               {Login ? <EditBtn onClick={editItem}>수정</EditBtn> : null}
             </TitleBox>
@@ -213,7 +213,8 @@ const Container = styled.div`
 const DicBook = styled.div`
   display: flex;
   margin-top: ${vh(40)};
-  height: ${vh(468)};
+  /* height: ${vh(468)}; */
+  aspect-ratio: 0.7/ 1;
 `;
 const DicSidePage = styled.div`
   width: ${vw(25)};
@@ -299,8 +300,8 @@ const Content = styled.div`
 
   .deleteIcon {
     background-image: url(${deleteIcon});
-    width: ${vw(14)};
-    height: ${vw(14)};
+    width: ${vw(15)};
+    height: ${vw(15)};
   }
   .countNum {
     width: 13%;
@@ -327,8 +328,8 @@ const Content = styled.div`
     align-items: center;
   }
   .likeImg {
-    width: ${vw(14)};
-    height: ${vw(14)};
+    width: ${vw(15)};
+    height: ${vw(15)};
     background-image: url(${like});
     background-repeat: no-repeat;
     background-position: center center;
