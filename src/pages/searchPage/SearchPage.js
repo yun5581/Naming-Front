@@ -20,7 +20,7 @@ const SearchPage = () => {
   const [data, setdata] = useState();
   const [dataLength, setdatalength] = useState();
   useEffect(() => {
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, []);
 
   const onSubmit = (e) => {
@@ -134,13 +134,13 @@ const Container = styled.div`
     top: 0;
 `
 const ResultWrapper = styled.div`
-  border: solid;
   margin-top: ${vh(16)};
   width: ${vw(301)};
-  height: 100%;
+  height: ${vh(490)};
+  border: solid;
   background: #f2f2f2;
   border-radius: 5px;
-  overflow-y: scroll;
+  overflow: scroll;
   .nullresult {
     font-size: ${vw(14)};
     margin: 10px auto;
@@ -201,11 +201,7 @@ const Input = styled.input`
 `;
 
 const FooterWrapper = styled.div`
-  height: 100vh;
-  margin-top: 30px;
-  padding-bottom: 30px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`;
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
+`
