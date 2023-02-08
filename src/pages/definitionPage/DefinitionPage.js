@@ -13,11 +13,10 @@ import axios from "axios";
 //components
 import Background from "../../components/Background";
 //images
-import like from "../../images/like.svg";
-import likeRed from "../../images/likeRed.svg";
 import deleteIcon from "../../images/definePage/delete.svg";
 import Footer from "../../components/Footer";
 import plusBtn from "../../images/definePage/+Btn.svg";
+import { AiOutlineHeart } from "react-icons/ai";
 
 const DefinitionPage = () => {
   // 사전 아이디 가져오기
@@ -147,8 +146,10 @@ const DefinitionPage = () => {
                               </div>   
                             )
                               : (
-                              <div className="like"  onClick={Like} id={ele.id}>
-                                <div className="likeImg" id={ele.id}/>
+                              <div className="like" id={ele.id} onClick={Like}>
+                                <AiOutlineHeart className="likeIcon" id={ele.id} 
+                               />
+                                {/* <div className="likeImg" id={ele.id}/> */}
                                 <div className="likeNum" id={ele.id}>
                                   <SF_HambakSnow>{ele.likes}</SF_HambakSnow>
                                 </div>
@@ -325,19 +326,17 @@ const Content = styled.div`
   }
   .like, .delete {
     width: 15%;
+    /* border: solid; */
     height: ${vh(33)};
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  .likeImg {
-    width: ${vw(15)};
-    height: ${vw(15)};
-    background-image: url(${like});
-    background-repeat: no-repeat;
-    background-position: center center;
-
+  .likeIcon {
+    width: ${vw(14)};
+    height: ${vw(14)};
+    color:  #818181;
   }
   .likeNum {
     font-weight: 800;
