@@ -51,7 +51,7 @@ const SearchPage = () => {
   // 해당 사전 정의 모아보기로 이동하기 
   const movePage = (userId,dicId) =>{
     // console.log(dicId);s
-    navigate(`${userId}/visitor/definition/${dicId}`);
+    navigate(`/${userId}/visitor/definition/${dicId}`);
   }
   useEffect(() => {
     if (keyword !== "") {
