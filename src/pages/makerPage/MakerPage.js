@@ -14,12 +14,37 @@ import { SF_HambakSnow } from "../../components/Text";
 const MakerPage = () => {
   const { dictionaryId } = useAppSelector((state) => state.dictionary);
   const { name } = useAppSelector((state)=>state.user);
-  const number = 10;
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   useEffect(() => {
     window.scrollTo(0, 0);
     getPeople();
   }, []);
+  // 색상 랜덤 함수 
+  const randColor = () =>{
+    const n = Math.floor(Math.random()*5);
+    var color;
+    switch(n){
+      case 0: color = "#0B0B0B"; break; // black
+      case 1: color = "#2B787D"; break; // green
+      case 2: color = "#005686"; break; // blue
+      case 3: color = "#BABABA"; break; // gray1
+      default: color = "#818181"; // gray2
+    }
+    return color;
+  }
+  // 배치 랜덤 함수
+  const randAlign = () =>{
+    const n = Math.floor(Math.random()*5);
+    var px;
+    switch(n){
+      case 0: px = vw(5); break; // black
+      case 1: px = vw(10); break; // green
+      case 2: px = vw(15); break; // blue
+      case 3: px = vw(20); break; // gray1
+      default: px = vw(25) // gray2
+    }
+    return px;
+  }
 
   const getPeople = () => {
     http
@@ -27,10 +52,17 @@ const MakerPage = () => {
         `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/people/`
       )
       .then((res) => {
-        setData(res.data.data);
-        // setTimeout(() => {
-        //   setData(res.data.data);
-        // }, 5000);
+        const raw = res.data.data;
+        // 공란 제거
+        const filter1 = raw.filter((data) => {
+          return data.nickname!= ""
+        });
+        // 중복 이름 제거
+        const filter2 = filter1.map((data)=>
+           data.nickname);
+        const set = new Set(filter2);
+        const uniqueMaker = [...set];
+        setData(uniqueMaker);
       })
       .catch((error) => {
         // alert("만들이들가져오기 실패");
@@ -42,29 +74,25 @@ const MakerPage = () => {
     <>
       <Background/>
       <Container>
-        <Sidebar />
+        <Sidebar/>
         <Title>
             {name}하다를 채운 <br/>
-            {number}명의 만든이들 
+            {data.length==0?"n":data.length}명의 만든이들 
         </Title>
         <DicBook>
           <DicSidePage/>
           <DicPage>
-            {/* {!data? (
-                  <Loading><div>{name}하다를 채운 만든이들 정보를 불러오는 중이에요!</div></Loading>):null} */}
-            <ContentWrapper>
               <ContentBox>
-                {data
+              {data
                   ? data.map((ele) => {
                       return (
                         <Content>
-                          <SF_HambakSnow>{ele.nickname}</SF_HambakSnow>
+                          <SF_HambakSnow style={{color: randColor()}}>{ele}</SF_HambakSnow>
                         </Content>
                       );
                     })
                   : null}
               </ContentBox>
-            </ContentWrapper>
           </DicPage>
         </DicBook>
         <FooterWrapper>
@@ -80,7 +108,7 @@ export default MakerPage;
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
+    align-items: center;
     /* justify-content: center; */
 
     width: 100vw;
@@ -99,19 +127,18 @@ const Title = styled.div`
   display: flex;
   justify-content: flex-end;
   color: var(--white);
-  /* border: solid; */
 `
 const DicBook = styled.div`
   display: flex;
   margin-top: ${vh(40)};
-  width: ${vw(310)};
-  aspect-ratio: 0.7/ 1;
-  border: solid;
-  border-color: blue;
+  width: ${vw(300)};
+  aspect-ratio: 0.15/1;
+  @media only screen  and (min-width: 700px) and (max-width: 850px){
+    height: 70%;
+  }
 `;
 const DicSidePage = styled.div`
   width: ${vw(25)};
-  height: 100%;
   background-color: white;
   /* border-right: 1px solid #ecebe8; */
   box-shadow: 0px 0px 2px #848380 inset;
@@ -119,20 +146,16 @@ const DicSidePage = styled.div`
 const DicPage = styled.div`
   background-color: white;
   width: ${vw(280)};
-  height: 100%;
   padding: ${vw(16)};
   box-shadow: 0px 0px 3px #848380 inset;
-`;
-const ContentWrapper = styled.div`
-  /* height: ${vh(435)}; */
-  height: 100%;
 `;
 
 const ContentBox = styled.div`
   overflow-y: scroll;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -148,13 +171,12 @@ const ContentBox = styled.div`
 `;
 
 const Content = styled.div`
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  height: ${vh(33)};
-  width: 96%;
-  margin-bottom: ${vw(16)};
+  height: ${vh(40)};
+  width: auto;
   display: flex;
   align-items: center;
+  font-size: ${vw(17)};
+  padding: 0 ${vw(20)};
 `;
 
 const FooterWrapper = styled.div`
@@ -167,18 +189,3 @@ const FooterWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-end;
 `;
-
-const Loading = styled.div`
-  width: ${vw(223)};
-  height: ${vh(441)};
-  position: absolute;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--hb-font);
-  div{
-    width: 70%;
-    text-align: center;
-  }
-`

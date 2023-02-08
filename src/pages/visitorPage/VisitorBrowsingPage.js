@@ -37,6 +37,7 @@ const VisitorBrowsingPage = () => {
       visit_dictionaryId: id,
     }));
     getDictionary(id, 1).then((res) => {
+      console.log(res);
       setContent(res);
       setArrCount(res.length);
     });
