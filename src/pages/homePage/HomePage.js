@@ -34,6 +34,11 @@ const HomePage = () => {
   }, []);
 
   const navigate = useNavigate();
+  
+  // 버튼 클릭시 이동
+  function scrollto(e){
+    e.target.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 
   // 사전 커스텀 정보 관리
   const [name, setName] = useState("");
@@ -86,7 +91,7 @@ const HomePage = () => {
           decoNum={decoNum}
         />
         <ButtonWrapper onClick={copyLink}>
-          <Button>
+          <Button onClick={e=> scrollto(e)}>
             <object type="image/svg+xml" data={getLink} className="getLink" />
             <SF_HambakSnow>내 사전 링크 복사하기</SF_HambakSnow>
           </Button>
@@ -119,6 +124,7 @@ const Container = styled.div`
 
     position: absolute;
     top: 0;
+    overflow: scroll;
 `
 
 const AlertMSG = styled.div`
