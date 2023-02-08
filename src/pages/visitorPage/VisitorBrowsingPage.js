@@ -6,6 +6,7 @@ import axios from "axios";
 // redux
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { setVisit_dictionaryID } from "../../redux/dictionarySlice";
+import { setVisit_dicName, setVisit_nth, setVisit_stacked } from "../../redux/visitorSlice";
 // components 
 import { vw, vh } from "../../components/SizeConvert";
 import Background from "../../components/Background";
@@ -15,17 +16,20 @@ import { makrData } from "../../_mock/customInfo";
 import DefinitionInputModal from "../../components/TxtModal/DefinitionInputModal";
 //images
 import like from "../../images/like.svg";
-import deleteIcon from "../../images/definePage/delete.svg";
 import plusBtn from "../../images/definePage/+Btn.svg";
+import { AiOutlineHeart } from "react-icons/ai";
+
 
 const VisitorBrowsingPage = () => {
   const [edit, setEdit] = useState(false);
   const [arrCount, setArrCount] = useState();
   const [contents, setContent] = useState({});
 
-  // 방문한 사전 정보 받아오기
-  const [nth, setNth ] =useState(1); // n번째 지은이 
-  const [cNum, setCNum] = useState(0); // 총 쌓인 문장 수 
+  // 방문한 사전 정보 받아오기 (첫 렌더링)
+  const [dicName, setDicName ] =useState(""); // 사전 이름
+  const [nth, setNth ] =useState(); // n번째 지은이 
+  const [stacked, setStacked] = useState(0); // 총 쌓인 문장 수 
+
   // 선택한 북마크 번호, 한글 자음
   const selectNum = sessionStorage.getItem("selectNum");
   const selectMark = sessionStorage.getItem("selectMark");
@@ -33,15 +37,17 @@ const VisitorBrowsingPage = () => {
   // redux
   const dispatch = useAppDispatch();
   const {visit_dictionaryId} = useAppSelector((state)=>state.dictionary);
-  const {visit_dicName} = useAppSelector((state)=>state.visitor);
+  // 방문한 사전 정보 저장 
+  const {visit_dicName, visit_nth, visit_stacked} = useAppSelector((state)=>state.visitor);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const location = window.location.pathname;
-    const id = Number(location.split('/')[3]); //url에서 사전 아이디 받아오기
+    const id = Number(location.split('/')[4]); //url에서 사전 아이디 받아오기
     dispatch(setVisit_dictionaryID({
       visit_dictionaryId: id,
     }));
+    getInfo(id);
     if(!!selectNum){
       getDictionary(id, selectNum).then((res) => {
         setContent(res);
@@ -57,25 +63,28 @@ const VisitorBrowsingPage = () => {
 
   }, []);
 
-  // 방문한 사전 쌓인 문장 수 받기
-  const getStacked = (dictionary_Id) => {
+  // 방문한 사전 정보 가져오기
+  const getInfo = (dictionary_Id) => {
     axios
       .get(`https://kj273456.pythonanywhere.com/dictionary/${dictionary_Id}/`)
       .then((res) => {
-        setCNum(res.data.data.stacked); // 쌓인 문장 수 저장
-        setNth(getNth(res.data.data.userId)); // nth 정보 받아오기
+        setStacked(res.data.data.stacked); 
+        setDicName(res.data.data.firstName);
+        dispatch(setVisit_stacked({visit_stacked:res.data.data.stacked}));
+        dispatch(setVisit_dicName({visit_dicName:res.data.data.firstName})); 
+        getNth(res.data.data.userId); // nth 정보 받아오기
       })
       .catch((error) => {
       })
   };
-  const getNth = (user_Id) =>{
-     // n번째 지은이 정보 받기
-     axios.get(`https://kj273456.pythonanywhere.com/accounts/number//${user_Id}/`)
-     .then((res)=>{
-          setNth(res.data.data.userNumber+1);
-     })
+  // nth 정보 받기
+  const getNth = (userId) =>{
+    axios.get(`https://kj273456.pythonanywhere.com/accounts/number/${userId}/`)
+    .then((res)=>{
+        setNth(res.data.data.userNumber+1);
+        dispatch(setVisit_nth({visit_nth: res.data.data.userNumber+1}));
+    })
   }
-  // 
   //모달
   const [modal, setModal] = useState(false);
 
@@ -91,17 +100,20 @@ const VisitorBrowsingPage = () => {
     const consonant = e.target.getAttribute("data-set");
     const consonantIndex = makrData.filter((data) => data.text === consonant);
     const idx = Object.values(consonantIndex)[0].id;
+    const ex = Object.values(consonantIndex)[0].ex;
     // 페이지 유지용 선택 자음 저장
     sessionStorage.setItem("selectNum", idx);
     sessionStorage.setItem("selectMark", e.target.getAttribute("data-set"));
+    // 모달용 자음 예시 저장
+    sessionStorage.setItem("selectEx", ex);
     getDictionary(visit_dictionaryId, idx).then((res) => {
       setContent(res);
       setArrCount(res.length);
     });
+    return e.target.getAttribute("data-set");
   };
   const Like = (e) => {
     const id = e.target.getAttribute("id");
-    console.log(id);
     axios.post(
       `https://kj273456.pythonanywhere.com/dictionary/${visit_dictionaryId}/post/${id}/like`
     );
@@ -117,7 +129,7 @@ const VisitorBrowsingPage = () => {
         {/* 사이드바 자리 */}
         <NumText>
           <SF_HambakSnow>
-            총 <span>{cNum}</span>개의 문장이 쌓여있어요!
+            총 <span>{stacked!=0? stacked: visit_stacked}</span>개의 문장이 쌓여있어요!
           </SF_HambakSnow>
         </NumText>
         <DicBook>
@@ -125,26 +137,28 @@ const VisitorBrowsingPage = () => {
           <DicPage>
             <TitleBox>
               <Title>
-                <div className="titleName"><Pretendard>{visit_dicName}하다</Pretendard></div>
-                <div className="titleNum"><Pretendard>{nth}</Pretendard></div>
+                <div className="titleName">
+                  <Pretendard>{dicName!=""? dicName: visit_dicName}하다</Pretendard>
+                </div>
+                <div className="titleNum"><Pretendard>{nth!=null? nth:visit_nth}</Pretendard></div>
               </Title>
             </TitleBox>
             <ContentWrapper>
               <ContentBox>
                 {arrCount
-                  ? contents.map((ele) => {
+                  ? contents.map((ele, index) => {
                       return (
                         <>
                           {" "}
                           <Content>
                             <div className="countNum">
-                              <Pretendard>{ele.id}.</Pretendard>
+                              <Pretendard>{index+1}.</Pretendard>
                             </div>
                             <div className="comment">
                               <Pretendard>{ele.contents}</Pretendard>
                             </div>
                               <div className="like" onClick={Like} id={ele.id}>
-                                <div className="likeImg" id={ele.id}></div>
+                              <AiOutlineHeart className="likeIcon" id={ele.id}/>
                                 <div className="likeNum" id={ele.id}>
                                   <SF_HambakSnow>{ele.likes}</SF_HambakSnow>
                                 </div>
@@ -287,40 +301,42 @@ const Content = styled.div`
   margin-bottom: ${vw(16)};
   display: flex;
   align-items: center;
-  .deleteIcon {
-    background-image: url(${deleteIcon});
-    width: ${vw(16)};
-    height: ${vw(16)};
-  }
   .countNum {
-    margin-left: ${vw(16)};
-    margin-right: ${vw(6)};
+    width: 13%;
+    height: ${vh(33)};
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: 400;
     font-size: ${vw(12)};
   }
-  .likeIcon {
-    width: ${vw(13)};
+  .comment {
+    width: 70%;
+    font-weight: 400;
+    font-size: ${vw(12)};
+    line-height: 1.5;
+    padding: 7px 3px 7px 3px;
   }
-  .likeImg {
-    background-image: url(${like});
-    background-repeat: none;
-    width: ${vw(16)};
-    height: ${vw(16)};
+  .like{
+    width: 15%;
+    /* border: solid; */
+    height: ${vh(33)};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .likeIcon {
+    width: ${vw(14)};
+    height: ${vw(14)};
+    color:  #818181;
   }
   .likeNum {
-    font-weight: 800;
+    font-weight: 700;
     font-size: ${vw(8)};
     color: #818181;
     width: fit-content;
     margin: 0 auto;
-  }
-  .comment {
-    width: 72%;
-    font-weight: 400;
-    font-size: ${vw(12)};
-  }
-  .like {
-    align-items: center;
   }
 `;
 const PlusBtn = styled.button`
