@@ -82,17 +82,17 @@ const MakerPage = () => {
         <DicBook>
           <DicSidePage/>
           <DicPage>
-              <ContentBox>
-              {data
-                  ? data.map((ele) => {
-                      return (
-                        <Content>
-                          <SF_HambakSnow style={{color: randColor()}}>{ele}</SF_HambakSnow>
-                        </Content>
-                      );
-                    })
-                  : null}
-              </ContentBox>
+            <ContentBox>
+            {data
+                ? data.map((ele) => {
+                    return (
+                      <Content>
+                        <SF_HambakSnow style={{color: randColor()}}>{ele}</SF_HambakSnow>
+                      </Content>
+                    );
+                  })
+                : null}
+            </ContentBox>
           </DicPage>
         </DicBook>
         <FooterWrapper>
@@ -132,10 +132,7 @@ const DicBook = styled.div`
   display: flex;
   margin-top: ${vh(40)};
   width: ${vw(300)};
-  aspect-ratio: 0.15/1;
-  @media only screen  and (min-width: 700px) and (max-width: 850px){
-    height: 70%;
-  }
+  aspect-ratio: 0.7/1;
 `;
 const DicSidePage = styled.div`
   width: ${vw(25)};
@@ -180,12 +177,7 @@ const Content = styled.div`
 `;
 
 const FooterWrapper = styled.div`
-  height: 100vh;
-  margin-top: 30px;
-  padding-bottom: 30px;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`;
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
+`
