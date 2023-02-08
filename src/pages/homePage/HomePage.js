@@ -51,7 +51,6 @@ const HomePage = () => {
     http
       .get(`https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/`)
       .then((res) => {
-        console.log(res.data.data.stacked);
         setName(res.data.data.firstName);
         setShapeColor(res.data.data.shadowColor);
         setColor(res.data.data.color);
@@ -91,9 +90,15 @@ const HomePage = () => {
           decoNum={decoNum}
         />
         <ButtonWrapper onClick={copyLink}>
-          <Button onClick={e=> scrollto(e)}>
+          <Button>
             <object type="image/svg+xml" data={getLink} className="getLink" />
-            <SF_HambakSnow>내 사전 링크 복사하기</SF_HambakSnow>
+            <SF_HambakSnow>
+            {show ? (
+              <div>내 사전 링크 복사 완료!</div>
+          ) : (
+              <div>내 사전 링크 복사하기</div>
+          )}
+          </SF_HambakSnow>
           </Button>
         </ButtonWrapper>
         <AlertMSG>
@@ -140,7 +145,7 @@ const ButtonWrapper = styled.button`
   height: ${vh(46)};
   background: #ffffff;
   border-radius: 5px;
-  margin-top: ${vh(15)};
+  margin-top: ${vh(5)};
 `;
 
 const Button = styled.div`
