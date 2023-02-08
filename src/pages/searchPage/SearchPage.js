@@ -69,10 +69,10 @@ const SearchPage = () => {
           <object type="image/svg+xml" data={searchImg} className="searchImg" />
           <Input
             placeholder="다른 사전을 검색해 보세요"
-            value={keyword || ""}
-            onChange={(e) => {
-              setkeyword(e.target.value);
-            }}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                setkeyword(e.target.value);
+              }}}
           />
           <object type="image/svg+xml" data={cancelImg} className="cancelImg" />
         </InputBox>
@@ -87,23 +87,26 @@ const SearchPage = () => {
               </div>
             ) : (
               data.map((ele, index) => {
-                return (
-                  <>
-                    <div className="resultText" onClick={()=>{movePage(ele.id)}}>
-                      <div className="searchResult">
-                        <SF_HambakSnow>
+                if (ele.firstName !== keyword) return;
+                else {
+                  return (
+                    <>
+                      <div className="resultText" onClick={()=>{movePage(ele.id)}}>
+                        <div className="searchResult">
+                          <SF_HambakSnow>
                           {/* 사전 번호가 아닌 위에서부터 1번 */}
-                          {index+1}번째 {keyword}하다
-                        </SF_HambakSnow>
+                            {index+1}번째 {keyword}하다
+                          </SF_HambakSnow>
+                        </div>
+                        <div className="resultCount">
+                          <SF_HambakSnow>
+                            쌓인 문장 : {ele.stacked}개
+                          </SF_HambakSnow>
+                        </div>
                       </div>
-                      <div className="resultCount">
-                        <SF_HambakSnow>
-                          쌓인 문장 : {ele.stacked}개
-                        </SF_HambakSnow>
-                      </div>
-                    </div>
-                  </>
-                );
+                    </>
+                  );
+                }
               })
             )}
           </ResultWrapper>
@@ -137,6 +140,7 @@ const ResultWrapper = styled.div`
   height: ${vh(10000)};
   background: #f2f2f2;
   border-radius: 5px;
+  overflow-y: scroll;
   .nullresult {
     font-size: ${vw(14)};
     margin: 10px auto;
