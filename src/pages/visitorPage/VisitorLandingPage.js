@@ -14,6 +14,7 @@ import VisitorDictionary from "../../components/visitorLandingPage/VisitorDictio
 //image
 import background from "../../images/background.svg";
 import { setVisit_dictionaryID } from "../../redux/dictionarySlice.js";
+import Background from "../../components/Background.js";
 
 const VisitorLandingPage = () => {
   const navigate = useNavigate();
@@ -63,7 +64,8 @@ const VisitorLandingPage = () => {
 
   return(
   <>
-    <Background>
+    <Background/>
+    <Container>
       <BodyContainer className={ !checkInfo() ? 'false' : ''}>
         <TitleBox>
           <span style={{'fontSize':vw(26)}}>이름하여 이름하다</span>
@@ -93,24 +95,23 @@ const VisitorLandingPage = () => {
       <FooterWrapper>
         <Footer/>
       </FooterWrapper>
-    </Background>
+    </Container>
   </>
   )
 }
 
 
 
-const Background = styled.div`
-  width: 100%;
-  height: 100vh;
+const Container = styled.div`
+   display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 100vw;
+    height: 100vh;
 
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-size: cover;
+    position: absolute;
+    top: 0;
 `
 
 const BodyContainer = styled.div`
@@ -154,9 +155,9 @@ const Button = styled.div`
     `
 
 const FooterWrapper = styled.div`
-    position:absolute;
+    position: absolute;
     bottom: 0;
-    padding-bottom: ${vh(42)};
-  `
+    padding: 20px;
+`
 
 export default VisitorLandingPage
