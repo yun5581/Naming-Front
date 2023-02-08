@@ -44,6 +44,7 @@ const DefinitionInputModal = props => {
   const consonant = sessionStorage.getItem("selectMark");
   const example = sessionStorage.getItem("selectEx");
   const [definition,setDefinition] = useState('')
+  
 
   //redux
   const dispatch = useAppDispatch();
@@ -60,7 +61,12 @@ const DefinitionInputModal = props => {
     var isSame=false;
     if(definition[0]!=null){
       const input = getConstantVowel(definition[0]).f;
-      input == consonant ? isSame=true : isSame=false;
+      if(consonant==null||consonant==""){
+        input == "ㄱ" ? isSame=true : isSame=false;
+      }
+      else{
+        input == consonant ? isSame=true : isSame=false;
+      }
     }
     else isSame=false;
     return isSame;
@@ -81,9 +87,11 @@ const DefinitionInputModal = props => {
 
  // 정의 보내기
   const submitDefinition= () => {
-    // 자음 int 값으로 보내기
+    var idx;
     const consonantIndex = makrData.filter((data) => data.text === consonant);
-    const idx = Object.values(consonantIndex)[0].id;
+    if(consonant==null||consonant=="") idx = 1;
+    else idx = Object.values(consonantIndex)[0].id;
+    // 자음 int 값으로 보내기
     axios.post(`https://kj273456.pythonanywhere.com/dictionary/${visit_dictionaryId}/post/`, {
       consonant: idx,
       contents: definition
@@ -112,13 +120,13 @@ const DefinitionInputModal = props => {
               color= 'var(--green)'
               height='80px'
               style={{marginBottom:'0px'}}
-              >{consonant}</SF_HambakSnow>
+              >{consonant==null||consonant==""?"ㄱ":consonant}</SF_HambakSnow>
                 </header>
                 <Pretendard
                 weight='500'
                 size='13px'
                 >
-            <span> 으로 시작하는 </span>
+            <span>으로 시작하는 </span>
             <span style={{color:'var(--green)'}}> {name}하다의 정의</span>
             <span>를 작성해 주세요.</span>
             </Pretendard>
@@ -127,7 +135,7 @@ const DefinitionInputModal = props => {
             size='10px'
             height = '12px'
             style={{margin:'8px 0 18px'}}>
-                  {example}
+                  {example==null||example==""?makrData[0].ex:example}
                 </Pretendard>
                 <InputBox>
                   <input placeholder="내용을 입력해주세요" style={{
