@@ -35,8 +35,8 @@ const VisitorFirstPage = () => {
   //redux
   const dispatch = useAppDispatch();
   const {visit_dictionaryId} = useAppSelector(state=>state.dictionary); 
-  const {visit_dicName} = useAppSelector(state=>state.visitor); // 방문 사전 이름 가져오기
-  const { nickname } = useAppSelector((state) => state.visitor); // 방문자 이름 가져오기
+  // 방문 사전 이름, 방문자이름, 방문 사전 유저 아이디 가져오기
+  const {visit_dicName, nickname, visit_userId} = useAppSelector(state=>state.visitor); 
 
   const [page,setPage] = useState(1)
   const [consonant,setConsonant] = useState('ㄴ')
@@ -251,7 +251,7 @@ const VisitorFirstPage = () => {
             </Pretendard>
             </TextBox>
             <BrowseBtn> 
-              <Link to={`/visitor/definition/${visit_dictionaryId}`}
+              <Link to={`/${visit_userId}/visitor/definition/${visit_dictionaryId}`}
                 style={{textDecoration:'none', color:'var(--green)'}}>
                 {visit_dicName}하다 사전 둘러보기
               </Link>
