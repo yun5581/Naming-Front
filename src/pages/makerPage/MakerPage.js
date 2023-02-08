@@ -80,7 +80,8 @@ export default MakerPage;
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
+    /* justify-content: center; */
 
     width: 100vw;
     height: 100vh;
@@ -102,28 +103,34 @@ const Title = styled.div`
 `
 const DicBook = styled.div`
   display: flex;
-  margin-top: ${vh(50)};
-  height: ${vh(468)};
+  margin-top: ${vh(40)};
+  width: ${vw(310)};
+  aspect-ratio: 0.7/ 1;
+  border: solid;
+  border-color: blue;
 `;
 const DicSidePage = styled.div`
   width: ${vw(25)};
+  height: 100%;
   background-color: white;
   /* border-right: 1px solid #ecebe8; */
   box-shadow: 0px 0px 2px #848380 inset;
 `;
 const DicPage = styled.div`
   background-color: white;
-  width: ${vw(255)};
+  width: ${vw(280)};
+  height: 100%;
   padding: ${vw(16)};
   box-shadow: 0px 0px 3px #848380 inset;
 `;
 const ContentWrapper = styled.div`
-  height: ${vh(435)};
+  /* height: ${vh(435)}; */
+  height: 100%;
 `;
 
 const ContentBox = styled.div`
   overflow-y: scroll;
-  height: ${vh(435)};
+  height: 100%;
   display: flex;
   flex-direction: column;
 
@@ -148,31 +155,6 @@ const Content = styled.div`
   margin-bottom: ${vw(16)};
   display: flex;
   align-items: center;
-
-  .countNum {
-    margin-left: ${vw(16)};
-    margin-right: ${vw(6)};
-    font-weight: 400;
-    font-size: ${vw(12)};
-  }
-  .likeIcon {
-    width: ${vw(13)};
-  }
-  .likeNum {
-    font-weight: 800;
-    font-size: ${vw(8)};
-    color: #818181;
-    width: fit-content;
-    margin: 0 auto;
-  }
-  .comment {
-    width: 72%;
-    font-weight: 400;
-    font-size: ${vw(12)};
-  }
-  .like {
-    align-items: center;
-  }
 `;
 
 const FooterWrapper = styled.div`
