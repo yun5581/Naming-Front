@@ -137,7 +137,6 @@ const ResultWrapper = styled.div`
   margin-top: ${vh(16)};
   width: ${vw(301)};
   height: ${vh(490)};
-  border: solid;
   background: #f2f2f2;
   border-radius: 5px;
   overflow: scroll;
