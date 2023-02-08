@@ -45,7 +45,7 @@ function App() {
           element={<VisitorLandingPage />}
         />
         <Route exact path="/visitorfirst" element={<VisitorFirstPage />} />
-        <Route exact path="/visitor/definition/:dictionaryId" element={<VisitorBrowsingPage/>} />
+        <Route exact path="/:userId/visitor/definition/:dictionaryId" element={<VisitorBrowsingPage/>} />
         <Route exact path="/maker" element={<MakerPage />} />
       </Routes>
     </Router>

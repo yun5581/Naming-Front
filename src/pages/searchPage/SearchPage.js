@@ -49,9 +49,9 @@ const SearchPage = () => {
   };
   const navigate = useNavigate();
   // 해당 사전 정의 모아보기로 이동하기 
-  const movePage = (dicId) =>{
-    // console.log(dicId);
-    navigate(`/visitor/definition/${dicId}`);
+  const movePage = (userId,dicId) =>{
+    // console.log(dicId);s
+    navigate(`${userId}/visitor/definition/${dicId}`);
   }
   useEffect(() => {
     if (keyword !== "") {
@@ -91,7 +91,7 @@ const SearchPage = () => {
                 else {
                   return (
                     <>
-                      <div className="resultText" onClick={()=>{movePage(ele.id)}}>
+                      <div className="resultText" onClick={()=>{movePage(ele.userId,ele.id)}}>
                         <div className="searchResult">
                           <SF_HambakSnow>
                           {/* 사전 번호가 아닌 위에서부터 1번 */}
