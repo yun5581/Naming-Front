@@ -28,10 +28,10 @@ export const visitorSlice = createSlice({
       state.visit_userId = action.payload.visit_userId;
     },
     setVisit_nth: (state,action)=>{
-      state.visit_userId = action.payload.visit_userId;
+      state.visit_nth = action.payload.visit_nth;
     },
     setVisit_stacked: (state,action)=>{
-      state.visit_userId = action.payload.visit_userId;
+      state.visit_stacked = action.payload.visit_stacked;
     }
   },
     extraReducers: builder => {

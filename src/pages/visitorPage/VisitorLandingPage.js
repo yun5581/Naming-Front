@@ -2,6 +2,7 @@ import React, {useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { vw, vh } from "../../components/SizeConvert.js";
+//redux
 import { useAppDispatch } from "../../redux/store.js";
 //api 
 import axios from "axios";
@@ -15,6 +16,7 @@ import VisitorDictionary from "../../components/visitorLandingPage/VisitorDictio
 import background from "../../images/background.svg";
 import { setVisit_dictionaryID } from "../../redux/dictionarySlice.js";
 import Background from "../../components/Background.js";
+import { setVisit_userId } from "../../redux/visitorSlice.js";
 
 const VisitorLandingPage = () => {
   const navigate = useNavigate();
@@ -29,8 +31,12 @@ const VisitorLandingPage = () => {
   useEffect(() => {
     const location = window.location.pathname;
     const id = Number(location.split('/')[3]); //url에서 사전 아이디 받아오기
+    const userid = Number(location.split('/')[1]); //url에서 유저 아이디 받아오기
     dispatch(setVisit_dictionaryID({
       visit_dictionaryId: id,
+    }))
+    dispatch(setVisit_userId({
+      visit_userId: userid,
     }))
     axios
     .get(`https://kj273456.pythonanywhere.com/dictionary/${id}/`)
