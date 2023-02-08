@@ -387,4 +387,3 @@ const FooterWrapper = styled.div`
     bottom: 0;
     padding: 20px;
 `
-
