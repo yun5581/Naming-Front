@@ -14,10 +14,12 @@ import Footer from "../../components/Footer";
 import { SF_HambakSnow, Pretendard } from "../../components/Text";
 import { makrData } from "../../_mock/customInfo";
 import DefinitionInputModal from "../../components/TxtModal/DefinitionInputModal";
+import VisitorSidebar from "../../components/visitorPage/VisitorSidebar";
 //images
 import like from "../../images/like.svg";
 import plusBtn from "../../images/definePage/+Btn.svg";
 import { AiOutlineHeart } from "react-icons/ai";
+
 
 
 const VisitorBrowsingPage = () => {
@@ -126,7 +128,7 @@ const VisitorBrowsingPage = () => {
     <>
       <Background/>
       <Container>
-        {/* 사이드바 자리 */}
+        <VisitorSidebar/>
         <NumText>
           <SF_HambakSnow>
             총 <span>{stacked!=0? stacked: visit_stacked}</span>개의 문장이 쌓여있어요!
