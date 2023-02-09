@@ -44,11 +44,19 @@ const CustomPage = () =>{
     const [shapeColor, setShapeColor] = useState(1);
     const [deco, setDeco] = useState(1);
     
+    var click = true;
+    function overClick() {
+        if (click) {
+            console.log("클릭됨");
+            click = !click;
+        } else {
+            console.log("중복됨");
+        }
+    }
     // 커스텀 정보 전달 코드
-    const submit_custom = ()=>{
+    const submit_custom =()=>{
         SubmitCustom(name, bookColor, shape, shapeColor, deco)
         .then(res=>{
-            console.log(res);
             if(res.message=="사전 만들기 성공"){
                 // 사전 아이디 저장
                 dispatch(setDictionaryID({dictionaryId: res.data.id})); 
@@ -64,7 +72,6 @@ const CustomPage = () =>{
                 navigate("/home");
             }
         }).catch((error)=>{
-            console.log(error);
             alert("사전 정보 저장 실패\n 다시 시도해주세요");
         })
     }
@@ -113,12 +120,11 @@ const CustomPage = () =>{
                     {checkOption()==2 ? <SelectScolor setShapeColor={setShapeColor}/>: null}
                     {checkOption()==3 ? <SelectDeco setDeco={setDeco}/>: null}
                 </CustomForm>
-                <SubmitButton onClick={()=>{
-                    submit_custom();
-                }}>완료</SubmitButton>
+                <button onClick={()=> overClick()}>클릭</button>
+                {/* <SubmitButton onClick={()=>{submit_custom()}}>완료</SubmitButton> */}
                 {/* 리셋용 임시 코드 */}
-                {/* <button onClick={()=> reset()}>리셋</button>
-                <button onClick={()=> Logout()}>로그아웃</button> */}
+                {/* <button onClick={()=> reset()}>리셋</button> */}
+        
                 <FooterWrapper>
                     <Footer/>
                 </FooterWrapper>
