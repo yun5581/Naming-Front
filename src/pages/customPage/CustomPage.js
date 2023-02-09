@@ -61,12 +61,12 @@ const CustomPage = () =>{
                 // 사전 아이디 저장
                 dispatch(setDictionaryID({dictionaryId: res.data.id})); 
                 // 사전 커스텀 정보 리덕스 저장
-                dispatch(setDictionary({
-                    colors: res.data.color,
-                    shapeNums: res.data.shadow,
-                    shapeColors: res.data.shadowColor,
-                    decoNums: res.data.border
-                }))
+                // dispatch(setDictionary({
+                //     colors: res.data.color,
+                //     shapeNums: res.data.shadow,
+                //     shapeColors: res.data.shadowColor,
+                //     decoNums: res.data.border
+                // }))
                 // 커스텀 페이지 저장 정보 삭제
                 reset();
                 navigate("/home");
@@ -120,11 +120,9 @@ const CustomPage = () =>{
                     {checkOption()==2 ? <SelectScolor setShapeColor={setShapeColor}/>: null}
                     {checkOption()==3 ? <SelectDeco setDeco={setDeco}/>: null}
                 </CustomForm>
-                <button onClick={()=> overClick()}>클릭</button>
-                {/* <SubmitButton onClick={()=>{submit_custom()}}>완료</SubmitButton> */}
+                <SubmitButton onClick={()=>{submit_custom()}}>완료</SubmitButton>
                 {/* 리셋용 임시 코드 */}
                 {/* <button onClick={()=> reset()}>리셋</button> */}
-        
                 <FooterWrapper>
                     <Footer/>
                 </FooterWrapper>
