@@ -41,7 +41,7 @@ const VisitorSidebar = (props) => {
           <LinkWrapper>
             <SF_HambakSnow style={{ marginRight: "32px"}}>
               <FaBook className="icon"/>
-              {<Link to="/register">내 사전 만들기</Link>}
+              {<Link to="/register">사전 만들기</Link>}
             </SF_HambakSnow>
             <SF_HambakSnow style={{ marginRight: "32px" }}>
               <FaUserCircle className="icon"/>
