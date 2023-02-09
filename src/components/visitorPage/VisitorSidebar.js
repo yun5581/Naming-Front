@@ -8,7 +8,7 @@ import { Logout } from "../../api/user";
 import { SF_HambakSnow, Simonetta } from "../Text";
 
 //images
-import {FaBook, FaUserCircle} from "react-icons/fa";
+import {FaBook, FaUserCircle , FaGithub} from "react-icons/fa";
 import hamburger from "../../images/Sidebar/sideBar.svg";
 
 const VisitorSidebar = (props) => {
@@ -47,11 +47,10 @@ const VisitorSidebar = (props) => {
               <FaUserCircle className="icon"/>
               <Link to="/login">로그인</Link>
             </SF_HambakSnow>
-            <TitleWrapper>
-                <SF_HambakSnow style={{ marginRight: "32px" }}>
-                    <div>이름하여 이름하다</div>
-                </SF_HambakSnow>
-            </TitleWrapper>
+            <SF_HambakSnow style={{ marginRight: "32px" }}>
+                <FaGithub className="icon"/>
+                <a href="https://github.com/NAME-ING/Naming-Front">Git</a>
+            </SF_HambakSnow>
           </LinkWrapper>
         </BarWrapper>
       ) : (
@@ -88,7 +87,8 @@ const HamburgerWrapper = styled.div`
 const LinkWrapper = styled.div`
   width: fit-content;
   margin-left: ${vw(40)};
-  margin-top: ${vh(60)};
+  /* margin-top: ${vh(60)}; */
+  margin-top: 25%;
   .icon {
     color: #818181;
     width: ${vw(20)};
@@ -96,10 +96,7 @@ const LinkWrapper = styled.div`
     justify-content: flex-end;
   }
 `;
-const TitleWrapper = styled.div`
-    margin-top: ${vh(230)};
-    color: var(--green);
-`
+
 const BarWrapper = styled.div`
   z-index: 100;
   width: ${vw(200)};
