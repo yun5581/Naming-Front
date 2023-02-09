@@ -19,6 +19,7 @@ const SearchPage = () => {
   const [keyword, setkeyword] = useState();
   const [data, setdata] = useState();
   const [dataLength, setdatalength] = useState();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -26,7 +27,6 @@ const SearchPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setkeyword(e.target.value);
-    console.log(getNames(keyword));
     getNames(keyword);
   };
   const getNames = (keyword) => {
@@ -39,7 +39,6 @@ const SearchPage = () => {
       .then((res) => {
         setdatalength(res.data.length);
         setdata(res.data.data);
-        console.log(data);
       })
       .catch((error) => {
         // alert("검색 실패");
