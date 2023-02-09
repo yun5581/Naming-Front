@@ -45,16 +45,11 @@ const CustomPage = () =>{
     const [shapeColor, setShapeColor] = useState(1);
     const [deco, setDeco] = useState(1);
 
-    // 모달 관리 
-    const [modal, setModal] = useState(false);
     // 커스텀 정보 전달 코드
     const submit_custom =()=>{
-        setModal(true);
         SubmitCustom(name, bookColor, shape, shapeColor, deco)
         .then(res=>{
             if(res.message=="사전 만들기 성공"){
-                // 화면 클릭 막는 모달 올리기
-               
                 // 사전 아이디 저장
                 dispatch(setDictionaryID({dictionaryId: res.data.id})); 
                 // 사전 커스텀 정보 리덕스 저장
@@ -98,7 +93,6 @@ const CustomPage = () =>{
         <>  
             <Background/> 
             <Container>
-            {/* {modal ? <BlockModal/> : null} */}
                 <Title>
                     나만의 사전을 만들어보세요!
                     <hr style={{marginTop: "10px"}}/>
