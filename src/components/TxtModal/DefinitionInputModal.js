@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/store";
 //data
 import { makrData } from "../../_mock/customInfo";
 //components
+import { vw,vh } from "../SizeConvert";
 import { Pretendard,SF_HambakSnow } from "../Text";
 import GreenBtn from "./GreenBtn";
 //image
@@ -116,15 +117,15 @@ const DefinitionInputModal = props => {
                 <header>
                 <SF_HambakSnow
               weight='800'
-              size='100px'
+              size={vw(100)}
               color= 'var(--green)'
-              height='80px'
+              height={vh(80)}
               style={{marginBottom:'0px'}}
               >{consonant==null||consonant==""?"ㄱ":consonant}</SF_HambakSnow>
                 </header>
                 <Pretendard
                 weight='500'
-                size='13px'
+                size={vw(14)}
                 >
             <span>으로 시작하는 </span>
             <span style={{color:'var(--green)'}}> {name}하다의 정의</span>
@@ -132,7 +133,7 @@ const DefinitionInputModal = props => {
             </Pretendard>
             <Pretendard
             weight='300'
-            size='10px'
+            size={vw(10)}
             height = '12px'
             style={{margin:'8px 0 18px'}}>
                   {example==null||example==""?makrData[0].ex:example}
@@ -144,7 +145,7 @@ const DefinitionInputModal = props => {
                     color:'var(--black)',
                     border:'none',
                     fontFamiliy:'Pretendard',
-                    fontSize:'16px',
+                    fontSize:vw(16),
                     padding:'0 15px',
                     outline: 'none'
                     }}
@@ -190,13 +191,13 @@ const XbtnBox = styled.button`
   background-color: transparent;
 `
 const InputBox = styled.div` 
-  width: 316.88px;
-  height: 46px;
+ width: ${vw(316)};
+  aspect-ratio: 6.8 / 1;
   border-radius: 5px;
   background-color: var(--gray0);
-
   display: flex;
   align-items: center;
+
   margin: 0 auto;
   .alertIcon{
     width: 20px;
@@ -213,10 +214,10 @@ const DisabledBtn = styled.button`
   color: var(--white);
   background-color: var(--gray1);
   font-family: 'SF_HambakSnow';
-  font-size: 16px;
+  font-size: ${vw(16)};
 
-  width: 316.88px;
-  height: 46px;
+  width: ${vw(316)};
+  aspect-ratio: 6.8 / 1;
 
   border: none;
   border-radius: 5px;
@@ -224,11 +225,3 @@ const DisabledBtn = styled.button`
   align-items: center;
   text-align: center;
 `;
-
-// const InfoCircle = styled.div`
-//   width: 20px;
-//   height: 20px;
-//   margin-right: 10px;
-//   background-image: url(${infoCircleGrey});
-//   background-repeat: no-repeat ;
-// `
