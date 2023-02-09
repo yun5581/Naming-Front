@@ -49,10 +49,6 @@ const RegisterPage = () =>{
         if(id!=""&&password!=""&&checkInput()){
             PostUser(id, password, name)
                 .then((res)=>{
-                    setID("");
-                    setName("");
-                    setPW("");
-                    setPW2("");
                     if(res.message=="회원가입 성공"){
                         login();
                         setNumber(res.data.userNumber+1);
