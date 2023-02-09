@@ -13,6 +13,7 @@ import Dictionary from "../../components/customPage/Dictionary";
 import SelectColor from "../../components/customPage/SelectColor";
 import SelectShape from "../../components/customPage/SelectShape";
 import SelectDeco from "../../components/customPage/SelectDeco";
+import BlockModal from "../../components/authPage/BlockModal";
 //images
 import background from "../../images/background.svg";
 // data
@@ -43,30 +44,26 @@ const CustomPage = () =>{
     const [shape, setShape] = useState(1);
     const [shapeColor, setShapeColor] = useState(1);
     const [deco, setDeco] = useState(1);
-    
-    var click = true;
-    function overClick() {
-        if (click) {
-            console.log("클릭됨");
-            click = !click;
-        } else {
-            console.log("중복됨");
-        }
-    }
+
+    // 모달 관리 
+    const [modal, setModal] = useState(false);
     // 커스텀 정보 전달 코드
     const submit_custom =()=>{
+        setModal(true);
         SubmitCustom(name, bookColor, shape, shapeColor, deco)
         .then(res=>{
             if(res.message=="사전 만들기 성공"){
+                // 화면 클릭 막는 모달 올리기
+               
                 // 사전 아이디 저장
                 dispatch(setDictionaryID({dictionaryId: res.data.id})); 
                 // 사전 커스텀 정보 리덕스 저장
-                // dispatch(setDictionary({
-                //     colors: res.data.color,
-                //     shapeNums: res.data.shadow,
-                //     shapeColors: res.data.shadowColor,
-                //     decoNums: res.data.border
-                // }))
+                dispatch(setDictionary({
+                    colors: res.data.color,
+                    shapeNums: res.data.shadow,
+                    shapeColors: res.data.shadowColor,
+                    decoNums: res.data.border
+                }))
                 // 커스텀 페이지 저장 정보 삭제
                 reset();
                 navigate("/home");
@@ -98,9 +95,10 @@ const CustomPage = () =>{
         //window.location.reload();
     }
     return(
-        <>
-            <Background/>
+        <>  
+            <Background/> 
             <Container>
+            {/* {modal ? <BlockModal/> : null} */}
                 <Title>
                     나만의 사전을 만들어보세요!
                     <hr style={{marginTop: "10px"}}/>
