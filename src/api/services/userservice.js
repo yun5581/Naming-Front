@@ -13,8 +13,8 @@ const UserService = {
     initUser();
     // 사전 정보 초기화
     initDictionary();
-    window.location.href = "http://localhost:3000/"; //url 수정 필요
-    //window.location.href = "https://naming-likelion.vercel.app/"; //url 수정 필요
+    // window.location.href = "http://localhost:3000/"; //url 수정 필요
+    window.location.href = "https://naming-likelion.vercel.app/"; //url 수정 필요
   },
   //회원가입
   postUser: (id, password, name) =>

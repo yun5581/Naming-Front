@@ -128,6 +128,7 @@ const DefinitionPage = () => {
                   ? contents.map((ele, index) => {
                       return (
                         <>
+                          {" "}
                           <Content>
                             <div className="countNum">
                               <Pretendard>{index+1}.</Pretendard>
@@ -386,4 +387,3 @@ const FooterWrapper = styled.div`
     bottom: 0;
     padding: 20px;
 `
-`;

@@ -164,6 +164,7 @@ const ResultWrapper = styled.div`
     color: #b5b5b5;
   }
 `;
+
 const InputBox = styled.div`
   background-color: #ffffff;
   border-radius: 5px;
