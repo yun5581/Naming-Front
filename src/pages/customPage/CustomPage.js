@@ -30,6 +30,8 @@ const CustomPage = () =>{
     // 커스텀 메뉴 관리
     const dispatch =useAppDispatch();
     const {option} = useAppSelector(state=>state.dictionary); 
+    // 모달 관리
+    const [block, setBlock ] = useState(false);
 
     const saveOption = (optionNum) =>{
         dispatch(setOption({option: optionNum}));
@@ -46,10 +48,12 @@ const CustomPage = () =>{
     const [deco, setDeco] = useState(1);
 
     // 커스텀 정보 전달 코드
-    const submit_custom =()=>{
-        SubmitCustom(name, bookColor, shape, shapeColor, deco)
-        .then(res=>{
-            if(res.message=="사전 만들기 성공"){
+    const submit_custom = async()=>{
+        setBlock(true);
+        try{
+            await SubmitCustom(name,bookColor,shape,shapeColor,deco)
+            .then((res)=>{
+                if(res.message="사전 만들기 성공"){
                 // 사전 아이디 저장
                 dispatch(setDictionaryID({dictionaryId: res.data.id})); 
                 // 사전 커스텀 정보 리덕스 저장
@@ -61,11 +65,33 @@ const CustomPage = () =>{
                 }))
                 // 커스텀 페이지 저장 정보 삭제
                 reset();
-                navigate("/home");
-            }
-        }).catch((error)=>{
+                navigate("/home");                    
+                }
+            });
+            setBlock(false);
+        }
+        catch(error){
             alert("사전 정보 저장 실패\n 다시 시도해주세요");
-        })
+        }
+        // SubmitCustom(name, bookColor, shape, shapeColor, deco)
+        // .then(res=>{
+        //     if(res.message=="사전 만들기 성공"){
+        //         // 사전 아이디 저장
+        //         dispatch(setDictionaryID({dictionaryId: res.data.id})); 
+        //         // 사전 커스텀 정보 리덕스 저장
+        //         dispatch(setDictionary({
+        //             colors: res.data.color,
+        //             shapeNums: res.data.shadow,
+        //             shapeColors: res.data.shadowColor,
+        //             decoNums: res.data.border
+        //         }))
+        //         // 커스텀 페이지 저장 정보 삭제
+        //         reset();
+        //         navigate("/home");
+        //     }
+        // }).catch((error)=>{
+        //     alert("사전 정보 저장 실패\n 다시 시도해주세요");
+        // })
     }
     // 새로고침 방지 경고 코드 
     const preventClose = (e=BeforeUnloadEvent) => {
@@ -93,6 +119,7 @@ const CustomPage = () =>{
         <>  
             <Background/> 
             <Container>
+                {block ? <BlockModal/> :null}
                 <Title>
                     나만의 사전을 만들어보세요!
                     <hr style={{marginTop: "10px"}}/>
