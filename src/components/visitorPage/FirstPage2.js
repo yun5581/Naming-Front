@@ -36,8 +36,11 @@ const Container = styled.div`
         display: flex;
         justify-content: center;
     }
-    height: 100%;
     font-family: var(--pre-font);
+
+    width: 100%;
+    aspect-ratio: 0.8 /1;
+    justify-content: space-between;
 `
 const Title = styled.div`
     width: 100%;
@@ -63,7 +66,7 @@ const TextTop = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 15%; 
+    /* margin-top: 5%;  */
     p{
         margin-left: 5px;
     }
@@ -78,7 +81,7 @@ const TextBottom = styled.div`
     }
 `
 const NextBtn = styled.div`
-    margin-top: 15%;
+    /* margin-top: 15%; */
     color: var(--white);
     background-color: var(--green);
     font-family: 'SF_HambakSnow';
@@ -93,4 +96,5 @@ const NextBtn = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    bottom: 0;
 `

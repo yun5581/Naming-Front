@@ -53,7 +53,9 @@ const Container = styled.div`
         justify-content: center;
         flex-wrap: wrap;
     }
-    height: 100%;
+    /* height: 100%; */
+    width: 100%;
+    aspect-ratio: 0.8 /1;
     font-family: var(--hb-font);
 `
 const Emoji = styled.div`

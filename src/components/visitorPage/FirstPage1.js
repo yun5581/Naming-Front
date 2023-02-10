@@ -31,6 +31,9 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    aspect-ratio: 0.8 /1;
+    justify-content: space-between;
     div{
         display: flex;
         justify-content: center;
@@ -61,16 +64,16 @@ const TextTop = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 15%;
+    /* margin-top: 15%; */
 `
 const TextBottom = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 7%;
+    margin-top: 15%;
 `
 const NextBtn = styled.div`
-    margin-top: 15%;
+    /* margin-top: 15%; */
     color: var(--white);
     background-color: var(--green);
     font-family: 'SF_HambakSnow';
