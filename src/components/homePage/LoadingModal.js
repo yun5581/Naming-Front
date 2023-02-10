@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Loading from "../Loading";
 import React from "react";
 import {PropagateLoader} from "react-spinners";
 import { vw } from "../SizeConvert";
+import Background from "../Background";
 
 const LoadingModal = () =>{
     const Loading = () =>{
@@ -27,6 +27,7 @@ const LoadingModal = () =>{
     };
     return(
         <>
+        <Background/>
         <Wrapper>
             <div>책장에서 사전을 찾는 중</div>
 			<Loading/>

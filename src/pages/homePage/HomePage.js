@@ -89,8 +89,8 @@ const HomePage = () => {
       <Sidebar />
       <Background/>
       <Container>
-      {checkInfo()==false? <LoadingModal/> :
-        (<><HomeDictionary
+      {checkInfo()? null : <LoadingModal/>}
+        <HomeDictionary
           name={name}
           color={color}
           shapeNum={shapeNum}
@@ -118,7 +118,7 @@ const HomePage = () => {
             <SF_HambakSnow>
              </SF_HambakSnow>
           )}
-        </AlertMSG></>)}
+        </AlertMSG>
         <FooterWrapper>
           <Footer />
         </FooterWrapper>

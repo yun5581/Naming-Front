@@ -55,7 +55,7 @@ const VisitorLandingPage = () => {
   // 사전 정보를 다 받아왔는지 확인 하는 함수
   const checkInfo = () =>{
     var check = false;
-    shapeNum!=0 ? check = true : check = false;
+    shapeNum!=0 && name!=""&& color!="" && shapeColor!=0 ? check = true : check = false;
     return check;
   }
 
@@ -73,8 +73,8 @@ const VisitorLandingPage = () => {
   <>
     <Background/>
     <Container>
-      {checkInfo()==false? <LoadingModal/>:
-      (<BodyContainer className={ !checkInfo() ? 'false' : ''}>
+    {checkInfo()? null : <LoadingModal/>}
+      <BodyContainer className={ !checkInfo() ? 'false' : ''}>
         <TitleBox>
           <span style={{'fontSize':vw(26)}}>이름하여 이름하다</span>
           <Line/>
@@ -99,8 +99,7 @@ const VisitorLandingPage = () => {
           header='작성자의 이름을 알려주세요'
           maintext={Name}
            />
-      </BodyContainer>)
-      }
+      </BodyContainer>
       <FooterWrapper>
         <Footer/>
       </FooterWrapper>
