@@ -13,13 +13,14 @@ import background from "../../images/background.svg";
 import { BsCheckCircle } from"react-icons/bs";
 // api, 유저 정보
 import { GetUser, PostUser } from "../../api/user";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { setUser, setNth } from "../../redux/userSlice";
 import axios from "axios";
 
 const RegisterPage = () =>{
     // 유저 리덕스 
     const dispatch =useAppDispatch();
+    const {userId } = useAppSelector((state)=>state.user);
     // 모달 관리 
     const [modal, setModal] = useState(false);
     const [block, setBlock ] = useState(false);
@@ -64,6 +65,12 @@ const RegisterPage = () =>{
                     setNumber(res.data.data.userNumber+1);
                     dispatch(setNth({nth: res.data.data.userNumber+1}));
                     setModal(true);
+                    dispatch(setUser({
+                        userId: res.data.data.id,
+                        name: res.data.data.firstName,
+                        ID: id,
+                        PW: password
+                    }));
                 }});
               setBlock(false);
               setModal(true);
@@ -94,15 +101,15 @@ const RegisterPage = () =>{
     // 로그인 함수
     const login = () =>{
         GetUser(id, password)
-        .then(res=>{
+        .then((res)=>{
             window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
-            dispatch(setUser({
-                userId: res.data.user_id,
-                name: res.data.firstName,
-                ID: id,
-                PW: password
-            }));
-        }).catch((error)=> console.log(error));
+            // dispatch(setUser({
+            //     userId: res.data.user_id,
+            //     name: res.data.firstName,
+            //     ID: id,
+            //     PW: password
+            // }));
+        }).catch((error)=> {});
     }
     return(
         <>
