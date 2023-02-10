@@ -17,6 +17,7 @@ import background from "../../images/background.svg";
 import { setVisit_dictionaryID } from "../../redux/dictionarySlice.js";
 import Background from "../../components/Background.js";
 import { setVisit_userId } from "../../redux/visitorSlice.js";
+import LoadingModal from "../../components/homePage/LoadingModal.js";
 
 const VisitorLandingPage = () => {
   const navigate = useNavigate();
@@ -72,7 +73,8 @@ const VisitorLandingPage = () => {
   <>
     <Background/>
     <Container>
-      <BodyContainer className={ !checkInfo() ? 'false' : ''}>
+      {checkInfo()==false? <LoadingModal/>:
+      (<BodyContainer className={ !checkInfo() ? 'false' : ''}>
         <TitleBox>
           <span style={{'fontSize':vw(26)}}>이름하여 이름하다</span>
           <Line/>
@@ -97,7 +99,8 @@ const VisitorLandingPage = () => {
           header='작성자의 이름을 알려주세요'
           maintext={Name}
            />
-      </BodyContainer>
+      </BodyContainer>)
+      }
       <FooterWrapper>
         <Footer/>
       </FooterWrapper>

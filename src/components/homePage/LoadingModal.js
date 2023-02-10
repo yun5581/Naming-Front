@@ -12,7 +12,7 @@ const LoadingModal = () =>{
                     color= "#BABABA"
                     // loading={loading}
                     cssOverride={override}
-                    size="20px"
+                    size="10px"
                 />
             </div>
         )
@@ -23,7 +23,7 @@ const LoadingModal = () =>{
         textAlign:"center",
         position:"relative",
         zIndex:"10",
-        speedMultiplier: 1,
+        speedMultiplier: 5,
     };
     return(
         <>

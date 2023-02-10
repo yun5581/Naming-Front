@@ -6,6 +6,7 @@ import { vw } from "../../components/SizeConvert";
 import Footer from "../../components/Footer";
 import Title from "../../components/authPage/Title";
 import Background from "../../components/Background";
+import BlockModal from "../../components/authPage/BlockModal";
 // api, 유저 정보
 import { GetUser } from "../../api/user";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
@@ -23,40 +24,47 @@ const LoginPage = () =>{
     // 로그인 정보관리
     const [id, setID] = useState(ID);
     const [password, setPW] = useState(PW);
+
+    // 모달 관리
+    const[block, setBlock] = useState(false);
+
     // 로그인 함수
-    const login =()=>{
-        GetUser(id, password)
-        .then((res)=>{
-            if(res.message=="로그인 성공"){
-                window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
-                dispatch(setUser({
-                    userId: res.data.user_id,
-                    name: res.data.firstName,
-                    ID: id,
-                    PW: password
-                }));
-                // n번째 지은이 정보 받기
-                axios.get(`https://kj273456.pythonanywhere.com/accounts/number/${res.data.user_id}/`)
-                .then((res)=>{
-                    dispatch(setNth({nth: res.data.data.userNumber+1}));
-                })
-                // 사전 아이디 받기
-                axios.get(`https://kj273456.pythonanywhere.com/dictionary/id/${res.data.user_id}/`)
-                .then((res)=>{
-                    dispatch(setDictionaryID({dictionaryId: res.data.data.id}));
-                }).then(()=>{  
-                    navigate("/home");
-                    window.location.reload();
-                }).catch((error)=>{
-                    alert("사전 정보를 가져오지 못했습니다. 재로그인해주세요.");
-                    navigate("/login");
-                });
-            }
-        }).catch((error)=>{
-            if(error.message=="로그인 실패"){
-                alert("아이디 또는 비밀번호를 확인해주세요.");
-            }
-        });
+    const login = async() =>{
+        setBlock(true);
+        try{    
+            await GetUser(id, password)
+            .then((res)=>{
+                if(res.message=="로그인 성공"){
+                    window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
+                    dispatch(setUser({
+                        userId: res.data.user_id,
+                        name: res.data.firstName,
+                        ID: id,
+                        PW: password
+                    }));
+                    // n번째 지은이 정보 받기
+                    axios.get(`https://kj273456.pythonanywhere.com/accounts/number/${res.data.user_id}/`)
+                    .then((res)=>{
+                        dispatch(setNth({nth: res.data.data.userNumber+1}));
+                    })
+                    // 사전 아이디 받기
+                    axios.get(`https://kj273456.pythonanywhere.com/dictionary/id/${res.data.user_id}/`)
+                    .then((res)=>{
+                        dispatch(setDictionaryID({dictionaryId: res.data.data.id}));
+                    }).then(()=>{  
+                        navigate("/home");
+                        window.location.reload();
+                    }).catch((error)=>{
+                        alert("사전 정보를 가져오지 못했습니다. 재로그인해주세요.");
+                        navigate("/login");
+                    });
+                    setBlock(false);
+                }
+            })
+        }
+        catch(error){
+            alert("아이디 또는 비밀번호를 확인해주세요.");
+        }
     }
     function scrollto(e){
         e.target.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -65,6 +73,7 @@ const LoginPage = () =>{
         <>
             <Background/>
             <Container>
+                {block ? <BlockModal/> : null}
                 <Title/>
                 <LoginForm>
                             <input 
