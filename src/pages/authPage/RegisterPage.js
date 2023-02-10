@@ -63,6 +63,7 @@ const RegisterPage = () =>{
                 if(res.data.message=="회원가입 성공"){
                     login();
                     setNumber(res.data.data.userNumber+1);
+                    setName(res.data.data.firstName);
                     dispatch(setNth({nth: res.data.data.userNumber+1}));
                     setModal(true);
                     dispatch(setUser({
