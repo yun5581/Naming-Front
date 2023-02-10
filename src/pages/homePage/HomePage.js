@@ -97,7 +97,8 @@ const HomePage = () => {
           shapeColor={shapeColor}
           decoNum={decoNum}
         />
-        <ButtonWrapper onClick={copyLink}>
+        {!checkInfo()? null : 
+        (<><ButtonWrapper onClick={copyLink}>
           <Button>
             <object type="image/svg+xml" data={getLink} className="getLink" />
             <SF_HambakSnow>
@@ -118,7 +119,8 @@ const HomePage = () => {
             <SF_HambakSnow>
              </SF_HambakSnow>
           )}
-        </AlertMSG>
+        </AlertMSG></>)
+        }
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
