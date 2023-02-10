@@ -80,7 +80,7 @@ const HomePage = () => {
   // 사전 정보를 다 받아왔는지 확인 하는 함수
   const checkInfo = () =>{
     var check = false;
-    shapeNum!=0 ? check = true : check = false;
+    shapeNum!=0 && name!=""&& color!="" && shapeColor!=0 ? check = true : check = false;
     return check;
   }
   const [show, setShow] = useState(false);
