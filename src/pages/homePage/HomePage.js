@@ -16,6 +16,7 @@ import getLink from "../../images/homePage/share.svg";
 import background from "../../images/background.svg";
 import Footer from "../../components/Footer";
 import Background from "../../components/Background";
+import BlockModal from "../../components/authPage/BlockModal";
 
 // link copy
 //const copyLinkRef = useRef();
@@ -75,14 +76,21 @@ const HomePage = () => {
       setShow(false);
       alert('사전 링크 복사 실패. 버튼을 다시 눌러주세요!');
     }
-};
+  };
+  // 사전 정보를 다 받아왔는지 확인 하는 함수
+  const checkInfo = () =>{
+    var check = false;
+    shapeNum!=0 ? check = true : check = false;
+    return check;
+  }
   const [show, setShow] = useState(false);
   return (
     <>
       <Sidebar />
       <Background/>
       <Container>
-        <HomeDictionary
+      {checkInfo()==false? <BlockModal/> :
+        (<><HomeDictionary
           name={name}
           color={color}
           shapeNum={shapeNum}
@@ -110,7 +118,7 @@ const HomePage = () => {
             <SF_HambakSnow>
              </SF_HambakSnow>
           )}
-        </AlertMSG>
+        </AlertMSG></>)}
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
