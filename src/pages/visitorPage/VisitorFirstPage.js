@@ -100,6 +100,7 @@ const Container = styled.div`
 const DicBook = styled.div`
   display: flex;
   margin-top: ${vh(93)};
+  width: ${vw(305)};
   aspect-ratio: 0.7/ 1;
 `;
 const DicSidePage = styled.div`

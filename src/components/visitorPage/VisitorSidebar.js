@@ -91,8 +91,8 @@ const LinkWrapper = styled.div`
   margin-top: 25%;
   .icon {
     color: #818181;
-    width: ${vw(20)};
-    height: ${vh(18)};
+    width: ${vw(22)};
+    height: ${vh(20)};
     justify-content: flex-end;
   }
 `;
@@ -129,5 +129,6 @@ const BarWrapper = styled.div`
     font-size: ${vw(14)};
     margin-bottom: ${vh(44)};
     display: flex;
+    align-items: center;
   }
 `;

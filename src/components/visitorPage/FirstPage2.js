@@ -37,9 +37,8 @@ const Container = styled.div`
         justify-content: center;
     }
     font-family: var(--pre-font);
-
     width: 100%;
-    aspect-ratio: 0.8 /1;
+    height: 100%;
     justify-content: space-between;
 `
 const Title = styled.div`

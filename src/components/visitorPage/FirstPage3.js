@@ -119,8 +119,9 @@ const Container = styled.div`
         justify-content: center;
         flex-wrap: wrap;
     }
+    width: 100%;
+    height: 100%;
     font-family: var(--pre-font);
-    aspect-ratio: 0.8 /1;
     justify-content: space-between;
     button{
         font-family: 'SF_HambakSnow';

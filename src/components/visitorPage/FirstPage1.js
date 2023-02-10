@@ -32,7 +32,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    aspect-ratio: 0.8 /1;
+    height: 100%;
     justify-content: space-between;
     div{
         display: flex;
