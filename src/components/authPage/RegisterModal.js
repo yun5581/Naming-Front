@@ -41,8 +41,8 @@ const Wrapper = styled.div`
 
     background: rgba(0, 0, 0, 0.5);
 
-    /* animation: modal-show 0.1s; */
-	/* @keyframes modal-show {
+    animation: modal-show 0.1s;
+	@keyframes modal-show {
 		from {
 			opacity: 0;
 			margin-top: -10px;
@@ -51,7 +51,7 @@ const Wrapper = styled.div`
 			opacity: 1;
 			margin-top: 0;
 		}
-	} */
+	}
 `
 
 const Modal = styled.div`

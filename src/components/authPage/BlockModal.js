@@ -1,13 +1,11 @@
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import {vw, vh} from "../../components/SizeConvert";
-import clap from "../../images/authPage/clap.svg";
-import { SF_HambakSnow } from "../Text";
+import Loading from "../Loading";
 
 const BlockModal = () =>{
     return(
         <>
         <Wrapper>
+			<Loading/>
         </Wrapper>
         </>
     )
@@ -22,21 +20,10 @@ const Wrapper = styled.div`
 	position: absolute;
 	display: flex;
     justify-content: center;
+	align-items: center;
 	z-index: 5;
 
     background: rgba(0, 0, 0, 0.5);
-
-    /* animation: modal-show 0.1s; */
-	/* @keyframes modal-show {
-		from {
-			opacity: 0;
-			margin-top: -10px;
-		}
-		to {
-			opacity: 1;
-			margin-top: 0;
-		}
-	} */
 `
 
 	
