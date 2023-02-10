@@ -16,7 +16,7 @@ import getLink from "../../images/homePage/share.svg";
 import background from "../../images/background.svg";
 import Footer from "../../components/Footer";
 import Background from "../../components/Background";
-import BlockModal from "../../components/authPage/BlockModal";
+import LoadingModal from "../../components/homePage/LoadingModal";
 
 // link copy
 //const copyLinkRef = useRef();
@@ -89,7 +89,7 @@ const HomePage = () => {
       <Sidebar />
       <Background/>
       <Container>
-      {checkInfo()==false? <BlockModal/> :
+      {checkInfo()==false? <LoadingModal/> :
         (<><HomeDictionary
           name={name}
           color={color}
