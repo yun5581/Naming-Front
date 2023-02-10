@@ -1,5 +1,6 @@
 import React from "react";
 import {MoonLoader} from "react-spinners";
+import {FadeLoader} from "react-spinners";
 import { vw } from "./SizeConvert";
 
 const override = {
@@ -8,13 +9,13 @@ const override = {
     textAlign:"center",
     position:"relative",
     zIndex:"10",
-    speedMultiplier: 5,
+    speedMultiplier: 1,
 };
 
 const Loading = ({loading}) =>{
     return(
         <div>
-            <MoonLoader
+            <FadeLoader
                 color= "#2B787D"
                 loading={loading}
                 cssOverride={override}
