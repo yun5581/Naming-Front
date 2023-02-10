@@ -11,7 +11,7 @@ export const vw = (width) =>{
 
 export const vh = (height) =>{
   var result;
-  isMobile ? 
+  isMobile && window.innerWidth<500 ? 
   result = (0.129 * height)+"vh":
   result = height+"px";
   return result;

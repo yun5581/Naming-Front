@@ -7,7 +7,8 @@ import { SF_HambakSnow } from "../Text";
 const RegisterModal = (props) =>{
     return(
         <>
-        <Wrapper onClick={()=>{props.setModal(false)}}>
+        <Wrapper>
+        {/* </Wrapper><Wrapper onClick={()=>{props.setModal(false)}}> */}
             <Modal>
                 <object type="image/svg+xml" data={clap} className="clap"/>
                 <NameWrapper>
@@ -40,7 +41,7 @@ const Wrapper = styled.div`
 
     background: rgba(0, 0, 0, 0.5);
 
-    animation: modal-show 0.25s;
+    animation: modal-show 0.1s;
 	@keyframes modal-show {
 		from {
 			opacity: 0;

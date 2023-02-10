@@ -5,6 +5,8 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import AuthRoute from "./AuthRoute.js";
+
 // 랜딩 페이지
 import LandingPage from "./pages/landingPage/LandingPage";
 // 로그인 페이지
@@ -32,21 +34,28 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* 랜딩 페이지 */}
         <Route exact path="/" element={<LandingPage />} />
+        {/* 로그인 */}
         <Route exact path="/login" element={<LoginPage />} />
-        <Route exact path="/home" element={<HomePage />} />
+        {/* 회원가입 */}
         <Route exact path="/register" element={<RegisterPage />} />
-        <Route exact path="/custom" element={<CustomPage />} />
-        <Route exact path="/search" element={<SearchPage />} />
-        <Route exact path="/definition" element={<DefinitionPage />} />
-        <Route
-          exact
-          path="/:userId/visitorLanding/:dictionaryId"
-          element={<VisitorLandingPage />}
-        />
+        {/* 가입자 사전 커스텀페이지 */}
+        <Route exact path="/custom" element={<AuthRoute component={<CustomPage />}/>} />
+        {/* 가입자 홈페이지 */}
+        <Route exact path="/home" element={<AuthRoute component={<HomePage />}/>} />
+        {/* 가입자 사전 검색 페이지 */}
+        <Route exact path="/search" element={<AuthRoute component={<SearchPage />}/>} />
+        {/* 가입자 사전 정의 보기 페이지 */}
+        <Route exact path="/definition" element={<AuthRoute component={<DefinitionPage />}/>} />
+        {/* 가입자 만든이들 페이지 */}
+        <Route exact path="/maker" element={<AuthRoute component={<MakerPage />}/>} />
+        {/* 사전 방문자 랜딩 페이지 */}
+        <Route exact path="/:userId/visitorLanding/:dictionaryId" element={<VisitorLandingPage />}/>
+        {/* 사전 방문자 첫 정의 적기 페이지 */}
         <Route exact path="/visitorfirst" element={<VisitorFirstPage />} />
-        <Route exact path="/visitor/definition/:dictionaryId" element={<VisitorBrowsingPage/>} />
-        <Route exact path="/maker" element={<MakerPage />} />
+        {/* 사전 방문자 정의 보기 페이지 */}
+        <Route exact path="/:userId/visitor/definition/:dictionaryId" element={<VisitorBrowsingPage/>} />
       </Routes>
     </Router>
   );

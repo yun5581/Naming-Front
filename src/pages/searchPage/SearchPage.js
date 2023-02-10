@@ -1,12 +1,13 @@
 import styled, { css } from "styled-components";
 import { useState, useRef, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useResize, vh, vw } from "../../components/SizeConvert";
 import { useSelector } from "react-redux";
 import { http } from "../../api/http.js";
 
 import Sidebar from "../../components/Sidebar";
 import Footer from "../../components/Footer";
+import Background from "../../components/Background";
 
 import background from "../../images/background.svg";
 import searchImg from "../../images/searchPage/searchImg.svg";
@@ -18,6 +19,7 @@ const SearchPage = () => {
   const [keyword, setkeyword] = useState();
   const [data, setdata] = useState();
   const [dataLength, setdatalength] = useState();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -25,13 +27,7 @@ const SearchPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setkeyword(e.target.value);
-    getNames(keyword)
-      .then((res) => {
-        setSearch(true);
-        setdata(res.data.data);
-        console.log(data);
-      })
-      .catch((err) => console.log(err));
+    getNames(keyword);
   };
   const getNames = (keyword) => {
     if (keyword === undefined) {
@@ -39,19 +35,23 @@ const SearchPage = () => {
       return;
     }
     http
-      .get(
-        `https://kj273456.pythonanywhere.com/dictionary/search/?keyword=${keyword}/`
-      )
+    .get(`https://kj273456.pythonanywhere.com/dictionary/search/?keyword=`)
       .then((res) => {
-        setdatalength(res.data.data.length);
+        setdatalength(res.data.length);
+        setdata(res.data.data);
       })
       .catch((error) => {
-        alert("검색 실패");
+        // alert("검색 실패");
       });
   };
-
+  const navigate = useNavigate();
+  // 해당 사전 정의 모아보기로 이동하기 
+  const movePage = (userId,dicId) =>{
+    // console.log(dicId);s
+    navigate(`/${userId}/visitor/definition/${dicId}`);
+  }
   useEffect(() => {
-    if (keyword !== "") {
+    if (keyword !== null) {
       getNames(keyword);
       setSearch(true);
     }
@@ -59,46 +59,49 @@ const SearchPage = () => {
 
   return (
     <>
-      <Background>
+      <Background/>
+      <Container>
         <Sidebar />
         <InputBox onChange={onSubmit}>
           <object type="image/svg+xml" data={searchImg} className="searchImg" />
           <Input
             placeholder="다른 사전을 검색해 보세요"
-            value={keyword || ""}
             onChange={(e) => {
-              setkeyword(e.target.value);
-            }}
+              setkeyword(e.target.value);}}
           />
           <object type="image/svg+xml" data={cancelImg} className="cancelImg" />
         </InputBox>
 
         {keyword === undefined ? null : (
           <ResultWrapper>
-            {dataLength === 0 ? (
+            {data === undefined ? (
               <div className="nullresult">
                 <SF_HambakSnow>
                   {keyword}하다는 아직 만들어지지 않았습니다.
                 </SF_HambakSnow>
               </div>
             ) : (
-              data.map((ele) => {
-                return (
-                  <>
-                    <div className="resultText">
-                      <div className="searchResult">
-                        <SF_HambakSnow>
-                          {ele.id}번째 {keyword}하다
-                        </SF_HambakSnow>
+              data.map((ele, index) => {
+                if (ele.firstName !== keyword) return;
+                else {
+                  return (
+                    <>
+                      <div className="resultText" onClick={()=>{movePage(ele.userId,ele.id)}}>
+                        <div className="searchResult">
+                          <SF_HambakSnow>
+                          {/* 사전 번호가 아닌 위에서부터 1번 */}
+                            {index+1}번째 {keyword}하다
+                          </SF_HambakSnow>
+                        </div>
+                        <div className="resultCount">
+                          <SF_HambakSnow>
+                            쌓인 문장 : {ele.stacked}개
+                          </SF_HambakSnow>
+                        </div>
                       </div>
-                      <div className="resultCount">
-                        <SF_HambakSnow>
-                          쌓인 문장 : {ele.stacked}개
-                        </SF_HambakSnow>
-                      </div>
-                    </div>
-                  </>
-                );
+                    </>
+                  );
+                }
               })
             )}
           </ResultWrapper>
@@ -107,19 +110,31 @@ const SearchPage = () => {
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
-      </Background>
+      </Container>
     </>
   );
 };
 
 export default SearchPage;
 
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    top: 0;
+`
 const ResultWrapper = styled.div`
   margin-top: ${vh(16)};
   width: ${vw(301)};
-  height: ${vh(10000)};
+  height: ${vh(490)};
   background: #f2f2f2;
   border-radius: 5px;
+  overflow: scroll;
   .nullresult {
     font-size: ${vw(14)};
     margin: 10px auto;
@@ -149,19 +164,6 @@ const ResultWrapper = styled.div`
     color: #b5b5b5;
   }
 `;
-
-const Background = styled.div`
-  width: 100%;
-  height: 100vh;
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-size: cover;
-`;
-
 const InputBox = styled.div`
   background-color: #ffffff;
   border-radius: 5px;
@@ -192,11 +194,7 @@ const Input = styled.input`
 `;
 
 const FooterWrapper = styled.div`
-  height: 100vh;
-  margin-top: 30px;
-  padding-bottom: 30px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`;
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
+`

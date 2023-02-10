@@ -2,6 +2,7 @@ import React, {useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { vw, vh } from "../../components/SizeConvert.js";
+//redux
 import { useAppDispatch } from "../../redux/store.js";
 //api 
 import axios from "axios";
@@ -14,6 +15,9 @@ import VisitorDictionary from "../../components/visitorLandingPage/VisitorDictio
 //image
 import background from "../../images/background.svg";
 import { setVisit_dictionaryID } from "../../redux/dictionarySlice.js";
+import Background from "../../components/Background.js";
+import { setVisit_userId } from "../../redux/visitorSlice.js";
+import LoadingModal from "../../components/homePage/LoadingModal.js";
 
 const VisitorLandingPage = () => {
   const navigate = useNavigate();
@@ -28,8 +32,12 @@ const VisitorLandingPage = () => {
   useEffect(() => {
     const location = window.location.pathname;
     const id = Number(location.split('/')[3]); //url에서 사전 아이디 받아오기
+    const userid = Number(location.split('/')[1]); //url에서 유저 아이디 받아오기
     dispatch(setVisit_dictionaryID({
       visit_dictionaryId: id,
+    }))
+    dispatch(setVisit_userId({
+      visit_userId: userid,
     }))
     axios
     .get(`https://kj273456.pythonanywhere.com/dictionary/${id}/`)
@@ -47,7 +55,7 @@ const VisitorLandingPage = () => {
   // 사전 정보를 다 받아왔는지 확인 하는 함수
   const checkInfo = () =>{
     var check = false;
-    shapeNum!=0 ? check = true : check = false;
+    shapeNum!=0 && name!=""&& color!="" && shapeColor!=0 ? check = true : check = false;
     return check;
   }
 
@@ -63,7 +71,9 @@ const VisitorLandingPage = () => {
 
   return(
   <>
-    <Background>
+    <Background/>
+    <Container>
+    {checkInfo()? null : <LoadingModal/>}
       <BodyContainer className={ !checkInfo() ? 'false' : ''}>
         <TitleBox>
           <span style={{'fontSize':vw(26)}}>이름하여 이름하다</span>
@@ -93,24 +103,23 @@ const VisitorLandingPage = () => {
       <FooterWrapper>
         <Footer/>
       </FooterWrapper>
-    </Background>
+    </Container>
   </>
   )
 }
 
 
 
-const Background = styled.div`
-  width: 100%;
-  height: 100vh;
+const Container = styled.div`
+   display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 100vw;
+    height: 100vh;
 
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-size: cover;
+    position: absolute;
+    top: 0;
 `
 
 const BodyContainer = styled.div`
@@ -154,9 +163,9 @@ const Button = styled.div`
     `
 
 const FooterWrapper = styled.div`
-    position:absolute;
+    position: absolute;
     bottom: 0;
-    padding-bottom: ${vh(42)};
-  `
+    padding: 20px;
+`
 
 export default VisitorLandingPage

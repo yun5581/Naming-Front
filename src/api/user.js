@@ -3,7 +3,6 @@ import axios from "axios";
 
 // 로그아웃
 export const Logout = () => {
-  alert("로그아웃");
   UserService.logout();
 };
 

@@ -7,17 +7,44 @@ import { http } from "../../api/http.js";
 
 import Sidebar from "../../components/Sidebar";
 import Footer from "../../components/Footer";
-
-import background from "../../images/background.svg";
+import Background from "../../components/Background";
 
 import { SF_HambakSnow } from "../../components/Text";
 
 const MakerPage = () => {
   const { dictionaryId } = useAppSelector((state) => state.dictionary);
-  const [data, setData] = useState();
+  const { name } = useAppSelector((state)=>state.user);
+  const [data, setData] = useState([]);
   useEffect(() => {
     window.scrollTo(0, 0);
+    getPeople();
   }, []);
+  // 색상 랜덤 함수 
+  const randColor = () =>{
+    const n = Math.floor(Math.random()*5);
+    var color;
+    switch(n){
+      case 0: color = "#0B0B0B"; break; // black
+      case 1: color = "#2B787D"; break; // green
+      case 2: color = "#005686"; break; // blue
+      case 3: color = "#BABABA"; break; // gray1
+      default: color = "#818181"; // gray2
+    }
+    return color;
+  }
+  // 배치 랜덤 함수
+  const randAlign = () =>{
+    const n = Math.floor(Math.random()*5);
+    var px;
+    switch(n){
+      case 0: px = vw(5); break; // black
+      case 1: px = vw(10); break; // green
+      case 2: px = vw(15); break; // blue
+      case 3: px = vw(20); break; // gray1
+      default: px = vw(25) // gray2
+    }
+    return px;
+  }
 
   const getPeople = () => {
     http
@@ -25,57 +52,107 @@ const MakerPage = () => {
         `https://kj273456.pythonanywhere.com/dictionary/${dictionaryId}/people/`
       )
       .then((res) => {
-        setData(res.data.data);
+        const raw = res.data.data;
+        // 공란 제거
+        const filter1 = raw.filter((data) => {
+          return data.nickname!= ""
+        });
+        // 중복 이름 제거
+        const filter2 = filter1.map((data)=>
+           data.nickname);
+        const set = new Set(filter2);
+        const uniqueMaker = [...set];
+        setData(uniqueMaker);
       })
       .catch((error) => {
-        alert("만들이들가져오기 실패");
+        // alert("만들이들가져오기 실패");
+        // window.location.reload();
       });
   };
 
-  useEffect(() => {}, []);
-  getPeople();
   return (
     <>
-      <Background>
-        <Sidebar />
+      <Background/>
+      <Container>
+        <Sidebar/>
+        <Title>
+            {name}하다를 채운 <br/>
+            {data.length==0?"n":data.length}명의 만든이들 
+        </Title>
         <DicBook>
-          <DicSidePage></DicSidePage>
+          <DicSidePage/>
           <DicPage>
-            <ContentWrapper>
-              <ContentBox>
-                {data
-                  ? data.map((ele) => {
-                      return (
-                        <Content>
-                          <SF_HambakSnow>{ele.nickname}</SF_HambakSnow>
-                        </Content>
-                      );
-                    })
-                  : null}
-              </ContentBox>
-            </ContentWrapper>
+            <ContentBox>
+            {data
+                ? data.map((ele) => {
+                    return (
+                      <Content>
+                        <SF_HambakSnow style={{color: randColor()}}>{ele}</SF_HambakSnow>
+                      </Content>
+                    );
+                  })
+                : null}
+            </ContentBox>
           </DicPage>
         </DicBook>
-
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
-      </Background>
+      </Container>
     </>
   );
 };
 
 export default MakerPage;
 
-const ContentWrapper = styled.div`
-  height: 85%;
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    top: 0;
+    font-family: var(--hb-font);
+`
+const Title = styled.div`
+  width: 100%;
+  width: ${vw(277)};
+  height: ${vh(42)};
+  margin-top: ${vh(50)};
+
+  display: flex;
+  justify-content: flex-end;
+  color: var(--white);
+`
+const DicBook = styled.div`
+  display: flex;
+  margin-top: ${vh(40)};
+  width: ${vw(300)};
+  aspect-ratio: 0.7/1;
+`;
+const DicSidePage = styled.div`
+  width: ${vw(25)};
+  background-color: white;
+  /* border-right: 1px solid #ecebe8; */
+  box-shadow: 0px 0px 2px #848380 inset;
+`;
+const DicPage = styled.div`
+  background-color: white;
+  width: ${vw(280)};
+  padding: ${vw(16)};
+  box-shadow: 0px 0px 3px #848380 inset;
 `;
 
 const ContentBox = styled.div`
   overflow-y: scroll;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -91,80 +168,16 @@ const ContentBox = styled.div`
 `;
 
 const Content = styled.div`
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  height: ${vh(33)};
-  width: 96%;
-  margin-bottom: ${vw(16)};
+  height: ${vh(40)};
+  width: auto;
   display: flex;
   align-items: center;
-
-  .countNum {
-    margin-left: ${vw(16)};
-    margin-right: ${vw(6)};
-    font-weight: 400;
-    font-size: ${vw(12)};
-  }
-  .likeIcon {
-    width: ${vw(13)};
-  }
-  .likeNum {
-    font-weight: 800;
-    font-size: ${vw(8)};
-    color: #818181;
-    width: fit-content;
-    margin: 0 auto;
-  }
-  .comment {
-    width: 72%;
-    font-weight: 400;
-    font-size: ${vw(12)};
-  }
-  .like {
-    align-items: center;
-  }
-`;
-
-const Background = styled.div`
-  width: 100%;
-  height: 100vh;
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-image: url(${background});
-  background-repeat: no-repeat;
-  background-size: cover;
-`;
-
-const DicBook = styled.div`
-  display: flex;
-  margin-top: ${vh(80)};
-`;
-
-const DicSidePage = styled.div`
-  height: ${vh(400)};
-  width: ${vw(25)};
-  margin-top: ${vh(40)};
-  background-color: white;
-  border-right: 2px solid #ecebe8;
-  box-shadow: 0px 0px 9px #848380;
-`;
-const DicPage = styled.div`
-  background-color: white;
-  width: ${vw(255)};
-  height: ${vh(400)};
-  margin-top: ${vh(40)};
-  padding: ${vw(16)};
+  font-size: ${vw(17)};
+  padding: 0 ${vw(20)};
 `;
 
 const FooterWrapper = styled.div`
-  height: 100vh;
-  margin-top: 30px;
-  padding-bottom: 30px;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`;
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
+`

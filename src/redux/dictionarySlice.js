@@ -11,6 +11,7 @@ const initialState = {
     shapeColors: 0,
     decoNums: 0,
     visit_dictionaryId: "", // 방문한 사전 고유 번호
+    commentNum: 0, // 쌓인 문장 수
 };
 
 export const dictionarySlice = createSlice({
@@ -35,6 +36,9 @@ export const dictionarySlice = createSlice({
     },
     setVisit_dictionaryID: (state, action) => {
       state.visit_dictionaryId = action.payload.visit_dictionaryId;
+    },
+    setCommentNum: (state,action) =>{
+      state.commentNum = action.payload.commentNum;
     }
   },
   extraReducers: builder => {
@@ -42,6 +46,7 @@ export const dictionarySlice = createSlice({
   },
 });
 
-export const { setDictionaryID, setOption, initDictionary, setDictionary, setVisit_dictionaryID } = dictionarySlice.actions;
+export const { setDictionaryID, setOption, initDictionary, 
+  setDictionary, setVisit_dictionaryID, setCommentNum } = dictionarySlice.actions;
 
 export default dictionarySlice.reducer;

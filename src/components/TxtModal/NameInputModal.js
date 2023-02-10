@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { vw,vh } from "../SizeConvert";
 import styled from "styled-components";
 import './NameInputModal.css'
 import { useNavigate } from "react-router-dom";
@@ -70,19 +71,19 @@ const NameInputModal = props => {
   return (
     <>
       <div className={open ? "openModal modal" : "modal"}>
-        {open ? (
+      {!!open ? (
           <section>
             <close style={{'display':'flex','justifyContent':'flex-end','margin':'7px'}}>
               <XButton onClick={close} />
             </close>
               <main>
                 <header>
-                  <SF_HambakSnow size="24px" color="var(--green)">
+                  <SF_HambakSnow size={vw(24)} color="var(--green)">
                     {header}
                   </SF_HambakSnow>
                 </header>
                 <Pretendard
-                  size="14px"
+                  size={vw(15)}
                   weight="400"
                   color="var(--black)"
                   style={{ marginTop: "18px", marginBottom:'25px',lineHeight:'18px' }}
@@ -104,8 +105,9 @@ const NameInputModal = props => {
                     color:'var(--black)',
                     border:'none',
                     fontFamiliy:'Pretendard',
-                    fontSize:'16px',
-                    padding:'0 15px'
+                    fontSize: vw(16),
+                    padding:'0 15px',
+                    outline: "none"
                     }}
                     onChange={(e)=>{setName(e.target.value)}}
                     value={name}
@@ -142,25 +144,23 @@ const XbtnBox = styled.button`
   background-color: transparent;
 `
 const InputBox = styled.div` 
-  width: 316.88px;
-  height: 46px;
+  width: ${vw(316)};
+  aspect-ratio: 6.8 / 1;
   border-radius: 5px;
   background-color: var(--gray0);
-
   display: flex;
   //align-items: center; input창이랑 div 크기 맞추려고 주석 처리함
   margin: 0 auto;
-
 `
 
 const DisabledBtn = styled.button`
   color: var(--white);
   background-color: var(--gray1);
   font-family: 'SF_HambakSnow';
-  font-size: 16px;
+  font-size: ${vw(16)};
 
-  width: 316.88px;
-  height: 46px;
+  width: ${vw(316)};
+  aspect-ratio: 6.8 / 1;
 
   border: none;
   border-radius: 5px;
