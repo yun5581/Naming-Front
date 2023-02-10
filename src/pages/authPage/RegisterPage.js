@@ -5,6 +5,9 @@ import { vw } from "../../components/SizeConvert";
 import Footer from "../../components/Footer";
 import Title from "../../components/authPage/Title";
 import RegisterModal from "../../components/authPage/RegisterModal";
+import Background from "../../components/Background";
+import BlockModal from "../../components/authPage/BlockModal";
+import Loading from "../../components/Loading";
 //images
 import background from "../../images/background.svg";
 import { BsCheckCircle } from"react-icons/bs";
@@ -12,13 +15,14 @@ import { BsCheckCircle } from"react-icons/bs";
 import { GetUser, PostUser } from "../../api/user";
 import { useAppDispatch } from "../../redux/store";
 import { setUser, setNth } from "../../redux/userSlice";
-import Background from "../../components/Background";
+import axios from "axios";
 
 const RegisterPage = () =>{
     // 유저 리덕스 
     const dispatch =useAppDispatch();
     // 모달 관리 
     const [modal, setModal] = useState(false);
+    const [block, setBlock ] = useState(false);
     function scrollto(e){
         e.target.scrollIntoView({ behavior: "smooth", block: "center" });
     }
@@ -45,23 +49,47 @@ const RegisterPage = () =>{
         return isSame;        
     }
     // 회원가입 함수 
-    const register=(e, async)=>{
+    const register = async() =>{
         if(id!=""&&password!=""&&checkInput()){
-            PostUser(id, password, name)
-                .then((res)=>{
-                    if(res.message=="회원가입 성공"){
-                        login();
-                        setNumber(res.data.userNumber+1);
-                        dispatch(setNth({nth: res.data.userNumber+1}));
-                        setModal(true);
-                    }
-                })
-                .catch((error)=>{
-                    if(error.response.data.message=="회원가입 실패"){
-                        alert("이미 존재하는 아이디입니다.");
-                    }
-                })
+            setBlock(true);
+            // 중복 가입 방지 코드 추가
+            try{
+               await axios.post("https://kj273456.pythonanywhere.com/accounts/signup/", {
+                firstName: name,
+                username: id,
+                password: password,
+              }).then((res)=>{
+                if(res.data.message=="회원가입 성공"){
+                    login();
+                    setNumber(res.data.data.userNumber+1);
+                    dispatch(setNth({nth: res.data.data.userNumber+1}));
+                    setModal(true);
+                }});
+              setBlock(false);
+              setModal(true);
+            }
+            catch(error){
+                alert("이미 존재하는 아이디입니다.");
+                setBlock(false);
+            }
         }
+      
+        // if(id!=""&&password!=""&&checkInput()){
+        //     PostUser(id, password, name)
+        //         .then((res)=>{
+        //             if(res.message=="회원가입 성공"){
+        //                 login();
+        //                 setNumber(res.data.userNumber+1);
+        //                 dispatch(setNth({nth: res.data.userNumber+1}));
+        //                 setModal(true);
+        //             }
+        //         })
+        //         .catch((error)=>{
+        //             if(error.response.data.message=="회원가입 실패"){
+        //                 alert("이미 존재하는 아이디입니다.");
+        //             }
+        //         })
+        // }
     }
     // 로그인 함수
     const login = () =>{
@@ -80,6 +108,7 @@ const RegisterPage = () =>{
         <>
             <Background/>
             <Container>
+                {block ? <BlockModal/> :null}
                 {modal? <RegisterModal number={number} name={name} setModal={setModal}/> :null}
                         <Title/>
                             <RegisterForm>
