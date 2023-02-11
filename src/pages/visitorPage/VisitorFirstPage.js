@@ -2,8 +2,8 @@ import React, {useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-import { getDictionary } from "../../api/user";
 //redux
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 //component
@@ -28,52 +28,75 @@ const GreenBtn = ({ children, onClick, margin }) => {
 
 
 const VisitorFirstPage = () => {
-  const { dictionaryId } = useAppSelector((state) => state.dictionary);
-  const { name } = useAppSelector((state) => state.user);
+  // 페이지 라우팅 navigate
+  const navigate = useNavigate();
+  //redux
+  const dispatch = useAppDispatch();
+  const {visit_dictionaryId} = useAppSelector(state=>state.dictionary)
+  const { name, userId } = useAppSelector((state) => state.user);
+  const { nickname } = useAppSelector((state) => state.visitor);
+
   const [page,setPage] = useState(1)
-  const [input,setInput] = useState(0)
   const [isInput, setIsInput] = useState(true)
   const [consonant,setConsonant] = useState('ㄴ')
   const [example,setExample] = useState('(ex. 넉살이 좋은, 나눔을 잘하는, 노는 것을 좋아하는)')
 
+
   useEffect(()=>{
     ranConsonant()
     },[])
+  // 자음 랜덤 배정
   const ranConsonant = () =>{
     const n = Math.floor(Math.random()*15)
     setConsonant(consonants[n].con)
     setExample(consonants[n].ex)
   }
 
-  const changeButton = (e) => {
-    // e.preventDefault();
-    setInput(e.target.value)
-    console.log(input)
+  // const changeButton = (e) => {
+  //   // e.preventDefault();
+  //   setInput(e.target.value)
+  //   console.log(input)
 
-    if (input.length > 0) {
-      setIsInput(true);
-    } else {
-      setIsInput(false);
-    }
-  };
+  //   if (input.length > 0) {
+  //     setIsInput(true);
+  //   } else {
+  //     setIsInput(false);
+  //   }
+  // };
 
-
+  // 페이지 넘기기
   const Next = () =>{
     setPage(page+1)
     console.log(page)
   }
 
+  const [defi,setDefi] = useState('') 
+
+    // 처음 정의 적기 
+    const submitDefinition= () => {
+      // 리덕스에 작성자 이름 저장 
+      console.log(visit_dictionaryId)
+      axios.post((`https://kj273456.pythonanywhere.com/dictionary/${visit_dictionaryId}/post/`, {
+        consonant: consonant,
+        contents: defi
+        }).then((res)=>{
+            console.log(res);
+            setPage(page+1)
+        })
+        .catch((error)=>{
+          console.log(error);
+          alert("정의 작성 실패");
+        }))
+      }
 
   const pages = () => {
-   
-
     
     if (page === 1){
       return (
       <>
       <TitleBox>
         <Title>반갑습니다.</Title>
-        <Title style={{'color':'var(--green)','marginLeft':'4px'}} >{name}</Title>
+        <Title style={{'color':'var(--green)','marginLeft':'4px'}} >{nickname}</Title>
         <Title>님!</Title>
       </TitleBox>
         <TextBox>
@@ -140,7 +163,7 @@ const VisitorFirstPage = () => {
           size='13px'
          >
             <span> 으로 시작하는 </span>
-            <span style={{color:'var(--green)'}}> (이름)하다의 정의</span>
+            <span style={{color:'var(--green)'}}> {name}하다의 정의</span>
             <span>를 작성해 주세요.</span>
             </Pretendard>
             <Pretendard
@@ -161,10 +184,12 @@ const VisitorFirstPage = () => {
                     fontSize:'13px',
                     padding:'0 15px'
                     }}
+                    onChange={(e)=>{setDefi(e.target.value)}}
+                    value={defi}
                     />
             </InputBox>
           {isInput ? (
-                    <GreenBtn onClick={Next}>
+                    <GreenBtn onClick={()=>{submitDefinition()}}>
                         완료
                     </GreenBtn>
                  ):(
@@ -192,15 +217,12 @@ const VisitorFirstPage = () => {
                 weight='400'
                 size='13px'
               >
-            <span> (이름)하다 사전을 둘러보며 정의를 추가하거나
+            <span> {name}하다 사전을 둘러보며 정의를 추가하거나
               <br/> 나만의 사전을 만들어보세요.  </span>
             </Pretendard>
             </TextBox>
-            <BrowseBtn>
-            <Link to='/definition' 
-            style={{textDecoration:'none', color:'var(--green)'}}>
-              (이름)하다 사전 둘러보기
-              </Link>
+            <BrowseBtn onClick={navigate(`/https://kj273456.pythonanywhere.com/dictionary/${visit_dictionaryId}`)}>
+              {name}하다 사전 둘러보기
               </BrowseBtn>
             <GreenBtn>
               <Link to='/' 
