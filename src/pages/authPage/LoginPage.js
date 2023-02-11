@@ -1,53 +1,79 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState} from "react";
+import { useNavigate } from "react-router-dom";
 import { vw } from "../../components/SizeConvert";
 //components
 import Footer from "../../components/Footer";
 import Title from "../../components/authPage/Title";
-//images
-import background from "../../images/background.svg";
-import { useNavigate } from "react-router-dom";
+import Background from "../../components/Background";
+import BlockModal from "../../components/authPage/BlockModal";
 // api, 유저 정보
 import { GetUser } from "../../api/user";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { setUser } from "../../redux/userSlice";
+import { setNth, setUser } from "../../redux/userSlice";
+import { setDictionaryID } from "../../redux/dictionarySlice";
+import axios from "axios";
 
 const LoginPage = () =>{
     const navigate = useNavigate();
     // 유저 리덕스 
     const dispatch =useAppDispatch();
     const {ID, PW} = useAppSelector(state=>state.user);
+    const { dictionaryId } = useAppSelector((state) => state.dictionary);
 
     // 로그인 정보관리
     const [id, setID] = useState(ID);
     const [password, setPW] = useState(PW);
-    // 로그인 함수
-    const login =()=>{
-        GetUser(id, password)
-        .then((res)=>{
-            if(res.message=="로그인 성공"){
 
-                window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
-                dispatch(setUser({
-                    userId: res.data.user_id,
-                    name: res.data.firstName,
-                    ID: id,
-                    PW: password
-                }));
-                navigate("/home");
-            }
-        }).catch((error)=>{
-            if(error.message=="로그인 실패"){
-                alert("아이디 또는 비밀번호를 확인해주세요.");
-            }
-        });
+    // 모달 관리
+    const[block, setBlock] = useState(false);
+
+    // 로그인 함수
+    const login = async() =>{
+        setBlock(true);
+        try{    
+            await GetUser(id, password)
+            .then((res)=>{
+                if(res.message=="로그인 성공"){
+                    window.localStorage.setItem("token", JSON.stringify(res.data.access_token));
+                    dispatch(setUser({
+                        userId: res.data.user_id,
+                        name: res.data.firstName,
+                        ID: id,
+                        PW: password
+                    }));
+                    // n번째 지은이 정보 받기
+                    axios.get(`https://kj273456.pythonanywhere.com/accounts/number/${res.data.user_id}/`)
+                    .then((res)=>{
+                        dispatch(setNth({nth: res.data.data.userNumber+1}));
+                    })
+                    // 사전 아이디 받기
+                    axios.get(`https://kj273456.pythonanywhere.com/dictionary/id/${res.data.user_id}/`)
+                    .then((res)=>{
+                        dispatch(setDictionaryID({dictionaryId: res.data.data.id}));
+                    }).then(()=>{  
+                        navigate("/home");
+                        window.location.reload();
+                    }).catch((error)=>{
+                        alert("사전 정보를 가져오지 못했습니다. 재로그인해주세요.");
+                        navigate("/login");
+                    }); 
+                }
+            })
+        }
+        catch(error){
+            alert("아이디 또는 비밀번호를 확인해주세요.");
+            setBlock(false);
+        }
     }
     function scrollto(e){
         e.target.scrollIntoView({ behavior: "smooth", block: "center" });
     }
     return(
         <>
-            <Background>
+            <Background/>
+            <Container>
+                {block ? <BlockModal/> : null}
                 <Title/>
                 <LoginForm>
                             <input 
@@ -73,24 +99,22 @@ const LoginPage = () =>{
                 <FooterWrapper>
                     <Footer/>
                 </FooterWrapper>
-            </Background>
+            </Container>
         </>
     )
 }
 export default LoginPage;
 
-const Background = styled.div`
-    width: 100%;
-    height: 100vh;
-    overflow: scroll;
-
+const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    background-image: url(${background});
-    background-repeat: no-repeat;
-    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    top: 0;
 `
 const LoginForm = styled.form`
     width: ${vw(250)};
@@ -110,7 +134,8 @@ const LoginForm = styled.form`
         }
     }
     input{
-        aspect-ratio: 5.8 / 1;
+        width: 100%;
+        aspect-ratio: 1 / 0.18;
         padding-left: 16px;
 
         font-size: ${vw(14)};
@@ -126,7 +151,7 @@ const LoginBtn = styled.div`
     justify-content: center;
     align-items: center;
 
-    aspect-ratio: 6 / 1;
+    aspect-ratio: 1 / 0.2;
 
     border-style: none;
     border-radius: 5px;
@@ -141,12 +166,7 @@ const LoginBtn = styled.div`
 	}
 `
 const FooterWrapper = styled.div`
-    height: 100vh;
-    margin-top: 30px;
-    padding-bottom: 30px;
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
 `

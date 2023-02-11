@@ -7,7 +7,8 @@ import { SF_HambakSnow } from "../Text";
 const RegisterModal = (props) =>{
     return(
         <>
-        <Wrapper onClick={()=>{props.setModal(false)}}>
+        <Wrapper>
+        {/* </Wrapper><Wrapper onClick={()=>{props.setModal(false)}}> */}
             <Modal>
                 <object type="image/svg+xml" data={clap} className="clap"/>
                 <NameWrapper>
@@ -16,8 +17,8 @@ const RegisterModal = (props) =>{
                 </NameWrapper>
                 <DeleteModalBtn onClick={()=> {
                         window.location.reload();
-                        window.location.href = "http://localhost:3000/custom"; // local용 도메인
-                        // window.location.href = "https://naming-likelion.vercel.app/m"; // 배포용 도메인
+                        // window.location.href = "http://localhost:3000/custom"; // local용 도메인
+                        window.location.href = "https://naming-likelion.vercel.app/custom"; // 배포용 도메인
                 }}>
                     내 사전 만들러 가기
 				</DeleteModalBtn>
@@ -40,7 +41,7 @@ const Wrapper = styled.div`
 
     background: rgba(0, 0, 0, 0.5);
 
-    animation: modal-show 0.25s;
+    animation: modal-show 0.1s;
 	@keyframes modal-show {
 		from {
 			opacity: 0;
